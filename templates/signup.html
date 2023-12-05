@@ -3,45 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-</head>
-<body>
-
-    {% for message in messages%}
+    <title>sajilotantra</title>
+    <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  {% for message in messages%}
     <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
         <strong>Message:</strong>{{message}}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
         <span aria-hidden="true"></span>
     </div>
     {% endfor %}
+  
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
 
-    
-    <div id="signup-form">
-        <h2>Sign Up</h2>
-        <form action="/signup" method="post" id="signup">
-            {% csrf_token %}
-            <label for="fname">First Name:</label>
-            <input type="text" id="fname" name="fname" required>
-<br>
-            <label for="lname">Last Name:</label>
-            <input type="text" id="lname" name="lname" required>
-<br>
-            <label for="username">email</label>
-            <input type="username" id="username" name="username" required>
-<br>
-            <label for="pass1">Password:</label>
-            <input type="password" id="pass1" name="pass1" required>
-<br>
-            <label for="pass2">Confirm Password:</label>
-            <input type="password" id="pass2" name="pass2" required>
-<br>
-            <button type="submit">Sign Up</button>
-        </form>
+  <div class="bg-white p-8 rounded shadow-md w-96">
+      <h2 class="text-2xl font-semibold mb-6">Sign Up</h2>
 
-        <div class="signin-link">
-            <p>Already have an account? <a href="/signin">Sign In</a></p>
-        </div>
+      <form action="/signup" method="POST">
+        {% csrf_token %}
+          <!-- first Name -->
+          <div class="mb-4">
+              <label for="fname" class="block text-gray-700 text-sm font-medium mb-2">First Name</label>
+              <input type="text" id="fname" name="fname" class="w-full px-3 py-2 border rounded-md
+                  focus:outline-none focus:ring focus:border-blue-300" required>
+          </div>
+
+            <!-- last Name -->
+          <div class="mb-4">
+              <label for="lname" class="block text-gray-700 text-sm font-medium mb-2">Last Name</label>
+              <input type="text" id="lname" name="lname" class="w-full px-3 py-2 border rounded-md
+                  focus:outline-none focus:ring focus:border-blue-300" required>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-4">
+              <label for="username" class="block text-gray-700 text-sm font-medium mb-2">email</label>
+              <input type="username" id="username" name="username" class="w-full px-3 py-2 border rounded-md
+                  focus:outline-none focus:ring focus:border-blue-300" required>
+          </div>
+
+          <!-- Password -->
+          <div class="mb-4">
+              <label for="pass1" class="block text-gray-700 text-sm font-medium mb-2">Password</label>
+              <input type="password" id="pass1" name="pass1" class="w-full px-3 py-2 border rounded-md
+                  focus:outline-none focus:ring focus:border-blue-300" required>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="mb-6">
+              <label for="pass2" class="block text-gray-700 text-sm font-medium mb-2">Confirm Password</label>
+              <input type="password" id="pass2" name="pass2" class="w-full px-3 py-2 border rounded-md
+                  focus:outline-none focus:ring focus:border-blue-300" required>
+          </div>
+
+          <!-- Sign Up Button -->
+          <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md
+              hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">
+              Sign Up
+          </button>
+      </form>
+
+      <!-- Already have an account? -->
+      <div class="mt-4 text-center">
+        <p class="text-sm text-gray-600">Already have an account? <a href="#" class="text-blue-500">Sign In</a></p>
     </div>
 
 </body>
 </html>
+         
