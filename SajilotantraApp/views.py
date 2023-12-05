@@ -4,7 +4,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
-from django.utils.encoding import force_bytes, force_text
+from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 from Sajilotantra import settings
@@ -71,9 +71,12 @@ def signup(request):
 def signin(request):
     return render(request,"signin.html")
 
+def dashboard(request):
+    return render(request,"dashboard.html")
+
 def activate(request,uidb64,token):#activate user account if the confirmation link is clicked
     try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = force_str(urlsafe_base64_decode(uidb64))
         myuser = User.objects.get(pk=uid)
     except (TypeError,ValueError,OverflowError,User.DoesNotExist):
         myuser = None

@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/c30dadd52a.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+</head>
+
+<body class="font-[Poppins] bg-[#EAF1F8]">
+    <header class="bg-white">
+        <nav class="flex justify-between items-center w-[100%]  mx-auto">
+            <div>
+                <img style="width:17rem;" src="static\assets\LogoWhite.png" alt="...">
+            </div>
+            <div
+                class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
+                <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
+                    <li>
+                        <a class="" href="#">
+                            <div class="text-xl bg-red-800 text-white w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="#">
+                            <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+                                <i class="fa-regular fa-calendar-days"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="#">
+                            <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+                                <i class="fa-solid fa-people-group"></i>
+                            </div>
+                        </a>                   
+                     </li>
+                    <li>
+                        <a class="" href="#">
+                            <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+                                <i class="fa-solid fa-map-location-dot"></i>                            </div>
+                        </a>                   
+                    </li>
+                    <li>
+                        <div class="container mx-auto p-4">
+                            <form action="#" method="get" class="flex items-center">
+                                <input type="text" name="search" placeholder="Search..." class="px-4 py-2 border rounded-md shadow-md focus:outline-none focus:ring focus:border-blue-300">
+                                <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">Search</button>
+                            </form>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+            <div class="flex items-center gap-6">
+                <button class="bg-[#043172] text-white px-5 py-2 rounded-full hover:bg-[#10223B]">Sign in</button>
+                <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
+            </div>
+    </header>
+
+
+
+    <script>
+        const navLinks = document.querySelector('.nav-links')
+        function onToggleMenu(e){
+            e.name = e.name === 'menu' ? 'close' : 'menu'
+            navLinks.classList.toggle('top-[9%]')
+        }
+    </script>
+</body>
+
+</html>
