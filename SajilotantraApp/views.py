@@ -71,6 +71,9 @@ def signup(request):
 def signin(request):
     return render(request,"signin.html")
 
+def playground(request):
+    return render(request,"playground.html")
+
 def dashboard(request):
     return render(request,"dashboard.html")
 
