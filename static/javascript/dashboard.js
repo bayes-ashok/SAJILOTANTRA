@@ -43,3 +43,24 @@ const profileContainer = document.getElementById('profileContainer');
             notificationDropdown.classList.add('hidden');
         }
     });
+
+// Create Pop-up
+    document.addEventListener("DOMContentLoaded", function(event) {
+        document.getElementById('defaultModalButton').click();
+    });
+    
+    // For Create Post Modal
+	const createToggle = document.getElementById('createPostToggle');
+    const createModal = document.getElementById('createPostModal');
+
+    createModal.addEventListener('click', function (event) {
+        event.stopPropagation(); // Stop the click event from reaching the window
+        createModal.classList.toggle('hidden');
+    });
+
+    // Close the dropdown if the user clicks outside of it
+    window.addEventListener('click', function () {
+        if (!createModal.classList.contains('hidden')) {
+            createModal.classList.add('hidden');
+        }
+    });
