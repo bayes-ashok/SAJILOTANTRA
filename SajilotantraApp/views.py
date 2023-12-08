@@ -71,6 +71,12 @@ def signup(request):
 def signin(request):
     return render(request,"signin.html")
 
+def playground(request):
+    return render(request,"playground.html")
+
+def dashboard(request):
+    return render(request,"dashboard.html")
+
 def activate(request,uidb64,token):#activate user account if the confirmation link is clicked
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
