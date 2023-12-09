@@ -133,3 +133,6 @@ import os
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'static'),)
+
+from .juzmin import JAZZMIN_SETTINGS
+JAZZMIN_SETTINGS=JAZZMIN_SETTINGS
