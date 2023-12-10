@@ -30,7 +30,7 @@ def signup(request):
             messages.error(request,"The username you entered is already taken, try another username")
             return redirect("signup")
         
-        myuser=User.objects.create_user(fname,username,pass1)#create user in the database with the details entered
+        myuser=User.objects.create_user(username,username,pass1)#create user in the database with the details entered
         myuser.first_name=fname
         myuser.last_name=lname
         myuser.is_active=False# before the user confirms their email address, the user's account(created) will not be active.
