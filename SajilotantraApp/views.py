@@ -22,6 +22,7 @@ def signup(request):
         fname=request.POST.get("fname")
         lname=request.POST.get("lname")
         pass2=request.POST.get("pass2")
+        print(username,pass1,pass2,fname,lname)
 
         #authentication(to check if the username(email) is already taken)
 
@@ -71,8 +72,8 @@ def signup(request):
 def signin(request):
     return render(request,"signin.html")
 
-def playground(request):
-    return render(request,"playground.html")
+# def playground(request):
+#     return render(request,"playground.html")
 
 def dashboard(request):
     return render(request,"dashboard.html")

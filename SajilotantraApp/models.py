@@ -7,7 +7,7 @@ class User(models.Model):
     lName = models.CharField(max_length=200)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=128)
-    image = models.ImageField()
+    # image = models.ImageField()
 
     def __str__(self):
         return self.user_id
