@@ -22,12 +22,8 @@ def signup(request):
         fname=request.POST.get("fname")
         lname=request.POST.get("lname")
         pass2=request.POST.get("pass2")
-<<<<<<< HEAD
-        print(username,pass1,pass2,fname,lname)
-=======
         email=request.POST.get("email")
         print(username,pass1,pass2,fname,lname,email)
->>>>>>> master
 
         #authentication(to check if the username and email are already taken)
 
