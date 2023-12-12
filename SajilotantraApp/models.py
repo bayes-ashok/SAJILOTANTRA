@@ -10,3 +10,12 @@ class User(models.Model):
 
     def __str__(self):
         return self.user_id
+
+class GovernmentProfile(models.Model):
+    name= models.CharField(max_length=100)
+    thumbnail = models.ImageField(upload_to='thumbnails/')
+    description = models.TextField()
+    address = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
