@@ -1,0 +1,8 @@
+#alert-border-3 {
+    max-width: 500px;
+    margin-left: auto;
+    padding: 10px; /* Adjust the padding as needed */
+    background-color: #ECFDF5; /* Set the background color */
+    border: 2px solid #34D399; /* Set the border color */
+    border-radius: 8px; /* Adjust the border radius */
+}

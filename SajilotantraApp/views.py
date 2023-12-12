@@ -42,7 +42,7 @@ def signup(request):
 
         myuser.save()
 
-        messages.success(request,"Your account has been successfully Created. We have sent you a confirmation email, please click on the activation link to activate your account.")
+        messages.success(request,"Your account has been successfully Created.  We have sent you a confirmation email, please click on the activation link to activate your account.")
 
         #Send Welcome Email
         subject="Welcome to Sajilotantra"
