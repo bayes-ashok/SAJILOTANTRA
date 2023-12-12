@@ -7,10 +7,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="/static/javascript/sigin.js"></script>
     <link rel="stylesheet" href="static\css\signin.css">
-</head>
-<body>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
-      {% for message in messages%}
+</head>
+<body >
+
+      <!-- {% for message in messages%}
 
       <div id="alert-border-3" class="flex items-center p-4 mb-4 text-green-800 rounded-lg border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-green-100 dark:border-green-800" role="alert">
         <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -27,11 +29,107 @@
         </button>
     </div>
 
-    {% endfor %}
+    {% endfor %} -->
 
-    <div id="signup-window">
+
+
+    <!-- <div id="image-container" class="row justify-content-lg-start">
+      <img src="\static\Image\signin.gif" alt="Computer man" style="width:100px;height:100px;">
+    </div> -->
+
+      <section class="h-100">
+        <div class="container h-100 rounded-3">
+          <div class="row justify-content-sm-center h-100">
+            <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+              <div class="text-center my-5">
+                <img src="\static\Image\completelogo.svg" alt="logo" width="500", height="300">
+              </div>
+              
+              <div class="card shadow-lg rounded">
+                <div class="card-body p-5 ">
+                  <h1 class="fs-4 card-title fw-bold mb-4 text-center">Login</h1>
+                  <form method="POST" class="needs-validation" novalidate="" autocomplete="off">
+                    <div class="mb-3">
+                      <label class="mb-2 text-muted" for="email">E-Mail Address</label>
+                      <input id="email" type="email" class="form-control" name="email" value="" required autofocus>
+                      <div class="invalid-feedback">
+                        Email is invalid
+                      </div>
+                    </div>
+    
+                    <div class="mb-3">
+                      <div class="mb-2 w-100">
+                        <label class="text-muted" for="password">Password</label>
+                        <a href="forgot.html" class="float-end">
+                          Forgot Password?
+                        </a>
+                      </div>
+                      <input id="password" type="password" class="form-control" name="password" required>
+                        <div class="invalid-feedback">
+                          Password is required
+                        </div>
+                    </div>
+    
+                    <div class="d-flex align-items-center">
+                      <div class="form-check">
+                        <input type="checkbox" name="remember" id="remember" class="form-check-input">
+                        <label for="remember" class="form-check-label">Remember Me</label>
+                      </div>
+                      <button type="submit" class="btn btn-primary ms-auto text-blue-800">
+                        Login
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div class="card-footer py-3 border-0 ">
+                  <div class="text-center">
+                    Don't have an account? <a href="signup" class="text-dark">Create One</a>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <div class="text-center mt-5 text-muted">
+        <h1 id="typewriter" class=" mb-4 text-center"></h1>
+        <img src="\static\Image\signin.gif" alt="Flag gif" style="width: 100px;height:100px;">
+      </div>
         
-    </div>
+        <script>
+        const words = ["Document Guidance", "Commuinity Forum", "Public Events"];
+        let i = 0;
+        let j = 0;
+        let currentWord = "";
+        let isDeleting = false;
+        
+        function type() {
+          currentWord = words[i];
+          if (isDeleting) {
+            document.getElementById("typewriter").textContent = currentWord.substring(0, j-1);
+            j--;
+            if (j == 0) {
+              isDeleting = false;
+              i++;
+              if (i == words.length) {
+                i = 0;
+              }
+            }
+          } else {
+            document.getElementById("typewriter").textContent = currentWord.substring(0, j+1);
+            j++;
+            if (j == currentWord.length) {
+              isDeleting = true;
+            }
+          }
+          setTimeout(type, 125);
+        }
+        
+        type();
+        </script>
 
 </body>
 </html>
