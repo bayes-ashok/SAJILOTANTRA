@@ -16,8 +16,8 @@
 		<link rel="stylesheet" href="static\css\dashboard.css">
 		<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 </head>
-<header class="bg-white">
-	<nav class="flex justify-between items-center w-[100%]  mx-auto">
+<header class=" bg-white">
+	<nav class="fixed bg-white flex justify-between items-center w-[100%]  mx-auto">
 		<div>
 		  <a href="#">  <img style="width:17rem;" src="static\assets\LogoWhite.png" alt="..."></a>
 		</div>
@@ -77,11 +77,6 @@
 
 			{% comment %} Notifications {% endcomment %}
 			 <!-- Dropdown menu -->
-			 
-
-
-
-
 			{% comment %} Profile Secion {% endcomment %}
 			<div id="profileContainer" class="flex items-center gap-3 cursor-pointer mx-2 rounded-full focus:ring-2 hover:ring-2 hover:ring-gray-600 focus:ring-gray-800 ">
 				<img class="w-10 h-10 rounded-full" src="https://placekitten.com/40/40" alt="Profile Picture">
@@ -95,11 +90,6 @@
 						role="menuitem">Logout</a>
 				</div>
 			</div>
-
-			
-			
-
-
 			{% comment %} Hamburger {% endcomment %}
 			<ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
 		</div>
@@ -131,17 +121,18 @@
 	{% endfor%}
 	
 	</div>
-	<a href="#" class="block py-2 text-base font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100">
+	<a href="#" class="block py-2 text-base font-medium text-center text-gray-900 bg-gray-500 hover:bg-gray-100">
 		<div class="inline-flex items-center ">
 		<svg aria-hidden="true" class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
 		View all
 		</div>
 	</a>
 </div>
-<body class="font-[Poppins] bg-[#EAF1F8]">
+
+<body class=" font-[Poppins] bg-[#EAF1F8]">
     
-	<div class="flex">
-		<div class="w-1/4" style="margin-left: 50px;">
+	<div class="pt-16 items-start flex gap-0">
+		<div class="w-1/4 " style="margin-left: 50px;">
 			<div class="border bg-white rounded-2xl p-4 " style="margin-top: 20px;">
 				<div>
 					<b id="name" class="mb-2 capitalize">Detailed Guide for Government Offices</b>
