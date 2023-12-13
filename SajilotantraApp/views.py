@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from SajilotantraApp.models import Events
+from SajilotantraApp.models import Event
 
 from Sajilotantra import settings
 

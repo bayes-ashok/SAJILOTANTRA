@@ -12,7 +12,7 @@ class User(models.Model):
     def __str__(self):
         return self.user_id
     
-class Events(models.Model):
+class Event(models.Model):
     id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=255,null=True,blank=True)
     description = models.TextField()
