@@ -50,20 +50,13 @@ JAZZMIN_SETTINGS = {
 
         # model admin to link to (Permissions checked against model)
         {"model": "auth.User"},
-
-        # App with dropdown menu to all its models pages (Permissions checked against models)
-        {"app": "books"},
     ],
 
     #############
     # User Menu #
     #############
 
-    # Additional links to include in the user menu on the top right ("app" url type is not allowed)
-    "usermenu_links": [
-        {"name": "Site", "url": "http://127.0.0.1:8000/dashboard", "new_window": True,"icon":"fas fa-globe"},
-        {"model": "auth.user"}
-    ],
+
 
     #############
     # Side Menu #
