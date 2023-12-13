@@ -17,19 +17,25 @@ def index(request):
 
 def signup(request):
     if request.method=="POST":
-        username=request.POST.get("username")#username=email address
+        username=request.POST.get("username")
         pass1=request.POST.get("pass1")
         fname=request.POST.get("fname")
         lname=request.POST.get("lname")
         pass2=request.POST.get("pass2")
+        email=request.POST.get("email")
+        print(username,pass1,pass2,fname,lname,email)
 
-        #authentication(to check if the username(email) is already taken)
+        #authentication(to check if the username and email are already taken)
 
-        if User.objects.filter(email=username):
+        if User.objects.filter(username=username):
             messages.error(request,"The username you entered is already taken, try another username")
             return redirect("signup")
         
-        myuser=User.objects.create_user(fname,username,pass1)#create user in the database with the details entered
+        if User.objects.filter(email=email):
+            messages.error(request,"The email you entered is already taken, try another email")
+            return redirect("signup")
+        
+        myuser=User.objects.create_user(username,email,pass1)#create user in the database with the details entered
         myuser.first_name=fname
         myuser.last_name=lname
         myuser.is_active=False# before the user confirms their email address, the user's account(created) will not be active.
@@ -71,8 +77,8 @@ def signup(request):
 def signin(request):
     return render(request,"signin.html")
 
-def playground(request):
-    return render(request,"playground.html")
+# def playground(request):
+#     return render(request,"playground.html")
 
 def dashboard(request):
     return render(request,"dashboard.html")
