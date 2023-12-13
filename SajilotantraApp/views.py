@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
@@ -75,7 +77,29 @@ def signup(request):
     return render(request,"signup.html")
 
 def signin(request):
-    return render(request,"signin.html")
+    if request.method == 'POST':
+        username = request.POST['username']
+        pass1 = request.POST['pass1']
+        user = authenticate(request, username=username, password=pass1)
+        print(username, pass1)
+
+        # Check if user exists
+        if user is None:
+            messages.info(request, f'Username "{username}" does not exist. Please create a new account.')
+            return redirect('signin')
+
+        # Check if password is correct
+        if not user.check_password(pass1):
+            messages.info(request, f'Incorrect password for username "{username}".')
+            return redirect('signin')
+
+        # Login successful
+        login(request, user)
+        messages.success(request, f'Welcome back, {username}!')
+        return redirect('index')
+
+    form = AuthenticationForm()
+    return render(request, 'signin.html', {'form': form})
 
 # def playground(request):
 #     return render(request,"playground.html")
