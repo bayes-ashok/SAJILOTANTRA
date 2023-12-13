@@ -105,4 +105,4 @@ def activate(request,uidb64,token):#activate user account if the confirmation li
 
 def dashboard(request):
     notifications = Notification.objects.all()
-    return render(request, 'dashboard.html', {'notifications': notifications})
+    return render(request, 'dashboard.html', {'notifications': notifications}) 
