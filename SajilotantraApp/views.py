@@ -1,11 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth.models import User
+from .models import Notification
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.shortcuts import render
 
 from Sajilotantra import settings
 
@@ -80,8 +82,8 @@ def signin(request):
 # def playground(request):
 #     return render(request,"playground.html")
 
-def dashboard(request):
-    return render(request,"dashboard.html")
+# def dashboard(request):
+#     return render(request,"dashboard.html")
 
 def activate(request,uidb64,token):#activate user account if the confirmation link is clicked
     try:
@@ -99,3 +101,8 @@ def activate(request,uidb64,token):#activate user account if the confirmation li
         return redirect('signin')
     else:
         return render(request,'activation_failed.html')
+    
+
+def dashboard(request):
+    notifications = Notification.objects.all()
+    return render(request, 'dashboard.html', {'notifications': notifications}) 
