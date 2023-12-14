@@ -11,7 +11,6 @@ from Sajilotantra import settings
 
 from.forms import GovernmentProfileForm
 from SajilotantraApp.models import GovernmentProfile
-
 from .tokens import generate_token
 
 
@@ -101,7 +100,7 @@ def create_profile(request):
         form = GovernmentProfileForm()
     return render(request, 'create_profile.html', {'form': form})
 
-def update_profile(request, profile_id):
+def create_profile(request, profile_id):
     profile = get_object_or_404(GovernmentProfile, pk=profile_id)
     if request.method == 'POST':
         form = GovernmentProfileForm(request.POST, request.FILES, instance=profile)
@@ -109,4 +108,27 @@ def update_profile(request, profile_id):
             form.save()
     else:
         form = GovernmentProfileForm(instance=profile)
-    return render(request, 'update_profile.html', {'form': form})
+    return render(request, 'create_profile.html', {'form': form})
+
+
+
+def create_profile(request, profile_id=None):
+    if profile_id:  
+        profile = get_object_or_404(GovernmentProfile, pk=profile_id)
+    else:
+        profile = None  
+    if request.method == 'POST':
+        form = GovernmentProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('index')  
+    else:
+        if not profile:  # Check if the profile doesn't exist
+            profile = GovernmentProfile.objects.create(
+                name="Dummy Profile",
+                thumbnail="dummy_thumbnail.jpg",  
+                description="Dummy description",
+                address="123 Dummy Address"
+            )
+        form = GovernmentProfileForm(instance=profile)
+    return render(request, 'create_profile.html', {'form': form})
