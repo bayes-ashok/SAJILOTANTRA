@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 from django.db import models
 
 
@@ -25,7 +26,7 @@ class GovernmentProfile(models.Model):
     
 class Guidance(models.Model):
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    description = RichTextField() 
     thumbnail = models.ImageField(upload_to='thumbnails/')
     category = models.CharField(max_length=100)
     
