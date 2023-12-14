@@ -99,7 +99,7 @@
 	<div class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50">
 		Notifications
 	</div>
-	<div>
+	<div class="flex flex-col-reverse">
 		{% comment %} just like for loop {% endcomment %}
 		{% for notification in notifications %}
 	<a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
@@ -324,7 +324,7 @@
 						
 								<!-- scroll area -->
 								<section class="h-full overflow-auto p-2 w-full h-full flex flex-col">
-									<header class="border-dashed border-2 border-green-200 rounded-md py-2 flex flex-col justify-center items-center" style="margin-bottom: 10px;">
+									<div class="border-dashed border-2 border-green-200 rounded-md py-2 flex flex-col justify-center items-center" style="margin-bottom: 10px;">
 									<p class="font-semibold text-gray-900 flex flex-wrap justify-center">
 										<span>Drag and drop</span>&nbsp;
 									</p>
@@ -335,7 +335,7 @@
 									<button id="button" class="mt-2 rounded-md px-3 py-1 bg-green-300 hover:bg-green-400 focus:shadow-outline focus:outline-none">
 										Browse
 									</button>
-									</header>
+								</div>
 									<ul id="gallery" class="flex flex-1 flex-wrap -m-2">
 									<li id="empty" class="h-full w-full text-center flex flex-col items-center justify-center items-center">
 										<img class="mx-auto w-32" src="static\assets\images\nofile.png" alt="no data"/>
