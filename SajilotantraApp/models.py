@@ -32,7 +32,7 @@ class Guidance(models.Model):
     
     def __str__(self):
         return self.title
-za
+
 class Notification(models.Model):
     notice_id=models.AutoField(primary_key=True)
     notice_title=models.CharField(max_length=500)
