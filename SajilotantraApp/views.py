@@ -1,16 +1,16 @@
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Notification
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.shortcuts import render
+from SajilotantraApp.models import Event
 
 from Sajilotantra import settings
 
+from .models import Notification
 from .tokens import generate_token
 
 
@@ -106,3 +106,6 @@ def activate(request,uidb64,token):#activate user account if the confirmation li
 def dashboard(request):
     notifications = Notification.objects.all()
     return render(request, 'dashboard.html', {'notifications': notifications}) 
+# events calendar
+def events(request):
+    return render(request,'events.html')

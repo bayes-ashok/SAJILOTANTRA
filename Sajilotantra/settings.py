@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ckeditor'
 ]
 
 
@@ -135,4 +136,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'static'),)
 
 from .juzmin import JAZZMIN_SETTINGS
+
 JAZZMIN_SETTINGS=JAZZMIN_SETTINGS
