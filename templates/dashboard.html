@@ -109,7 +109,7 @@
 		<div class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-primary-700">
 			{% comment %} <svg class="w-2 h-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18"><path d="M15.977.783A1 1 0 0 0 15 0H3a1 1 0 0 0-.977.783L.2 9h4.239a2.99 2.99 0 0 1 2.742 1.8 1.977 1.977 0 0 0 3.638 0A2.99 2.99 0 0 1 13.561 9H17.8L15.977.783ZM6 2h6a1 1 0 1 1 0 2H6a1 1 0 0 1 0-2Zm7 5H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Z"/><path d="M1 18h16a1 1 0 0 0 1-1v-6h-4.439a.99.99 0 0 0-.908.6 3.978 3.978 0 0 1-7.306 0 .99.99 0 0 0-.908-.6H0v6a1 1 0 0 0 1 1Z"/></svg> {% endcomment %}
 		</div>
-		</div>
+		</div> 
 		<div class="pl-3 w-full">
 			<div class="text-gray-500 font-normal text-sm mb-1.5"><span class="font-semibold text-gray-900">{{notification.notice_title}}</span>: {{notification.notice_description}}</div>
 			<div class="flex gap-5">
@@ -117,11 +117,8 @@
 			<div class="text-xs text-primary-500">{{notification.posted_by}}</div>
 			</div>
 			</div>
-			<div class="pl-3 w-full">
-				<div class="text-gray-500 font-normal text-sm mb-1.5 "><span class="font-semibold text-gray-900">DOTM Lalitpur</span> posted a new video: Glassmorphism - How to Apply Online</div>
-				<div class="text-xs font-medium text-primary-700 ">3 hours ago</div>
-			</div>
 		</a>
+		{% endfor %}
 		</div>
 		<a href="#" class="block py-2 text-base font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100">
 			<div class="inline-flex items-center ">
@@ -132,7 +129,7 @@
 	</div>
 	
 
-	<div class="flex">
+	<div class="flex bg-blue-50 mt-20">
 		<div class="w-1/4" style="margin-left: 50px;">
 			<div class="border bg-white rounded-2xl p-4 " style="margin-top: 20px;">
 				<div>
@@ -229,7 +226,6 @@
 				</div>
 			</a>
 			</div>
-
 
 		<!-- Content of public events -->
 			<div class="border  bg-white mt-6 rounded-2xl p-4 ">
