@@ -80,23 +80,21 @@ def signin(request):
     if request.method == 'POST':
         username = request.POST['username']
         pass1 = request.POST['pass1']
+        remember_me = request.POST.get('remember')
         user = authenticate(request, username=username, password=pass1)
         print(username, pass1)
 
         # Check if user exists
         if user is None:
-            messages.info(request, f'Username "{username}" does not exist. Please create a new account.')
+            messages.info(request, "Incorrect login creadentials. Try again")
             return redirect('signin')
-
-        # Check if password is correct
-        if not user.check_password(pass1):
-            messages.info(request, f'Incorrect password for username "{username}".')
-            return redirect('signin')
+        
+        if remember_me:
+                request.session.set_expiry(1209600)  # 2 weeks in seconds
 
         # Login successful
         login(request, user)
-        messages.success(request, f'Welcome back, {username}!')
-        return redirect('index')
+        return redirect('dashboard')
 
     form = AuthenticationForm()
     return render(request, 'signin.html', {'form': form})
