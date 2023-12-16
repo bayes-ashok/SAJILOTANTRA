@@ -39,13 +39,16 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'SajilotantraApp',
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ckeditor'
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -131,3 +134,7 @@ import os
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'static'),)
+
+from .juzmin import JAZZMIN_SETTINGS
+
+JAZZMIN_SETTINGS=JAZZMIN_SETTINGS

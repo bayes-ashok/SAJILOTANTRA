@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
@@ -6,6 +8,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from SajilotantraApp.models import Event
 
 from Sajilotantra import settings
 
@@ -19,26 +22,32 @@ def index(request):
 
 def signup(request):
     if request.method=="POST":
-        username=request.POST.get("username")#username=email address
+        username=request.POST.get("username")
         pass1=request.POST.get("pass1")
         fname=request.POST.get("fname")
         lname=request.POST.get("lname")
         pass2=request.POST.get("pass2")
+        email=request.POST.get("email")
+        print(username,pass1,pass2,fname,lname,email)
 
-        #authentication(to check if the username(email) is already taken)
+        #authentication(to check if the username and email are already taken)
 
-        if User.objects.filter(email=username):
+        if User.objects.filter(username=username):
             messages.error(request,"The username you entered is already taken, try another username")
             return redirect("signup")
         
-        myuser=User.objects.create_user(fname,username,pass1)#create user in the database with the details entered
+        if User.objects.filter(email=email):
+            messages.error(request,"The email you entered is already taken, try another email")
+            return redirect("signup")
+        
+        myuser=User.objects.create_user(username,email,pass1)#create user in the database with the details entered
         myuser.first_name=fname
         myuser.last_name=lname
         myuser.is_active=False# before the user confirms their email address, the user's account(created) will not be active.
 
         myuser.save()
 
-        messages.success(request,"Your account has been successfully Created. We have sent you a confirmation email, please click on the activation link to activate your account.")
+        messages.success(request,"Your account has been successfully Created.  We have sent you a confirmation email, please click on the activation link to activate your account.")
 
         #Send Welcome Email
         subject="Welcome to Sajilotantra"
@@ -71,7 +80,30 @@ def signup(request):
     return render(request,"signup.html")
 
 def signin(request):
-    return render(request,"signin.html")
+    if request.method == 'POST':
+        username = request.POST['username']
+        pass1 = request.POST['pass1']
+        remember_me = request.POST.get('remember')
+        user = authenticate(request, username=username, password=pass1)
+        print(username, pass1)
+
+        # Check if user exists
+        if user is None:
+            messages.info(request, "Incorrect login credentials. Try again")
+            return redirect('signin')
+
+        # Login successful
+        login(request, user)
+        return redirect('dashboard')
+
+    form = AuthenticationForm()
+    return render(request, 'signin.html', {'form': form})
+
+# def playground(request):
+#     return render(request,"playground.html")
+
+# def dashboard(request):
+#     return render(request,"dashboard.html")
 
 def activate(request,uidb64,token):#activate user account if the confirmation link is clicked
     try:

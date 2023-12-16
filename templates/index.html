@@ -1,24 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>12ka4</title>
-    <link rel="stylesheet" href="static/css/style.css">
-</head>
-<body>
-    <header>
-        <h1>Rajtantra</h1>
-    </header>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="static/css/login.css" />
 
-    <section>
-        <h2>RAJAWADI</h2>
-        <p>Raja aau desh bachau</p>
-        <p>Durga Prasai jindabaad!</p>
-    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+  </head>
+  <body style="background-color: white;">
+    {% for message in messages%}
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+        <strong>Message:</strong>{{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+        <span aria-hidden="true"></span>
+    </div>
+    {% endfor %}
+    <p class="small fw-bold mb-0">
+      Don't have an account?
+      <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-backdrop="static">Register</a>
+    </p>
 
-    <footer>
-        &copy; 2023 Yo chai mero branch. All rights reserved.
-    </footer>
-</body>
+    {% comment %} modal {% endcomment %}
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Create New Account</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-container">
+              <form action="/signup" method="post" id="signup">
+                {% csrf_token %}
+                <!-- Registration form fields -->
+                <div class="form-outline mb-4">
+                  <input type="text" id="sName" class="form-control form-control-lg" placeholder="Enter your First Name" />
+                  <label class="form-label" for="sName">First Name</label>
+                  <div id="nameWarningSignUp" style="color: red;" class="warning"></div>
+                </div>
+                <div class="form-outline mb-4">
+                    <input type="text" id="lName" class="form-control form-control-lg" placeholder="Enter your Last Name" />
+                    <label class="form-label" for="lName">Last Name</label>
+                    <div id="lnameWarningSignUp" style="color: red;" class="warning"></div>
+                </div>
+                <div class="form-outline mb-4">
+                  <input type="email" id="sEmail" class="form-control form-control-lg" placeholder="Enter your Email" />
+                  <label class="form-label" for="sEmail">Email address</label>
+                  <div id="emailWarningSignUp" style="color: red;" class="warning"></div>
+                </div>
+
+                <div class="form-outline mb-3">
+                  <input type="password" id="sPW" class="form-control form-control-lg" placeholder="Create a Password" />
+                  <label class="form-label" for="sPW">Password</label>
+                  <div id="passwordWarningSignUp" style="color: red;" class="warning"></div>
+                </div>
+
+                <div class="form-outline mb-3">
+                  <input type="password" id="sCPW" class="form-control form-control-lg" placeholder="Confirm Password" />
+                  <label class="form-label" for="sCPW">Confirm Password</label>
+                  <div id="confirmPasswordWarningSignUp" style="color: red;" class="warning"></div>
+                </div>
+
+                <div class="text-center text-lg-start pt-2">
+                  <button id="registerButton" type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Register</button>
+                </div>
+
+                <div id="registrationWarning" class="warning"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="static/javascript/main.js"></script>
+  </body>
 </html>
