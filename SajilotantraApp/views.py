@@ -8,9 +8,11 @@ from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from SajilotantraApp.models import Event
 
 from Sajilotantra import settings
 
+from .models import Notification
 from .tokens import generate_token
 
 
@@ -99,8 +101,8 @@ def signin(request):
 # def playground(request):
 #     return render(request,"playground.html")
 
-def dashboard(request):
-    return render(request,"dashboard.html")
+# def dashboard(request):
+#     return render(request,"dashboard.html")
 
 def activate(request,uidb64,token):#activate user account if the confirmation link is clicked
     try:
@@ -118,3 +120,11 @@ def activate(request,uidb64,token):#activate user account if the confirmation li
         return redirect('signin')
     else:
         return render(request,'activation_failed.html')
+    
+
+def dashboard(request):
+    notifications = Notification.objects.all()
+    return render(request, 'dashboard.html', {'notifications': notifications}) 
+# events calendar
+def events(request):
+    return render(request,'events.html')
