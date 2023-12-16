@@ -17,7 +17,7 @@ class User(models.Model):
 class GovernmentProfile(models.Model):
     name= models.CharField(max_length=100)
     thumbnail = models.ImageField(upload_to='thumbnails/')
-    description = RichTextField()
+    description = models.TextField()
     address = models.CharField(max_length=200)
 
     def __str__(self):
@@ -36,7 +36,7 @@ class Guidance(models.Model):
 class Notification(models.Model):
     notice_id=models.AutoField(primary_key=True)
     notice_title=models.CharField(max_length=500)
-    notice_description=RichTextField()
+    notice_description=models.TextField()
     date_posted=models.DateTimeField(auto_now_add=True)
     posted_by=models.CharField(max_length=200)
 
