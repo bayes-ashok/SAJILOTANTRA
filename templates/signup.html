@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="static/css/login.css" />
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script> 
+
 </head>
+
 <body style="background-color: white;">
+
     {% for message in messages%}
     <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
         <strong>Message:</strong>{{message}}
@@ -19,75 +23,164 @@
         <span aria-hidden="true"></span>
     </div>
     {% endfor %}
+
     <p class="small fw-bold mb-0">
-    Don't have an account?
-    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-backdrop="static">Register</a>
+        Don't have an account?
+        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-backdrop="static">Register</a>
     </p>
 
     {% comment %} modal {% endcomment %}
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Create New Account</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Create New Account</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-container">
+                        <div id="signup-form">
+                            <form action="/signup" method="post" id="signup" onsubmit="return validateEmail();">
+                                {% csrf_token %}
+
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="fname" class="form-control form-control-lg" placeholder="Enter your First Name" name="fname" required />
+                                    <label class="form-label" for="fname">First Name</label>
+                                    <!-- <div id="nameWarningSignUp" style="color: red;" class="warning"></div> -->
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="lName" class="form-control form-control-lg" placeholder="Enter your Last Name" name="lname" required />
+                                    <label class="form-label" for="lName">Last Name</label>
+                                    <div id="nameWarningSignUp" style="color: red;" class="warning"></div>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="username" class="form-control form-control-lg" placeholder="Enter your Username" name="username" required />
+                                    <label class="form-label" for="username">Username</label>
+                                    <div id="emailWarningSignUp" style="color: red;" class="warning"></div>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="email" id="email" class="form-control form-control-lg" placeholder="Enter your Email" name="email" required oninput="clearEmailWarning();" />
+                                    <label class="form-label" for="email">Email Address</label>
+                                    <div id="emailWarningSignUp" style="color: red;" class="warning"></div>
+                                </div>
+
+                                <div class="form-outline mb-3">
+                                    <input type="password" id="pass1" class="form-control form-control-lg" placeholder="Create a Password" name="pass1" required />
+                                    <label class="form-label" for="pass1">Password</label>
+                                    <div id="passwordWarningSignUp" style="color: red;" class="warning"></div>
+                                </div>
+
+                                <div class="form-outline mb-3">
+                                    <input type="password" id="pass2" class="form-control form-control-lg" placeholder="Confirm Password" name="pass2" required />
+                                    <label class="form-label" for="pass2">Confirm Password</label>
+                                    <div id="confirmPasswordWarningSignUp" style="color: red;" class="warning"></div>
+                                </div>
+
+                                <div class="form-outline mb-3">
+                                    <input type="checkbox" onclick="togglePassword()" id="showPassword" class="hidden">
+                                    <label for="showPassword" class="cursor-pointer">
+                                        <span class="inline-block w-6 h-6 bg-gray-200 rounded-full relative">
+                                            <span class="block w-3 h-3 bg-white rounded-full shadow-md absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-300 ease-in-out" id="eyeIcon"></span>
+                                        </span>
+                                    </label>
+                                    <span class="text-sm ml-2">Show Password</span>
+                                </div>
+
+                                <div class="d-flex align-items-sm-baseline justify-content-center mb-0">
+                                  <button id="registerButton" type="submit" class="btn btn-primary bg-blue-500 text-white px-4 py-2">
+                                    Register
+                                  </button>
+                                </div>
+
+                                <div id="registrationWarning" class="warning"></div>
+
+                            </form>
+
+                            <div style="margin-top: 15px;"></div>
+
+                            <div class="signin-link d-flex justify-content-center">
+                                <p>Already have an account? <a href="/signin">Sign In</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-            <div class="form-container">
-    <div id="signup-form">
-        <form action="/signup" method="post" id="signup">
-            {% csrf_token %}
-            <div class="form-outline mb-4">
-                <input type="text" id="fname" class="form-control form-control-lg" placeholder="Enter your First Name" name="fname" required/>
-                <label class="form-label" for="fname">First Name</label>
-                <div id="nameWarningSignUp" style="color: red;" class="warning"></div>
-              </div>
-              <div class="form-outline mb-4">
-                  <input type="text" id="lName" class="form-control form-control-lg" placeholder="Enter your Last Name" name="lname" required/>
-                  <label class="form-label" for="lName">Last Name</label>
-                  <div id="nameWarningSignUp" style="color: red;" class="warning"></div>
-              </div>
-              <div class="form-outline mb-4">
-                <input type="text" id="username" class="form-control form-control-lg" placeholder="Enter your Username" name="username" required/>
-                <label class="form-label" for="username">Username</label>
-                <div id="emailWarningSignUp" style="color: red;" class="warning"></div>
-              </div>
-              <div class="form-outline mb-4">
-                <input type="email" id="email" class="form-control form-control-lg" placeholder="Enter your Email" name="email" required/>
-                <label class="form-label" for="email">Email Address</label>
-                <div id="emailWarningSignUp" style="color: red;" class="warning"></div>
-              </div>
-              <div class="form-outline mb-3">
-                <input type="password" id="pass1" class="form-control form-control-lg" placeholder="Create a Password" name="pass1" required/>
-                <label class="form-label" for="pass1">Password</label>
-                <div id="passwordWarningSignUp" style="color: red;" class="warning"></div>
-              </div>
-
-              <div class="form-outline mb-3">
-                <input type="password" id="pass2" class="form-control form-control-lg" placeholder="Confirm Password" name="pass2" required/>
-                <label class="form-label" for="pass2">Confirm Password</label>
-                <div id="confirmPasswordWarningSignUp" style="color: red;" class="warning"></div>
-              </div>
-
-              <div class="text-center text-lg-start pt-2">
-                <button id="registerButton" type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Register</button>
-              </div>
-
-              <div id="registrationWarning" class="warning"></div>
-
-
-        </form>
-
-        <div class="signin-link">
-            <p>Already have an account? <a href="/signin">Sign In</a></p>
-        </div>
-
     </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</body>
-</html>
 
+    <script>
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      function validateEmail() {
+          var emailInput = document.getElementById('email');
+          var emailWarning = document.getElementById('emailWarningSignUp');
+
+          if (!emailPattern.test(emailInput.value)) {
+              emailWarning.textContent = 'Please enter a valid email address.';
+              return false;
+          } else {
+              emailWarning.textContent = '';
+              return true;
+          }
+      }
+      function validatePassword() {
+        var pass1 = document.getElementById('pass1').value;
+        var pass2 = document.getElementById('pass2').value;
+        var passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        var passwordWarning = document.getElementById('passwordWarningSignUp');
+        var confirmPasswordWarning = document.getElementById('confirmPasswordWarningSignUp');
+
+        if (pass1.length < 8 || !passwordRegex.test(pass1)) {
+            passwordWarning.textContent = 'Password must be at least 8 characters and contain at least one uppercase, one lowercase, one digit and one special.';
+            return false;
+        } else {
+            passwordWarning.textContent = '';
+        }
+        
+
+        if (pass1 !== pass2) {
+            confirmPasswordWarning.textContent = 'Passwords do not match.';
+            return false;
+        } else {
+            confirmPasswordWarning.textContent = '';
+        }
+
+        return true;
+    }
+
+      function clearEmailWarning() {
+          var emailWarning = document.getElementById('emailWarningSignUp');
+          emailWarning.textContent = '';
+      }
+
+      function togglePassword() {
+          var pass1 = document.getElementById('pass1');
+          var pass2 = document.getElementById('pass2');
+          var eyeIcon = document.getElementById('eyeIcon');
+
+          if (pass1.type === "password") {
+              pass1.type = "text";
+              pass2.type = "text";
+              eyeIcon.classList.add('opacity-0');
+          } else {
+              pass1.type = "password";
+              pass2.type = "password";
+              eyeIcon.classList.remove('opacity-0');
+          }
+      }
+      document.getElementById('signup').addEventListener('submit', function(event) {
+        if (!validatePassword()) {
+            event.preventDefault();
+
+      }
+    });
+    
+  </script>
+
+</head>
+
+</body>
+
+</html>

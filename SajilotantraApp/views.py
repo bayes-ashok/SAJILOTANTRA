@@ -88,9 +88,6 @@ def signin(request):
         if user is None:
             messages.info(request, "Incorrect login creadentials. Try again")
             return redirect('signin')
-        
-        if remember_me:
-                request.session.set_expiry(1209600)  # 2 weeks in seconds
 
         # Login successful
         login(request, user)
