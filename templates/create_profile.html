@@ -3,7 +3,7 @@ from .models import GovernmentProfile
 from .forms import GovernmentProfileForm
 
 def create_profile(request):
-    profile_id = 1  # Set an arbitrary profile ID for the dummy profile
+    profile_id = 1  
 
     try:
         profile = GovernmentProfile.objects.get(pk=profile_id)

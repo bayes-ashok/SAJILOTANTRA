@@ -1,0 +1,48 @@
+.typed {
+    font-weight: bold;
+  }
+  
+
+
+  
+  .form-outline {
+    position: relative;
+  }
+  
+  .form-control:focus+.form-label,
+  .form-control:not(:placeholder-shown)+.form-label {
+    top: -11px;
+    padding: 2px;
+    font-size: 12px;
+    color: #007BFF;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .form-label {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    background-color: white;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .form-control::placeholder {
+    opacity: 0;
+  }
+  
+  .form-control:focus::placeholder {
+    opacity: 1;
+    animation-delay: 0.4s;
+  }
+  
+  .warning {
+    color: red;
+    font-size: 12px;
+  }
+  
+  
+  
+  .modal-backdrop.static {
+    opacity: 0.5;
+    background-color: #000;
+  }
