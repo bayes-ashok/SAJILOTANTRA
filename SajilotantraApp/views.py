@@ -86,7 +86,7 @@ def signin(request):
 
         # Check if user exists
         if user is None:
-            messages.info(request, "Incorrect login creadentials. Try again")
+            messages.info(request, "Incorrect login credentials. Try again")
             return redirect('signin')
 
         # Login successful
