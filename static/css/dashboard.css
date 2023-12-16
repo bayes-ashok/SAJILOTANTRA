@@ -1,4 +1,4 @@
-/* header{
+header{
     position: fixed;
     top: 0;
     left: 0;
@@ -6,4 +6,4 @@
     z-index: 1000; /* Set a high z-index to ensure the navbar appears above other elements */
     background-color: #fff; /* Set your desired background color */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for a visual effect */
-} */
+}
