@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
@@ -44,7 +46,7 @@ def signup(request):
 
         myuser.save()
 
-        messages.success(request,"Your account has been successfully Created. We have sent you a confirmation email, please click on the activation link to activate your account.")
+        messages.success(request,"Your account has been successfully Created.  We have sent you a confirmation email, please click on the activation link to activate your account.")
 
         #Send Welcome Email
         subject="Welcome to Sajilotantra"
@@ -77,7 +79,24 @@ def signup(request):
     return render(request,"signup.html")
 
 def signin(request):
-    return render(request,"signin.html")
+    if request.method == 'POST':
+        username = request.POST['username']
+        pass1 = request.POST['pass1']
+        remember_me = request.POST.get('remember')
+        user = authenticate(request, username=username, password=pass1)
+        print(username, pass1)
+
+        # Check if user exists
+        if user is None:
+            messages.info(request, "Incorrect login credentials. Try again")
+            return redirect('signin')
+
+        # Login successful
+        login(request, user)
+        return redirect('dashboard')
+
+    form = AuthenticationForm()
+    return render(request, 'signin.html', {'form': form})
 
 # def playground(request):
 #     return render(request,"playground.html")
