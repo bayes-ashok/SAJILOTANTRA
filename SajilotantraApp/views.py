@@ -8,8 +8,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from SajilotantraApp.models import Event
-
+# from SajilotantraApp.models import Event
+from SajilotantraApp.models import Notification
 from Sajilotantra import settings
 
 from.forms import GovernmentProfileForm
@@ -164,3 +164,10 @@ def create_profile(request, profile_id=None):
             )
         form = GovernmentProfileForm(instance=profile)
     return render(request, 'create_profile.html', {'form': form})
+
+def dashboard(request):
+    notifications = Notification.objects.all()
+    return render(request, 'dashboard.html', {'notifications': notifications})
+
+
+
