@@ -1,8 +1,14 @@
 from django.contrib import admin
 
 from SajilotantraApp.models import User
-from .models import GovernmentProfile
+
+from .models import Guidance, Notification
+
 # Register your models here.
 
 admin.site.register(User)
-admin.site.register(GovernmentProfile)
+admin.site.register(Guidance)
+admin.site.register(Notification)
+from SajilotantraApp.models import User,Event
+
+admin.site.register(Event)
