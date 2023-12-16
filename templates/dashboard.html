@@ -16,163 +16,110 @@
 		<link rel="stylesheet" href="static\css\dashboard.css">
 		<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 </head>
-
-<body class="font-[Poppins] bg-[#EAF1F8]">
-    
-	<header class="bg-white">
-		<nav class="flex justify-between items-center w-[100%]  mx-auto">
-			<div>
-			  <a href="#">  <img style="width:17rem;" src="static\assets\LogoWhite.png" alt="..."></a>
-			</div>
-			<div class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
-				<ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
-					<li>
-						<a class="" href="#">
-							<div class="text-xl bg-red-800 text-white w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800">
-								<i class="fa-solid fa-house"></i>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a class="" href="#">
-							<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
-								<i class="fa-regular fa-calendar-days"></i>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a class="" href="#">
-							<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
-								<i class="fa-solid fa-people-group"></i>
-							</div>
-						</a>                   
-					 </li>
-					<li>
-						<a class="" href="#">
-							<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
-								<i class="fa-solid fa-map-location-dot"></i>                            </div>
-						</a>                   
-					</li>
-					<li>
-						<form class="flex items-center">
-							<label for="simple-search" class="sr-only">Search</label>
-							<div class="relative w-full">
-							  <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-								<svg aria-hidden="true" class="w-5 h-5 text-[#858EAD]" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-								  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-								</svg>
-							  </div>
-							  <input type="text" id="simple-search" class="block w-full p-2.5 pl-20 text-sm text-[#858EAD] rounded-lg bg-[#F4F6F8] border focus:ring-primary-100 focus:border-primary-100" placeholder="Type here to search..." required="">
-							</div>
-						  </form>
-	
-					</li>
-				</ul>
-			</div>  
-			<div class="flex items-center gap-6">
-				{% comment %} <button class="bg-[#043172] text-white px-5 py-2 rounded-full hover:bg-[#10223B]">Sign in</button> {% endcomment %}
-				
-				<button id="notificationButton" type="button" data-dropdown-toggle="notification-dropdown" class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-blue-800 hover:text-white dark:text-gray-400 dark:hover:text-white dark:hover:bg-blue-800 focus:ring-4 focus:ring-blue-800 dark:focus:ring-blue-800">
-					<span class="sr-only">View notifications</span>
-					<!-- Bell icon -->
-					<svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20"><path d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"/></svg>
-				</button>
-	
-				{% comment %} Notifications {% endcomment %}
-				 <!-- Dropdown menu -->
-				 
-	
-	
-	
-	
-				{% comment %} Profile Secion {% endcomment %}
-				<div id="profileContainer" class="flex items-center gap-3 cursor-pointer mx-2 rounded-full focus:ring-2 hover:ring-2 hover:ring-gray-600 focus:ring-gray-800 ">
-					<img class="w-10 h-10 rounded-full" src="https://placekitten.com/40/40" alt="Profile Picture">
-				</div>
-				<div id="profileDropdown"
-					class="hidden origin-top-right absolute right-2 top-14 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-					<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="profileContainer">
-						<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-							role="menuitem">Profile Settings</a>
-						<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-							role="menuitem">Logout</a>
-					</div>
-				</div>
-	
-				
-				
-	
-	
-				{% comment %} Hamburger {% endcomment %}
-				<ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
-			</div>
-	</header>
-	{% comment %} Notifications {% endcomment %}
-	<div class="hidden overflow-hidden absolute right-10 z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg" id="notification-dropdown">
-		<div class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50">
-			Notifications
-		</div>
+<body class="bg-blue-50">
+<header class="">
+	<nav class="fixed bg-white shadow flex justify-between items-center w-[100%]  mx-auto">
 		<div>
-		<a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
-			<div class="flex-shrink-0">
-			<img class="w-11 h-11 rounded-full" src="https://scontent.fbir7-1.fna.fbcdn.net/v/t39.30808-6/401139858_1055566672306633_6984792515935984599_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=HLNDQ-IEXB8AX9-e7Sf&_nc_oc=AQlYEi_rCVJIymDr-PTbvSYhni0LOElcybukqRao40MEZqc-M5BWVnLS8IwQkMkVXJU&_nc_ht=scontent.fbir7-1.fna&oh=00_AfD3QFpClxZFCUALxrqZ8QPBomQf2lALwrfGv-7HQBbznA&oe=657654A9" alt="Nikesh">
-			<div class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 rounded-full border border-white bg-primary-700">
-				<svg class="w-2 h-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18"><path d="M15.977.783A1 1 0 0 0 15 0H3a1 1 0 0 0-.977.783L.2 9h4.239a2.99 2.99 0 0 1 2.742 1.8 1.977 1.977 0 0 0 3.638 0A2.99 2.99 0 0 1 13.561 9H17.8L15.977.783ZM6 2h6a1 1 0 1 1 0 2H6a1 1 0 0 1 0-2Zm7 5H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Z"/><path d="M1 18h16a1 1 0 0 0 1-1v-6h-4.439a.99.99 0 0 0-.908.6 3.978 3.978 0 0 1-7.306 0 .99.99 0 0 0-.908-.6H0v6a1 1 0 0 0 1 1Z"/></svg>
+		<a href="#">  <img style="width:17rem;" src="static\assets\LogoWhite.png" alt="..."></a>
+		</div>
+		<div class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
+		<ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
+		<li>
+		<a class="" href="#">
+						<div class="text-xl bg-red-800 text-white w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800">
+							<i class="fa-solid fa-house"></i>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a class="" href="#">
+						<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+							<i class="fa-regular fa-calendar-days"></i>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a class="" href="#">
+						<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+							<i class="fa-solid fa-people-group"></i>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a class="" href="#">
+						<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+							<i class="fa-solid fa-map-location-dot"></i>                            </div>
+					</a>
+				</li>
+				<li>
+					<form class="flex items-center">
+						<label for="simple-search" class="sr-only">Search</label>
+						<div class="relative w-full">
+						<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+							<svg aria-hidden="true" class="w-5 h-5 text-[#858EAD]" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+							</svg>
+						</div>
+						<input type="text" id="simple-search" class="block w-full p-2.5 pl-20 text-sm text-[#858EAD] rounded-lg bg-[#F4F6F8] border focus:ring-primary-100 focus:border-primary-100" placeholder="Type here to search..." required="">
+						</div>
+					</form>
+
+				</li>
+			</ul>
+		</div>
+		<div class="flex items-center gap-6">
+			{% comment %} <button class="bg-[#043172] text-white px-5 py-2 rounded-full hover:bg-[#10223B]">Sign in</button> {% endcomment %}
+			
+			<button id="notificationButton" type="button" data-dropdown-toggle="notification-dropdown" class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-blue-800 hover:text-white dark:text-gray-400 dark:hover:text-white dark:hover:bg-blue-800 focus:ring-4 focus:ring-blue-800 dark:focus:ring-blue-800">
+				<span class="sr-only">View notifications</span>
+				<!-- Bell icon -->
+				<svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20"><path d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"/></svg>
+			</button>
+
+			{% comment %} Notifications {% endcomment %}
+			 <!-- Dropdown menu -->
+			{% comment %} Profile Secion {% endcomment %}
+			<div id="profileContainer" class="flex items-center gap-3 cursor-pointer mx-2 rounded-full focus:ring-2 hover:ring-2 hover:ring-gray-600 focus:ring-gray-800 ">
+				<img class="w-10 h-10 rounded-full" src="https://placekitten.com/40/40" alt="Profile Picture">
 			</div>
+			<div id="profileDropdown"
+				class="hidden origin-top-right absolute right-2 top-14 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+				<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="profileContainer">
+					<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+						role="menuitem">Profile Settings</a>
+					<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+						role="menuitem">Logout</a>
+				</div>
 			</div>
-			<div class="pl-3 w-full">
-				<div class="text-gray-500 font-normal text-sm mb-1.5">New message from <span class="font-semibold text-gray-900">Nikesh Bhandari</span>: "Dai, Tapai ko Passport ko issue kasari solve vayo?"</div>
-				<div class="text-xs font-medium text-primary-700">a few moments ago</div>
+			{% comment %} Hamburger {% endcomment %}
+			<ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
+		</div>
+</header>
+{% comment %} Notifications {% endcomment %}
+<div class="hidden overflow-hidden absolute right-10 z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg" id="notification-dropdown">
+	<div class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50">
+		Notifications
+	</div>
+	<div class="flex flex-col-reverse">
+		{% comment %} just like for loop {% endcomment %}
+		{% for notification in notifications %}
+	<a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
+		<div class="flex-shrink-0">
+		{% comment %} <img class="w-11 h-11 rounded-full" src="https://scontent.fbir7-1.fna.fbcdn.net/v/t39.30808-6/401139858_1055566672306633_6984792515935984599_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=HLNDQ-IEXB8AX9-e7Sf&_nc_oc=AQlYEi_rCVJIymDr-PTbvSYhni0LOElcybukqRao40MEZqc-M5BWVnLS8IwQkMkVXJU&_nc_ht=scontent.fbir7-1.fna&oh=00_AfD3QFpClxZFCUALxrqZ8QPBomQf2lALwrfGv-7HQBbznA&oe=657654A9" alt="Nikesh"> {% endcomment %}
+		<i class="fa-solid fa-bell" style="color: #e00b0b;"></i>
+		<div class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-primary-700">
+			{% comment %} <svg class="w-2 h-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18"><path d="M15.977.783A1 1 0 0 0 15 0H3a1 1 0 0 0-.977.783L.2 9h4.239a2.99 2.99 0 0 1 2.742 1.8 1.977 1.977 0 0 0 3.638 0A2.99 2.99 0 0 1 13.561 9H17.8L15.977.783ZM6 2h6a1 1 0 1 1 0 2H6a1 1 0 0 1 0-2Zm7 5H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Z"/><path d="M1 18h16a1 1 0 0 0 1-1v-6h-4.439a.99.99 0 0 0-.908.6 3.978 3.978 0 0 1-7.306 0 .99.99 0 0 0-.908-.6H0v6a1 1 0 0 0 1 1Z"/></svg> {% endcomment %}
+		</div>
+		</div> 
+		<div class="pl-3 w-full">
+			<div class="text-gray-500 font-normal text-sm mb-1.5"><span class="font-semibold text-gray-900">{{notification.notice_title}}</span>: {{notification.notice_description}}</div>
+			<div class="flex gap-5">
+			<div class="text-xs font-medium text-primary-700">{{notification.date_posted}}</div>
+			<div class="text-xs text-primary-500">{{notification.posted_by}}</div>
+			</div>
 			</div>
 		</a>
-		<a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
-			<div class="flex-shrink-0">
-			<img class="w-11 h-11 rounded-full" src="https://scontent.fbir7-1.fna.fbcdn.net/v/t39.30808-6/401139858_1055566672306633_6984792515935984599_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=HLNDQ-IEXB8AX9-e7Sf&_nc_oc=AQlYEi_rCVJIymDr-PTbvSYhni0LOElcybukqRao40MEZqc-M5BWVnLS8IwQkMkVXJU&_nc_ht=scontent.fbir7-1.fna&oh=00_AfD3QFpClxZFCUALxrqZ8QPBomQf2lALwrfGv-7HQBbznA&oe=657654A9" alt="Jese Leos avatar">
-			<div class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-gray-900 rounded-full border border-white">
-				<svg class="w-2 h-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18"><path d="M6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Zm11-3h-2V5a1 1 0 0 0-2 0v2h-2a1 1 0 1 0 0 2h2v2a1 1 0 0 0 2 0V9h2a1 1 0 1 0 0-2Z"/></svg>
-			</div>
-			</div>
-			<div class="pl-3 w-full">
-				<div class="text-gray-500 font-normal text-sm mb-1.5"><span class="font-semibold text-gray-900">Prabin Tiwari</span> and <span class="font-medium text-gray-900">5 others</span> started following you.</div>
-				<div class="text-xs font-medium text-primary-700">10 minutes ago</div>
-			</div>
-		</a>
-		<a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
-			<div class="flex-shrink-0">
-			<img class="w-11 h-11 rounded-full" src="https://scontent.fbir7-1.fna.fbcdn.net/v/t39.30808-6/401139858_1055566672306633_6984792515935984599_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=HLNDQ-IEXB8AX9-e7Sf&_nc_oc=AQlYEi_rCVJIymDr-PTbvSYhni0LOElcybukqRao40MEZqc-M5BWVnLS8IwQkMkVXJU&_nc_ht=scontent.fbir7-1.fna&oh=00_AfD3QFpClxZFCUALxrqZ8QPBomQf2lALwrfGv-7HQBbznA&oe=657654A9" alt="Joseph McFall avatar">
-			<div class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-red-600 rounded-full border border-white">
-			  <svg class="w-2 h-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18"> <path d="M17.947 2.053a5.209 5.209 0 0 0-3.793-1.53A6.414 6.414 0 0 0 10 2.311 6.482 6.482 0 0 0 5.824.5a5.2 5.2 0 0 0-3.8 1.521c-1.915 1.916-2.315 5.392.625 8.333l7 7a.5.5 0 0 0 .708 0l7-7a6.6 6.6 0 0 0 2.123-4.508 5.179 5.179 0 0 0-1.533-3.793Z"/> </svg>                      
-			</div>
-			</div>
-			<div class="pl-3 w-full">
-				<div class="text-gray-500 font-normal text-sm mb-1.5"><span class="font-semibold text-gray-900">Prajwal Pokhrel</span> and <span class="font-medium text-gray-900">141 others</span> liked your post.</div>
-				<div class="text-xs font-medium text-primary-700">44 minutes ago</div>
-			</div>
-		</a>
-		<a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
-			<div class="flex-shrink-0">
-			<img class="w-11 h-11 rounded-full" src="https://scontent.fbir7-1.fna.fbcdn.net/v/t39.30808-6/401139858_1055566672306633_6984792515935984599_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=HLNDQ-IEXB8AX9-e7Sf&_nc_oc=AQlYEi_rCVJIymDr-PTbvSYhni0LOElcybukqRao40MEZqc-M5BWVnLS8IwQkMkVXJU&_nc_ht=scontent.fbir7-1.fna&oh=00_AfD3QFpClxZFCUALxrqZ8QPBomQf2lALwrfGv-7HQBbznA&oe=657654A9" alt="Roberta Casas image">
-			<div class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-green-400 rounded-full border border-white">
-				<svg class="w-2 h-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18"><path d="M18 0H2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2v4a1 1 0 0 0 1.707.707L10.414 13H18a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5 4h2a1 1 0 1 1 0 2h-2a1 1 0 1 1 0-2ZM5 4h5a1 1 0 1 1 0 2H5a1 1 0 0 1 0-2Zm2 5H5a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Zm9 0h-6a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Z"/></svg>
-			</div>
-			</div>
-			<div class="pl-3 w-full">
-				<div class="text-gray-500 font-normal text-sm mb-1.5"><span class="font-semibold text-gray-900">Ashok Shah</span> replied to your comment: <span class="font-medium text-primary-700 dark:text-primary-500">@sandeshsapkota01</span> Maile pailai vanya change nagarum </div>
-				<div class="text-xs font-medium text-primary-700">1 hour ago</div>
-			</div>
-		</a>
-		<a href="#" class="flex py-3 px-4 hover:bg-gray-100">
-			<div class="flex-shrink-0">
-			<img class="w-11 h-11 rounded-full" src="https://scontent.fbir7-1.fna.fbcdn.net/v/t39.30808-6/401139858_1055566672306633_6984792515935984599_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=HLNDQ-IEXB8AX9-e7Sf&_nc_oc=AQlYEi_rCVJIymDr-PTbvSYhni0LOElcybukqRao40MEZqc-M5BWVnLS8IwQkMkVXJU&_nc_ht=scontent.fbir7-1.fna&oh=00_AfD3QFpClxZFCUALxrqZ8QPBomQf2lALwrfGv-7HQBbznA&oe=657654A9" alt="Robert image">
-			<div class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-purple-500 rounded-full border border-white">
-				<svg class="w-2 h-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14"><path d="M11 0H2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm8.585 1.189a.994.994 0 0 0-.9-.138l-2.965.983a1 1 0 0 0-.685.949v8a1 1 0 0 0 .675.946l2.965 1.02a1.013 1.013 0 0 0 1.032-.242A1 1 0 0 0 20 12V2a1 1 0 0 0-.415-.811Z"/></svg>
-			</div>
-			</div>
-			<div class="pl-3 w-full">
-				<div class="text-gray-500 font-normal text-sm mb-1.5 "><span class="font-semibold text-gray-900">DOTM Lalitpur</span> posted a new video: Glassmorphism - How to Apply Online</div>
-				<div class="text-xs font-medium text-primary-700 ">3 hours ago</div>
-			</div>
-		</a>
+		{% endfor %}
 		</div>
 		<a href="#" class="block py-2 text-base font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100">
 			<div class="inline-flex items-center ">
@@ -183,7 +130,7 @@
 	</div>
 	
 
-	<div class="flex">
+	<div class="flex bg-blue-50 mt-20">
 		<div class="w-1/4" style="margin-left: 50px;">
 			<div class="border bg-white rounded-2xl p-4 " style="margin-top: 20px;">
 				<div>
@@ -281,7 +228,6 @@
 			</a>
 			</div>
 
-
 		<!-- Content of public events -->
 			<div class="border  bg-white mt-6 rounded-2xl p-4 ">
 				<div>
@@ -376,7 +322,7 @@
 						
 								<!-- scroll area -->
 								<section class="h-full overflow-auto p-2 w-full h-full flex flex-col">
-									<header class="border-dashed border-2 border-green-200 rounded-md py-2 flex flex-col justify-center items-center" style="margin-bottom: 10px;">
+									<div class="border-dashed border-2 border-green-200 rounded-md py-2 flex flex-col justify-center items-center" style="margin-bottom: 10px;">
 									<p class="font-semibold text-gray-900 flex flex-wrap justify-center">
 										<span>Drag and drop</span>&nbsp;
 									</p>
@@ -387,7 +333,7 @@
 									<button id="button" class="mt-2 rounded-md px-3 py-1 bg-green-300 hover:bg-green-400 focus:shadow-outline focus:outline-none">
 										Browse
 									</button>
-									</header>
+								</div>
 									<ul id="gallery" class="flex flex-1 flex-wrap -m-2">
 									<li id="empty" class="h-full w-full text-center flex flex-col items-center justify-center items-center">
 										<img class="mx-auto w-32" src="static\assets\images\nofile.png" alt="no data"/>
