@@ -1,0 +1,26 @@
+from django.shortcuts import render, get_object_or_404
+from .models import GovernmentProfile
+from .forms import GovernmentProfileForm
+
+def create_profile(request):
+    profile_id = 1  
+
+    try:
+        profile = GovernmentProfile.objects.get(pk=profile_id)
+    except GovernmentProfile.DoesNotExist:
+        # Create a dummy profile if it doesn't exist
+        profile = GovernmentProfile.objects.create(
+            name="Dummy Profile",
+            thumbnail="dummy_thumbnail.jpg",
+            description="Dummy description",
+            address="123 Dummy Address"
+        )
+
+    if request.method == 'POST':
+        form = GovernmentProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+    else:
+        form = GovernmentProfileForm(instance=profile)
+
+    return render(request, 'create_profile.html', {'form': form})

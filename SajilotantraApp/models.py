@@ -13,7 +13,6 @@ class User(models.Model):
     def __str__(self):
         return self.user_id
 
-
 class GovernmentProfile(models.Model):
     name= models.CharField(max_length=100)
     thumbnail = models.ImageField(upload_to='thumbnails/')
@@ -23,16 +22,6 @@ class GovernmentProfile(models.Model):
     def __str__(self):
         return self.name
     
-    
-class Guidance(models.Model):
-    title = models.CharField(max_length=200)
-    description = RichTextField() 
-    thumbnail = models.ImageField(upload_to='thumbnails/')
-    category = models.CharField(max_length=100)
-    
-    def __str__(self):
-        return self.title
-
 class Notification(models.Model):
     notice_id=models.AutoField(primary_key=True)
     notice_title=models.CharField(max_length=500)
@@ -42,14 +31,3 @@ class Notification(models.Model):
 
     def __str__(self):
         return self.notice_title
-
-    
-class Event(models.Model):
-    id=models.AutoField(primary_key=True)
-    name=models.CharField(max_length=255,null=True,blank=True)
-    description = models.TextField()
-    start=models.DateTimeField(null=True,blank=True)
-    end=models.DateTimeField(null=True,blank=True)
-    
-    def __str__(self):
-        return self.title
