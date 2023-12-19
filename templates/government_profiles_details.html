@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    
+
     <title>{{ GovernmentProfile.name }}</title>
 
   </head>
@@ -12,6 +12,8 @@
       <h2 class="title">{{ GovernmentProfile.name }}</h2>
 
       <div class="content">{{ GovernmentProfile.description|safe }}</div>
+
+      <div class="content">{{ GovernmentProfile.address|safe }}</div>
 
       <img src="{{ GovernmentProfile.thumbnail.url }}" alt="Your Name" width="30" height="30" style="border-radius: 50%; vertical-align: middle;" />
 
