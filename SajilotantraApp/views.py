@@ -12,7 +12,7 @@ from SajilotantraApp.models import Event
 
 from Sajilotantra import settings
 
-from .models import Notification
+from .models import Notification, Guidance
 from .tokens import generate_token
 
 
@@ -124,7 +124,10 @@ def activate(request,uidb64,token):#activate user account if the confirmation li
 
 def dashboard(request):
     notifications = Notification.objects.all()
-    return render(request, 'dashboard.html', {'notifications': notifications}) 
+    guidance = Guidance.objects.all().order_by('-pk')
+    return render(request, 'dashboard.html', {'notifications': notifications , 'guidance': guidance})
+
+  
 # events calendar
 def events(request):
     return render(request,'events.html')

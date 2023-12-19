@@ -132,27 +132,33 @@
 
 	<div class="flex bg-blue-50 mt-20">
 		<div class="w-1/4" style="margin-left: 50px;">
-			<div class="border bg-white rounded-2xl p-4 " style="margin-top: 20px;">
+
+			<!--Guidance Sections-->
+			<div class="border bg-white rounded-2xl p-4" style="margin-top: 20px;">
 				<div>
 					<b id="name" class="mb-2 capitalize">Detailed Guide for Government Offices</b>
-			
 				</div>
-				{% comment %} Individual Card {% endcomment %}
+				{% for guidance_item in guidance %}
 				<a href="#">
-				<div class="flex items-center mt-2 gap-4 cursor-pointer hover:bg-gray-300 rounded-md">
-					<img src="/static/Image/license.svg" alt="Image" class="w-20 h-20 object-cover " style="margin-top: 5px;">
-					<div>
-					  <p class="text-xs" style="margin-bottom: -5px;">
-						<span style="font-size: larger;">Detailed Guide Applying for Driver’s License </span>
-						
-					  </p>
-					  <p class="mt-2 text-gray-700 text-xs">
-						<span style="font-size: smaller;">Department of Transportation Management</span>
-					  </p>
+					<div class="flex items-center mt-2 gap-4 cursor-pointer hover:bg-gray-300 rounded-md">
+						<div class="w-20 h-20 overflow-hidden rounded-full">
+							<img src="{{ guidance_item.thumbnail.url }}" alt="Image" class="w-full h-full object-cover" style="margin-top: 5px;">
+						</div>
+						<div>
+							<p class="text-xs" style="margin-bottom: -5px;">
+								<span style="font-size: larger;">{{ guidance_item.title }}</span>
+							</p>
+							<p class="mt-2 text-gray-700 text-xs">
+								<span style="font-size: smaller;">{{ guidance_item.category }}</span>
+							</p>
+						</div>
 					</div>
-				</div>
-			</a>
-				  {% comment %} Individual Card End {% endcomment %}
+				</a>
+				{% endfor %}
+			</div>
+			
+			
+				  <!-- {% comment %} Individual Card End {% endcomment %}
 				<a href="#">
 				<div class="flex items-center mt-2 gap-4 cursor-pointer hover:bg-gray-300 rounded-md ">
 					<img src="/static/Image/OCR.svg" alt="Image" class="w-20 h-20 object-cover " style="margin-top: 5px;">
@@ -225,8 +231,8 @@
 					  </p>
 					</div>
 				</div>
-			</a>
-			</div>
+			</a> -->
+		
 
 		<!-- Content of public events -->
 			<div class="border  bg-white mt-6 rounded-2xl p-4 ">
