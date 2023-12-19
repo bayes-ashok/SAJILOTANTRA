@@ -1,15 +1,19 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-
+# from SajilotantraApp.models import Event
+from SajilotantraApp.models import Notification
 from Sajilotantra import settings
 
-from .models import Notification
+from.forms import GovernmentProfileForm
+from SajilotantraApp.models import GovernmentProfile
 from .tokens import generate_token
 
 
@@ -43,7 +47,7 @@ def signup(request):
 
         myuser.save()
 
-        messages.success(request,"Your account has been successfully Created. We have sent you a confirmation email, please click on the activation link to activate your account.")
+        messages.success(request,"Your account has been successfully Created.  We have sent you a confirmation email, please click on the activation link to activate your account.")
 
         #Send Welcome Email
         subject="Welcome to Sajilotantra"
@@ -76,7 +80,24 @@ def signup(request):
     return render(request,"signup.html")
 
 def signin(request):
-    return render(request,"signin.html")
+    if request.method == 'POST':
+        username = request.POST['username']
+        pass1 = request.POST['pass1']
+        remember_me = request.POST.get('remember')
+        user = authenticate(request, username=username, password=pass1)
+        print(username, pass1)
+
+        # Check if user exists
+        if user is None:
+            messages.info(request, "Incorrect login credentials. Try again")
+            return redirect('signin')
+
+        # Login successful
+        login(request, user)
+        return redirect('dashboard')
+
+    form = AuthenticationForm()
+    return render(request, 'signin.html', {'form': form})
 
 # def playground(request):
 #     return render(request,"playground.html")
@@ -102,6 +123,51 @@ def activate(request,uidb64,token):#activate user account if the confirmation li
         return render(request,'activation_failed.html')
     
 
+def create_profile(request):
+    if request.method == 'POST':
+        form = GovernmentProfile(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+    else:
+        form = GovernmentProfileForm()
+    return render(request, 'create_profile.html', {'form': form})
+
+def create_profile(request, profile_id):
+    profile = get_object_or_404(GovernmentProfile, pk=profile_id)
+    if request.method == 'POST':
+        form = GovernmentProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+    else:
+        form = GovernmentProfileForm(instance=profile)
+    return render(request, 'create_profile.html', {'form': form})
+
+
+
+def create_profile(request, profile_id=None):
+    if profile_id:  
+        profile = get_object_or_404(GovernmentProfile, pk=profile_id)
+    else:
+        profile = None  
+    if request.method == 'POST':
+        form = GovernmentProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('index')  
+    else:
+        if not profile:  # Check if the profile doesn't exist
+            profile = GovernmentProfile.objects.create(
+                name="Dummy Profile",
+                thumbnail="dummy_thumbnail.jpg",  
+                description="Dummy description",
+                address="123 Dummy Address"
+            )
+        form = GovernmentProfileForm(instance=profile)
+    return render(request, 'create_profile.html', {'form': form})
+
 def dashboard(request):
     notifications = Notification.objects.all()
-    return render(request, 'dashboard.html', {'notifications': notifications}) 
+    return render(request, 'dashboard.html', {'notifications': notifications})
+
+
+
