@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
@@ -108,4 +109,21 @@ def dashboard(request):
     return render(request, 'dashboard.html', {'notifications': notifications}) 
 # events calendar
 def events(request):
-    return render(request,'events.html')
+    all_events = Event.objects.all()
+    context = {
+        "events":all_events,
+    }
+    return render(request,'events.html',context)
+
+def all_events(request):                                                                                                 
+    all_events = Event.objects.all()                                                                                    
+    out = []                                                                                                             
+    for event in all_events:                                                                                             
+        out.append({                                                                                                     
+            'title': event.name,                                                                                         
+            'id': event.id,                                                                                              
+            'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),                                                         
+            'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),                                                             
+        })                                                                                                               
+                                                                                                                      
+    return JsonResponse(out, safe=False) 

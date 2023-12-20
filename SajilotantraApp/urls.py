@@ -10,5 +10,6 @@ urlpatterns = [
     path('events', views.events,name='events'),
     # path('play', views.playground,name='playground'),
     path('dashboard', views.dashboard,name='dashboard'),
-    path("activate<uidb64>/<token>",views.activate,name="activate")
+    path("activate<uidb64>/<token>",views.activate,name="activate"),
+    path('all_events/', views.all_events, name='all_events'), 
 ]
