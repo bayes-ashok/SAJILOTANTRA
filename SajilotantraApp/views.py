@@ -8,9 +8,10 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-# from SajilotantraApp.models import Event
-from SajilotantraApp.models import Notification
+from SajilotantraApp.models import Event
+
 from Sajilotantra import settings
+from SajilotantraApp.models import Event, GovernmentProfile
 
 from.forms import GovernmentProfileForm
 from SajilotantraApp.models import GovernmentProfile
@@ -171,3 +172,15 @@ def dashboard(request):
 
 
 
+
+#government profiles
+def government_profiles(request):
+    profiles=GovernmentProfile.objects.all().order_by('-pk')
+    data={
+        'profiles':profiles
+    }
+    return render(request, 'government_profiles.html',data)
+
+def government_profiles_details(request,pk):
+    profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
+    return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
