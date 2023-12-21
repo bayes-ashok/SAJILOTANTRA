@@ -133,32 +133,41 @@
 	<div class="flex bg-blue-50 mt-20">
 		<div class="w-1/4" style="margin-left: 50px;">
 
-			<!--Guidance Sections-->
+			<!--guidance Sections-->
 			<div class="border bg-white rounded-2xl p-4" style="margin-top: 20px;">
 				<div>
 					<b id="name" class="mb-2 capitalize">Detailed Guide for Government Offices</b>
 				</div>
-				{% for guidance_item in guidance %}
+				{% for item in guidance_items %}
 				<a href="#">
 					<div class="flex items-center mt-2 gap-4 cursor-pointer hover:bg-gray-300 rounded-md">
-						<div class="w-20 h-20 overflow-hidden rounded-full">
-							<img src="{{ guidance_item.thumbnail.url }}" alt="Image" class="w-full h-full object-cover" style="margin-top: 5px;">
-						</div>
+							<img src="{{ item.thumbnail.url }}" alt="Image" class="w-20 h-20 object-cover rounded-md" style="margin-top: 5px;">
+						
 						<div>
 							<p class="text-xs" style="margin-bottom: -5px;">
-								<span style="font-size: larger;">{{ guidance_item.title }}</span>
+								<span style="font-size: larger;">{{ item.title }}</span>
 							</p>
 							<p class="mt-2 text-gray-700 text-xs">
-								<span style="font-size: smaller;">{{ guidance_item.category }}</span>
+								<span style="font-size: smaller;">{{ item.category }}</span>
 							</p>
 						</div>
 					</div>
 				</a>
 				{% endfor %}
+				<a href="#" class="block py-2 text-base font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100">
+					<div class="inline-flex items-center ">
+					<svg aria-hidden="true" class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
+					View all
+					</div>
+				</a>
+				
 			</div>
 			
-			
-				  <!-- {% comment %} Individual Card End {% endcomment %}
+<!-- 			
+			<div class="border bg-white rounded-2xl p-4" style="margin-top: 20px;">
+				<div>
+					<b id="name" class="mb-2 capitalize">Detailed Guide for Government Offices</b>
+				</div>
 				<a href="#">
 				<div class="flex items-center mt-2 gap-4 cursor-pointer hover:bg-gray-300 rounded-md ">
 					<img src="/static/Image/OCR.svg" alt="Image" class="w-20 h-20 object-cover " style="margin-top: 5px;">
@@ -172,9 +181,10 @@
 					  </p>
 					</div>
 				</div>
-			</a>
+			</a> 
+			</div> -->
 
-			<a href="#">
+			<!-- <a href="#">
 				<div class="flex items-center mt-2 gap-4 cursor-pointer hover:bg-gray-300 rounded-md">
 					<img src="/static/Image/NOC.svg" alt="Image" class="w-20 h-20 object-cover " style="margin-top: 5px;">
 					<div>
@@ -231,7 +241,7 @@
 					  </p>
 					</div>
 				</div>
-			</a> -->
+			</a> --> 
 		
 
 		<!-- Content of public events -->
