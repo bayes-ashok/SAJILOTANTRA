@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-
     <title>{{ GovernmentProfile.name }}</title>
-
+    <!-- Include Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   </head>
 
   <body>
@@ -17,6 +17,29 @@
 
       <img src="{{ GovernmentProfile.thumbnail.url }}" alt="Your Name" width="30" height="30" style="border-radius: 50%; vertical-align: middle;" />
 
+      <div id="map" style="height: 400px; width: 500px;"></div>
+
+      <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+      <script>
+          var address = "{{ GovernmentProfile.address }}";
+          var coordinates = extractCoordinatesFromAddress(address);
+
+          function extractCoordinatesFromAddress(address) {
+              var coords = address.split(',');
+              return [parseFloat(coords[0]), parseFloat(coords[1])];
+          }
+
+          var map = L.map('map').setView(coordinates, 13);
+
+          L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          }).addTo(map);
+
+          L.marker(coordinates).addTo(map)
+              .bindPopup('{{ GovernmentProfile.name }}')
+              .openPopup();
+      </script>
 
   </body>
 </html>
