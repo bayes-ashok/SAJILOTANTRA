@@ -121,6 +121,19 @@ def all_events(request):
     for event in all_events:                                                                                             
         out.append({                                                                                                     
             'title': event.name,                                                                                         
+            'id': event.id,    
+            'description': event.description,                                                                                          
+            'start': event.start.isoformat(),  # Use isoformat() here                                                       
+            'end': event.end.isoformat(),      # Use isoformat() here                                                       
+        })                                                                                                               
+                                                                                                                      
+    return JsonResponse(out, safe=False)
+                                                                                              
+    all_events = Event.objects.all()                                                                                    
+    out = []                                                                                                             
+    for event in all_events:                                                                                             
+        out.append({                                                                                                     
+            'title': event.name,                                                                                         
             'id': event.id,                                                                                              
             'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),                                                         
             'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),                                                             
