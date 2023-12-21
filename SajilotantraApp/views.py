@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
@@ -98,11 +98,6 @@ def signin(request):
     form = AuthenticationForm()
     return render(request, 'signin.html', {'form': form})
 
-# def playground(request):
-#     return render(request,"playground.html")
-
-# def dashboard(request):
-#     return render(request,"dashboard.html")
 
 def activate(request,uidb64,token):#activate user account if the confirmation link is clicked
     try:
@@ -122,12 +117,27 @@ def activate(request,uidb64,token):#activate user account if the confirmation li
         return render(request,'activation_failed.html')
     
 
-def dashboard(request):
-    notifications = Notification.objects.all()
-    guidance = Guidance.objects.all().order_by('-pk')
-    return render(request, 'dashboard.html', {'notifications': notifications , 'guidance': guidance})
 
-  
+
+     
 # events calendar
 def events(request):
     return render(request,'events.html')
+
+
+
+def dashboard(request):
+    notifications = Notification.objects.all()
+    guidance = Guidance.objects.all().order_by('-pk')
+    
+    context = {
+        'notifications': notifications,
+        'guidance_items': guidance[:6],  # Fetching the first 6 guidance items
+    }
+
+    return render(request, 'dashboard.html', context)
+
+
+def guide_steps(request, pk, category):
+    guidance = get_object_or_404(Guidance, id=pk, category=category)
+    return render(request, 'guidelines_details.html',{'guidance':guidance})
