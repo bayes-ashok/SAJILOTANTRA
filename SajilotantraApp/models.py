@@ -53,4 +53,4 @@ class Event(models.Model):
     end=models.DateTimeField(null=True,blank=True)
     
     def __str__(self):
-        return self.title
+        return self.name
