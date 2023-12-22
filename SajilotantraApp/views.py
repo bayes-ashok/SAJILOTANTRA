@@ -1,15 +1,18 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from SajilotantraApp.models import Event
 
 from Sajilotantra import settings
+from SajilotantraApp.models import Event, GovernmentProfile
 
 from .models import Notification
 from .tokens import generate_token
@@ -45,7 +48,7 @@ def signup(request):
 
         myuser.save()
 
-        messages.success(request,"Your account has been successfully Created. We have sent you a confirmation email, please click on the activation link to activate your account.")
+        messages.success(request,"Your account has been successfully Created.  We have sent you a confirmation email, please click on the activation link to activate your account.")
 
         #Send Welcome Email
         subject="Welcome to Sajilotantra"
@@ -78,7 +81,24 @@ def signup(request):
     return render(request,"signup.html")
 
 def signin(request):
-    return render(request,"signin.html")
+    if request.method == 'POST':
+        username = request.POST['username']
+        pass1 = request.POST['pass1']
+        remember_me = request.POST.get('remember')
+        user = authenticate(request, username=username, password=pass1)
+        print(username, pass1)
+
+        # Check if user exists
+        if user is None:
+            messages.info(request, "Incorrect login credentials. Try again")
+            return redirect('signin')
+
+        # Login successful
+        login(request, user)
+        return redirect('dashboard')
+
+    form = AuthenticationForm()
+    return render(request, 'signin.html', {'form': form})
 
 # def playground(request):
 #     return render(request,"playground.html")
@@ -140,3 +160,16 @@ def all_events(request):
         })                                                                                                               
                                                                                                                       
     return JsonResponse(out, safe=False) 
+    return render(request,'events.html')
+
+#government profiles
+def government_profiles(request):
+    profiles=GovernmentProfile.objects.all().order_by('-pk')
+    data={
+        'profiles':profiles
+    }
+    return render(request, 'government_profiles.html',data)
+
+def government_profiles_details(request,pk):
+    profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
+    return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
