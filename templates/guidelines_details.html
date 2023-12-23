@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdn.tailwindcss.com"></script>
+		<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script src="https://kit.fontawesome.com/c30dadd52a.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"  rel="stylesheet" />
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+		<link rel="stylesheet" href="static\css\dashboard.css">
+  </head>
+  <body>
+    <header class="">
+      <nav class="fixed bg-white shadow flex justify-between items-center w-[100%]  mx-auto">
+        <div>
+        <a href="/dashboard#">  <img style="width:17rem;" src="static\assets\LogoWhite.png" alt="..."></a>
+        </div>
+        <div class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
+        <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
+        <li>
+        <a class="" href="/dashboard#">
+                <div class="text-xl bg-red-800 text-white w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800">
+                  <i class="fa-solid fa-house"></i>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="" href="https://udhyam.tech/">
+                <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+                  <i class="fa-regular fa-calendar-days"></i>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="" href="#">
+                <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+                  <i class="fa-solid fa-people-group"></i>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="" href="#">
+                <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+                  <i class="fa-solid fa-map-location-dot"></i>                            </div>
+              </a>
+            </li>
+            <li>
+              <form class="flex items-center">
+                <label for="simple-search" class="sr-only">Search</label>
+                <div class="relative w-full">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <svg aria-hidden="true" class="w-5 h-5 text-[#858EAD]" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <input type="text" id="simple-search" class="block w-full p-2.5 pl-20 text-sm text-[#858EAD] rounded-lg bg-[#F4F6F8] border focus:ring-primary-100 focus:border-primary-100" placeholder="Type here to search..." required="">
+                </div>
+              </form>
+    
+            </li>
+          </ul>
+        </div>
+        <div class="flex items-center gap-6">
+          {% comment %} <button class="bg-[#043172] text-white px-5 py-2 rounded-full hover:bg-[#10223B]">Sign in</button> {% endcomment %}
+          
+          <button id="notificationButton" type="button" data-dropdown-toggle="notification-dropdown" class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-blue-800 hover:text-white dark:text-gray-400 dark:hover:text-white dark:hover:bg-blue-800 focus:ring-4 focus:ring-blue-800 dark:focus:ring-blue-800">
+            <span class="sr-only">View notifications</span>
+            <!-- Bell icon -->
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20"><path d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"/></svg>
+          </button>
+    
+          {% comment %} Notifications {% endcomment %}
+           <!-- Dropdown menu -->
+          {% comment %} Profile Secion {% endcomment %}
+          <div id="profileContainer" class="flex items-center gap-3 cursor-pointer mx-2 rounded-full focus:ring-2 hover:ring-2 hover:ring-gray-600 focus:ring-gray-800 ">
+            <img class="w-10 h-10 rounded-full" src="https://placekitten.com/40/40" alt="Profile Picture">
+          </div>
+          <div id="profileDropdown"
+            class="hidden origin-top-right absolute right-2 top-14 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="profileContainer">
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                role="menuitem">Profile Settings</a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                role="menuitem">Logout</a>
+            </div>
+          </div>
+          {% comment %} Hamburger {% endcomment %}
+          <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
+        </div>
+    </header><header class="">
+      <nav class="fixed bg-white shadow flex justify-between items-center w-[100%]  mx-auto">
+        <div>
+        <a href="#">  <img style="width:17rem;" src="static\assets\LogoWhite.png" alt="..."></a>
+        </div>
+        <div class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
+        <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
+        <li>
+        <a class="" href="#">
+                <div class="text-xl bg-red-800 text-white w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800">
+                  <i class="fa-solid fa-house"></i>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="" href="#">
+                <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+                  <i class="fa-regular fa-calendar-days"></i>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="" href="#">
+                <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+                  <i class="fa-solid fa-people-group"></i>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="" href="#">
+                <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+                  <i class="fa-solid fa-map-location-dot"></i>                            </div>
+              </a>
+            </li>
+            <li>
+              <form class="flex items-center">
+                <label for="simple-search" class="sr-only">Search</label>
+                <div class="relative w-full">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <svg aria-hidden="true" class="w-5 h-5 text-[#858EAD]" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <input type="text" id="simple-search" class="block w-full p-2.5 pl-20 text-sm text-[#858EAD] rounded-lg bg-[#F4F6F8] border focus:ring-primary-100 focus:border-primary-100" placeholder="Type here to search..." required="">
+                </div>
+              </form>
+    
+            </li>
+          </ul>
+        </div>
+        <div class="flex items-center gap-6">
+          {% comment %} <button class="bg-[#043172] text-white px-5 py-2 rounded-full hover:bg-[#10223B]">Sign in</button> {% endcomment %}
+          
+          <button id="notificationButton" type="button" data-dropdown-toggle="notification-dropdown" class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-blue-800 hover:text-white dark:text-gray-400 dark:hover:text-white dark:hover:bg-blue-800 focus:ring-4 focus:ring-blue-800 dark:focus:ring-blue-800">
+            <span class="sr-only">View notifications</span>
+            <!-- Bell icon -->
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20"><path d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"/></svg>
+          </button>
+    
+          {% comment %} Notifications {% endcomment %}
+           <!-- Dropdown menu -->
+          {% comment %} Profile Secion {% endcomment %}
+          <div id="profileContainer" class="flex items-center gap-3 cursor-pointer mx-2 rounded-full focus:ring-2 hover:ring-2 hover:ring-gray-600 focus:ring-gray-800 ">
+            <img class="w-10 h-10 rounded-full" src="https://placekitten.com/40/40" alt="Profile Picture">
+          </div>
+          <div id="profileDropdown"
+            class="hidden origin-top-right absolute right-2 top-14 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="profileContainer">
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                role="menuitem">Profile Settings</a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                role="menuitem">Logout</a>
+            </div>
+          </div>
+          {% comment %} Hamburger {% endcomment %}
+          <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
+        </div>
+    </header>
+{% comment %} Hidden Notifications {% endcomment %}
+<div class=" overflow-hidden absolute right-10 z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg" id="notification-dropdown">
+	<div class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50">
+		Notifications
+	</div>
+	<div class="flex flex-col-reverse">
+		{% comment %} just like for loop {% endcomment %}
+		{% for notification in notifications %}
+	<a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
+		<div class="flex-shrink-0">
+		{% comment %} <img class="w-11 h-11 rounded-full" src="https://scontent.fbir7-1.fna.fbcdn.net/v/t39.30808-6/401139858_1055566672306633_6984792515935984599_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=HLNDQ-IEXB8AX9-e7Sf&_nc_oc=AQlYEi_rCVJIymDr-PTbvSYhni0LOElcybukqRao40MEZqc-M5BWVnLS8IwQkMkVXJU&_nc_ht=scontent.fbir7-1.fna&oh=00_AfD3QFpClxZFCUALxrqZ8QPBomQf2lALwrfGv-7HQBbznA&oe=657654A9" alt="Nikesh"> {% endcomment %}
+		<i class="fa-solid fa-bell" style="color: #e00b0b;"></i>
+		<div class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-primary-700">
+			{% comment %} <svg class="w-2 h-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18"><path d="M15.977.783A1 1 0 0 0 15 0H3a1 1 0 0 0-.977.783L.2 9h4.239a2.99 2.99 0 0 1 2.742 1.8 1.977 1.977 0 0 0 3.638 0A2.99 2.99 0 0 1 13.561 9H17.8L15.977.783ZM6 2h6a1 1 0 1 1 0 2H6a1 1 0 0 1 0-2Zm7 5H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Z"/><path d="M1 18h16a1 1 0 0 0 1-1v-6h-4.439a.99.99 0 0 0-.908.6 3.978 3.978 0 0 1-7.306 0 .99.99 0 0 0-.908-.6H0v6a1 1 0 0 0 1 1Z"/></svg> {% endcomment %}
+		</div>
+		</div> 
+		<div class="pl-3 w-full">
+			<div class="text-gray-500 font-normal text-sm mb-1.5"><span class="font-semibold text-gray-900">{{notification.notice_title}}</span>: {{notification.notice_description}}</div>
+			<div class="flex gap-5">
+			<div class="text-xs font-medium text-primary-700">{{notification.date_posted}}</div>
+			<div class="text-xs text-primary-500">{{notification.posted_by}}</div>
+			</div>
+			</div>
+		</a>
+		{% endfor %}
+		</div>
+		<a href="#" class="block py-2 text-base mt-2 font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-200">
+			<div class="inline-flex items-center ">
+			<svg aria-hidden="true" class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
+			View all
+			</div>
+		</a>
+	</div>
+
+    {% comment %} Cards {% endcomment %}
+    <section id="blog" class="blog min-h-screen mt-12 items-center justify-center" style="padding-top: 30px;">
+      <h1 class="text-4xl font-bold ml-10">Document Guides</h1>
+      <div class="container" data-aos="fade-up">
+        <div class="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-10 items-center justify-center lg:p-10 ml-2 md:ml-20">
+          {% for det in details %}
+<div class="max-w-sm bg-white hover:shadow-indigo-500/60 border border-gray-200 rounded-lg shadow">
+  <a href="/guide/{{det.id}}">
+      <img class="rounded-t-lg w-full h-40 object-cover" src="{{ det.thumbnail.url }}" alt="" />
+  </a>
+  <div class="p-5">
+      <a href="/guide/{{det.id}}">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{det.title}}</h5>
+      </a>
+      <p class="mb-3 font-normal text-gray-700 ">{{ det.description|truncatewords:10|safe }}</p>
+      <a href="/guide/{{det.id}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+          View
+           <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+          </svg>
+      </a>
+  </div>
+</div>
+
+
+
+            {% comment %} <div class="flex items-stretch">
+              <article class="post-container bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="post-img">
+                  <div class="image-container">
+                    <img src="{{ det.thumbnail.url }}" alt="" class="img-fluid post-image" />
+                  </div>
+                </div>
+                <div class="post-content p-4">
+                  <h3 class="post-title text-sm font-semibold mb-2">{{ det.title }}</h3>
+                  <h4 class="post-category text-sm font-semibold mb-2">{{ det.category }}</h4>
+                  <p class="post-description text-sm">{{ det.description|truncatewords:10 }}</p>
+                </div>
+              </article>
+            </div> {% endcomment %}
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    
+  <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    <script src="static/javascript/dashboard.js"></script>
+  </script>
+  </body>

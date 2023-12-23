@@ -26,6 +26,7 @@ class GovernmentProfile(models.Model):
     
     
 class Guidance(models.Model):
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
     description = RichTextField() 
     thumbnail = models.ImageField(upload_to='static/thumbnails/')
@@ -53,4 +54,4 @@ class Event(models.Model):
     end=models.DateTimeField(null=True,blank=True)
     
     def __str__(self):
-        return self.title
+        return self.name
