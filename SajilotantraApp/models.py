@@ -15,6 +15,7 @@ class User(models.Model):
 
 
 class GovernmentProfile(models.Model):
+    profile_id=models.AutoField(primary_key=True, default=0)
     name= models.CharField(max_length=100)
     thumbnail = models.ImageField(upload_to='static/thumbnails/')
     description = models.TextField()
@@ -53,4 +54,8 @@ class Event(models.Model):
     end=models.DateTimeField(null=True,blank=True)
     
     def __str__(self):
+<<<<<<< HEAD
         return self.name
+=======
+        return self.title
+>>>>>>> c1c126ae5ef0f62a5c3523fa891ae4712722c9be

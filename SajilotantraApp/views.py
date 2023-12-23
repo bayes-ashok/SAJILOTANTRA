@@ -11,8 +11,9 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from SajilotantraApp.models import Event
 
 from Sajilotantra import settings
+from SajilotantraApp.models import Event, GovernmentProfile
 
-from .models import Notification, Guidance
+from .models import Notification
 from .tokens import generate_token
 
 
@@ -117,13 +118,66 @@ def activate(request,uidb64,token):#activate user account if the confirmation li
         return render(request,'activation_failed.html')
     
 
+def create_profile(request):
+    if request.method == 'POST':
+        form = GovernmentProfile(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+    else:
+        form = GovernmentProfileForm()
+    return render(request, 'create_profile.html', {'form': form})
+
+def create_profile(request, profile_id):
+    profile = get_object_or_404(GovernmentProfile, pk=profile_id)
+    if request.method == 'POST':
+        form = GovernmentProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+    else:
+        form = GovernmentProfileForm(instance=profile)
+    return render(request, 'create_profile.html', {'form': form})
 
 
-     
-# events calendar
-def events(request):
-    return render(request,'events.html')
 
+def create_profile(request, profile_id=None):
+    if profile_id:  
+        profile = get_object_or_404(GovernmentProfile, pk=profile_id)
+    else:
+        profile = None  
+    if request.method == 'POST':
+        form = GovernmentProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('index')  
+    else:
+        if not profile:  # Check if the profile doesn't exist
+            profile = GovernmentProfile.objects.create(
+                name="Dummy Profile",
+                thumbnail="dummy_thumbnail.jpg",  
+                description="Dummy description",
+                address="123 Dummy Address"
+            )
+        form = GovernmentProfileForm(instance=profile)
+    return render(request, 'create_profile.html', {'form': form})
+
+
+
+    
+
+
+
+
+#government profiles
+def government_profiles(request):
+    profiles=GovernmentProfile.objects.all().order_by('-pk')
+    data={
+        'profiles':profiles
+    }
+    return render(request, 'government_profiles.html',data)
+
+def government_profiles_details(request,pk):
+    profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
+    return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
 
 
 def dashboard(request):
