@@ -144,9 +144,14 @@ def card(request):
     }
     return render(request, 'guidelines_details.html',context)
 
-def guide_steps(request, pk, category):
-    print(f"Guide steps function called with pk={pk} and category={category}")
-    guidance = get_object_or_404(Guidance, id=pk, category=category)
-    print(f"Guidance object retrieved: {guidance}")
-    return render(request, 'guide_steps.html', {'guidance': guidance})
+def guide_blog(request,pk):
+    # print(f"Guide steps function called with pk={pk} and category={category}")
+    # guidance = get_object_or_404(Guidance, id=pk, category=category)
+    # print(f"Guidance object retrieved: {guidance}")
+    # return render(request, 'guide_steps.html', {'guidance': guidance})
+   guideBlog=Guidance.objects.get(id=pk)
+   blog={
+       'guideBlog':guideBlog
+   }
+   return render(request,'guide_steps.html',blog)
 
