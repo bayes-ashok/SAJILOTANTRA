@@ -12,7 +12,7 @@ from SajilotantraApp.models import Event
 
 from Sajilotantra import settings
 
-from .models import Notification, Guidance
+from .models import Notification, Guidance, GovernmentProfile
 from .tokens import generate_token
 
 
@@ -155,3 +155,13 @@ def guide_blog(request,pk):
    }
    return render(request,'guide_steps.html',blog)
 
+def government_profiles(request):
+    profiles=GovernmentProfile.objects.all().order_by('-pk')
+    data={
+        'profiles':profiles
+    }
+    return render(request, 'government_profiles.html',data)
+
+def government_profiles_details(request,pk):
+    profiles = get_object_or_404(GovernmentProfile, id=pk)
+    return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})

@@ -10,9 +10,9 @@ urlpatterns = [
     path('events', views.events,name='events'),
     # path('play', views.playground,name='playground'),
     path('dashboard', views.dashboard,name='dashboard'),
-    path('allguides',views.card,name='card'),
-    # path('guide',views.guide_steps,name='guide_steps'),
     path("activate<uidb64>/<token>",views.activate,name="activate"),
+    path('allguides',views.card,name='card'),
     path('guide/<int:pk>', views.guide_blog, name='guide_blog'),
-
+    path('government_profiles',views.government_profiles,name='government_profiles'),
+    path('government_profile/<int:pk>', views.government_profiles_details, name='government_profiles_details'),
 ]
