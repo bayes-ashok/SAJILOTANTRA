@@ -128,9 +128,9 @@ def events(request):
     }
     return render(request,'events.html',context)
 
-def all_events(request):                                                                                                 
-    all_events = Event.objects.all()                                                                                    
-    out = []                                                                                                             
+def all_events(request):
+    all_events = Event.objects.all()
+    out = []
     for event in all_events:                                                                                             
         out.append({                                                                                                     
             'title': event.name,                                                                                         
@@ -138,20 +138,18 @@ def all_events(request):
             'description': event.description,                                                                                          
             'start': event.start.isoformat(),  # Use isoformat() here                                                       
             'end': event.end.isoformat(),      # Use isoformat() here                                                       
-        })                                                                                                               
-                                                                                                                      
+        })                                                                                    
     return JsonResponse(out, safe=False)
-                                                                                              
+
     all_events = Event.objects.all()                                                                                    
     out = []                                                                                                             
     for event in all_events:                                                                                             
         out.append({                                                                                                     
-            'title': event.name,                                                                                         
+            'title': event.name,
             'id': event.id,                                                                                              
             'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),                                                         
             'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),                                                             
-        })                                                                                                               
-                                                                                                                      
+        })
     return JsonResponse(out, safe=False) 
     return render(request,'events.html')
 
