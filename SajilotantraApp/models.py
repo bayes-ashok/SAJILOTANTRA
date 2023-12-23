@@ -16,7 +16,7 @@ class User(models.Model):
 
 class GovernmentProfile(models.Model):
     name= models.CharField(max_length=100)
-    thumbnail = models.ImageField(upload_to='thumbnails/')
+    thumbnail = models.ImageField(upload_to='static/thumbnails/')
     description = models.TextField()
     address = models.CharField(max_length=200)
 
@@ -25,9 +25,10 @@ class GovernmentProfile(models.Model):
     
     
 class Guidance(models.Model):
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
     description = RichTextField() 
-    thumbnail = models.ImageField(upload_to='thumbnails/')
+    thumbnail = models.ImageField(upload_to='static/thumbnails/')
     category = models.CharField(max_length=100)
     
     def __str__(self):
@@ -52,4 +53,4 @@ class Event(models.Model):
     end=models.DateTimeField(null=True,blank=True)
     
     def __str__(self):
-        return self.title
+        return self.name
