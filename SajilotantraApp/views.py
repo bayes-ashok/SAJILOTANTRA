@@ -4,17 +4,17 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
-from django.http import JsonResponse
-from django.shortcuts import redirect, render
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.views.decorators.csrf import csrf_exempt
 
 from Sajilotantra import settings
 from SajilotantraApp.models import Event, GovernmentProfile
 
-from .models import Notification
+from .models import Notification, UserProfile
 from .tokens import generate_token
 
 
@@ -135,33 +135,6 @@ def events(request):
     }
     return render(request,'events.html',context)
 
-def all_events(request):                                                                                                 
-    all_events = Event.objects.all()                                                                                    
-    out = []                                                                                                             
-    for event in all_events:                                                                                             
-        out.append({                                                                                                     
-            'title': event.name,                                                                                         
-            'id': event.id,    
-            'description': event.description,                                                                                          
-            'start': event.start.isoformat(),  # Use isoformat() here                                                       
-            'end': event.end.isoformat(),      # Use isoformat() here                                                       
-        })                                                                                                               
-                                                                                                                      
-    return JsonResponse(out, safe=False)
-                                                                                              
-    all_events = Event.objects.all()                                                                                    
-    out = []                                                                                                             
-    for event in all_events:                                                                                             
-        out.append({                                                                                                     
-            'title': event.name,                                                                                         
-            'id': event.id,                                                                                              
-            'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),                                                         
-            'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),                                                             
-        })                                                                                                               
-                                                                                                                      
-    return JsonResponse(out, safe=False) 
-    return render(request,'events.html')
-
 #government profiles
 def government_profiles(request):
     profiles=GovernmentProfile.objects.all().order_by('-pk')
@@ -173,3 +146,18 @@ def government_profiles(request):
 def government_profiles_details(request,pk):
     profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
     return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
+
+def save_user_location(request):
+    if request.method == 'POST':
+        user = request.user  # Assuming the user is authenticated
+        lat = request.POST.get('lat')
+        lon = request.POST.get('lon')
+
+        # Update the user's address
+        user_profile, created = UserProfile.objects.get_or_create(user=user)
+        user_profile.address = f"{lat},{lon}"
+        user_profile.save()
+
+        return HttpResponse('Location saved successfully')  # You can customize this response
+    else:
+        return HttpResponse('Invalid request method', status=400)  # Bad Request
