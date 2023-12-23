@@ -4,13 +4,13 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from SajilotantraApp.models import Event
 
 from Sajilotantra import settings
+from SajilotantraApp.models import Event, GovernmentProfile
 
 from .models import Notification, Guidance
 from .tokens import generate_token
@@ -155,3 +155,15 @@ def guide_blog(request,pk):
    }
    return render(request,'guide_steps.html',blog)
 
+
+#government profiles
+def government_profiles(request):
+    profiles=GovernmentProfile.objects.all().order_by('-pk')
+    data={
+        'profiles':profiles
+    }
+    return render(request, 'government_profiles.html',data)
+
+def government_profiles_details(request,pk):
+    profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
+    return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
