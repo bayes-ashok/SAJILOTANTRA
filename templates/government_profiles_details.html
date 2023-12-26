@@ -29,12 +29,12 @@
     <header class="">
         <nav class="fixed bg-white shadow flex justify-between items-center w-[100%]  mx-auto">
             <div>
-            <a href="#">  <img style="width:17rem;" src="\static\assets\LogoWhite.png" alt="..."></a>
+            <a href="/dashboard#">  <img style="width:17rem;" src="\static\assets\LogoWhite.png" alt="..."></a>
             </div>
             <div class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
             <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
             <li>
-            <a class="" href="#">
+            <a class="" href="/dashboard#">
                             <div class="text-xl bg-red-800 text-white w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800">
                                 <i class="fa-solid fa-house"></i>
                             </div>
@@ -110,7 +110,7 @@
         <div class="lg:w-4/5 mx-auto flex flex-wrap">
           <img alt="thumbnail" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="{{ GovernmentProfile.thumbnail.url }}">
           <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-            <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">hhh{{ GovernmentProfile.name }}</h1>
+            <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{ GovernmentProfile.name }}</h1>
             <div class="flex mb-4">
             </div>
             <p class="leading-relaxed">{{ GovernmentProfile.description|safe }}.</p>
