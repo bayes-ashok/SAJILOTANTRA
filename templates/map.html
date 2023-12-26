@@ -107,9 +107,55 @@
         </header>
 
 {% comment %} Map {% endcomment %}
-<div id="map" class="bg-blue-50 mt-20" style="height: 100vh;"></div>
-
+<section id="mapContainer" class="blog bg-blue-950 min-h-screen mt-12 items-center justify-center" style="padding-top: 30px;">
+    <h1 class="text-4xl font-bold text-white ml-10">Locate Government Offices</h1>
+<div id="map" class="bg-blue-50 mt-4 items-center justify-center mx-40 rounded-lg" style="height: 70vh; width:150vh"></div>
+</section>
 <script>
+{% comment %} Getting the User's Live Location Coordinates {% endcomment %}
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
+
+function showPosition(position) {
+    var UserLat = position.coords.latitude;
+    var UserLong = position.coords.longitude;
+    {% comment %} alert("You are here: " UserLat +", "+ UserLong); {% endcomment %}
+console.log(UserLat+','+UserLong);
+
+map.setView([UserLat, UserLong], 15);
+
+    var userMarker = L.marker([UserLat, UserLong]).addTo(map);
+    var userPopupContent = "<b>You are Here!</b> ";
+    userMarker.bindPopup(userPopupContent).openPopup();
+
+    // You can now use the latitude and longitude as needed, for example, send them to your server.
+}
+
+function showError(error) {
+    switch (error.code) {
+        case error.PERMISSION_DENIED:
+            alert("User denied the request for Geolocation.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("Location information is unavailable.");
+            break;
+        case error.TIMEOUT:
+            alert("The request to get user location timed out.");
+            break;
+        case error.UNKNOWN_ERROR:
+            alert("An unknown error occurred.");
+            break;
+    }
+}
+
+// Call getLocation as soon as the page is loaded
+window.onload = getLocation;
+
     var map = L.map('map').setView([27.706130300000016, 85.3300594693138], 13);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -127,10 +173,10 @@ var leafletIcon=L.icon({
         // Split the address string into latitude and longitude
         var coordinates = "{{ profile.address }}".split(',').map(parseFloat);
         var marker{{ profile.id }} = L.marker(coordinates, {icon:leafletIcon}).addTo(map);
-
         var popupContent{{ profile.id }} = "<b>{{ profile.name }}</b><br><a href='/government_profile/{{ profile.id }}'>Details</a>";
         marker{{ profile.id }}.bindPopup(popupContent{{ profile.id }}).openPopup();
     {% endfor %}
+
 </script>
 {% comment %} Map Ends {% endcomment %}
         
