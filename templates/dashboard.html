@@ -32,21 +32,21 @@
 					</a>
 				</li>
 				<li>
-					<a class="" href="#">
+					<a class="" href="/events">
 						<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
 							<i class="fa-regular fa-calendar-days"></i>
 						</div>
 					</a>
 				</li>
 				<li>
-					<a class="" href="#">
+					<a class="" href="/government_profiles">
 						<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
-							<i class="fa-solid fa-people-group"></i>
+							<i class="fa fa-building-o"></i>
 						</div>
 					</a>                   
 				 </li>
 				<li>
-					<a class="" href="#">
+					<a class="" href="/map/">
 						<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
 							<i class="fa-solid fa-map-location-dot"></i>                            </div>
 					</a>                   
@@ -121,7 +121,7 @@
 		</a>
 		{% endfor %}
 		</div>
-		<a href="#" class="block py-2 text-base font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100">
+		<a href="#" class="block py-2 text-base mt-2 font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-200">
 			<div class="inline-flex items-center ">
 			<svg aria-hidden="true" class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
 			View all
@@ -132,100 +132,34 @@
 
 	<div class="flex bg-blue-50 mt-20">
 		<div class="w-1/4" style="margin-left: 50px;">
-			<div class="border bg-white rounded-2xl p-4 " style="margin-top: 20px;">
+
+			<!--guidance Sections-->
+			<div class="border bg-white rounded-2xl p-4" style="margin-top: 20px;">
 				<div>
 					<b id="name" class="mb-2 capitalize">Detailed Guide for Government Offices</b>
-			
 				</div>
-				{% comment %} Individual Card {% endcomment %}
-				<a href="#">
-				<div class="flex items-center mt-2 gap-4 cursor-pointer hover:bg-gray-300 rounded-md">
-					<img src="/static/Image/license.svg" alt="Image" class="w-20 h-20 object-cover " style="margin-top: 5px;">
-					<div>
-					  <p class="text-xs" style="margin-bottom: -5px;">
-						<span style="font-size: larger;">Detailed Guide Applying for Driver’s License </span>
+				{% for item in guidance_items|slice:":4" %}
+				<a href="/guide/{{item.id}}">
+					<div class="flex items-center mt-2 gap-4 cursor-pointer hover:bg-gray-300 rounded-md">
+							<img src="{{ item.thumbnail.url }}" alt="Image" class="w-20 h-20 object-cover rounded-md" style="margin-top: 5px;">
 						
-					  </p>
-					  <p class="mt-2 text-gray-700 text-xs">
-						<span style="font-size: smaller;">Department of Transportation Management</span>
-					  </p>
+						<div>
+							<p class="text-xs" style="margin-bottom: -5px;">
+								<span style="font-size: larger;">{{ item.title }}</span>
+							</p>
+							<p class="mt-2 text-gray-700 text-xs">
+								<span style="font-size: smaller;">{{ item.category }}</span>
+							</p>
+						</div>
 					</div>
-				</div>
-			</a>
-				  {% comment %} Individual Card End {% endcomment %}
-				<a href="#">
-				<div class="flex items-center mt-2 gap-4 cursor-pointer hover:bg-gray-300 rounded-md ">
-					<img src="/static/Image/OCR.svg" alt="Image" class="w-20 h-20 object-cover " style="margin-top: 5px;">
-					<div>
-					  <p class=" text-xs" style="margin-bottom: -5px;">
-						<span style="font-size: larger;">Starting a new Business? Know all you need to about Office of Company Registrar (OCR).</span>
-						
-					  </p>
-					  <p class="mt-2 text-gray-700 text-xs">
-						<span style="font-size: smaller;">Company Registrar’s Office</span>
-					  </p>
+				</a>
+				{% endfor %}
+				<a href="/allguides" class="block py-2 text-base font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100">
+					<div class="inline-flex items-center ">
+					<svg aria-hidden="true" class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
+					View all
 					</div>
-				</div>
-			</a>
-
-			<a href="#">
-				<div class="flex items-center mt-2 gap-4 cursor-pointer hover:bg-gray-300 rounded-md">
-					<img src="/static/Image/NOC.svg" alt="Image" class="w-20 h-20 object-cover " style="margin-top: 5px;">
-					<div>
-					  <p class=" text-xs" style="margin-bottom: -5px;">
-						<span style="font-size: larger;">No Objection Certificate for Foreign Studies</span>
-						
-					  </p>
-					  <p class="mt-2 text-gray-700 text-xs">
-						<span style="font-size: smaller;">Ministry of Foreign Affairs</span>
-					  </p>
-					</div>
-				</div>
-			</a>
-			<a href="#">
-				<div class="flex items-center mt-2 gap-4 cursor-pointer hover:bg-gray-300 rounded-md">
-					<img src="/static/Image/healthinsurance.svg" alt="Image" class="w-20 h-20 object-cover " style="margin-top: 5px;">
-					<div>
-					  <p class=" text-xs" style="margin-bottom: -5px;">
-						<span style="font-size: larger;">Process of getting into Government Health Insurance Program</span>
-						
-					  </p>
-					  <p class="mt-2 text-gray-700 text-xs">
-						<span style="font-size: smaller;">Health Insurance Department, DoHP</span>
-					  </p>
-					</div>
-				</div>
-			</a>
-
-			<a href="#">
-				<div class="flex items-center mt-2 gap-4 cursor-pointer hover:bg-gray-300 rounded-md">
-					<img src="/static/Image/citizenship.svg" alt="Image" class="w-20 h-20 object-cover " style="margin-top: 5px;">
-					<div>
-					  <p class="text-xs" style="margin-bottom: -5px;">
-						<span style="font-size: larger;">Everything about Applying for Citizenship</span>
-						
-					  </p>
-					  <p class="mt-2 text-gray-700 text-xs">
-						<span style="font-size: smaller;">Ministry of Home Affairs</span>
-					  </p>
-					</div>
-				</div>
-			</a>
-
-			<a href="#">
-				<div class="flex items-center mt-2 gap-4 cursor-pointer hover:bg-gray-300 rounded-md">
-					<img src="/static/Image/passport.svg" alt="Image" class="w-20 h-20 object-cover " style="margin-top: 5px;">
-					<div>
-					  <p class=" text-xs" style="margin-bottom: -5px;">
-						<span style="font-size: larger;">Guide: Getting a Passport</span>
-						
-					  </p>
-					  <p class="mt-2 text-gray-700 text-xs">
-						<span style="font-size: smaller;">Ministry of Foreign Affairs</span>
-					  </p>
-					</div>
-				</div>
-			</a>
+				</a>
 			</div>
 
 		<!-- Content of public events -->
