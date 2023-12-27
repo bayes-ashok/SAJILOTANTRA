@@ -4,16 +4,16 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
-from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
+from django.http import JsonResponse
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-
-from Sajilotantra import settings
 from SajilotantraApp.models import Event
 
-from .models import GovernmentProfile, Guidance, Notification
+from Sajilotantra import settings
+
+from .models import Notification, Guidance, GovernmentProfile
 from .tokens import generate_token
 
 
