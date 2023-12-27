@@ -16,6 +16,7 @@
 
 <body class="bg-blue-50">
 <header class="">
+
 <nav class="fixed bg-white shadow flex justify-between items-center w-[100%]  mx-auto">
             <div>
             <a href="/dashboard#">  <img style="width:17rem;" src="\static\assets\LogoWhite.png" alt="..."></a>
@@ -93,48 +94,42 @@
                 <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
             </div>
     </header>
-
-
-	<section class=" bg-white ">
-		<div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+<div>
+safe
+</div>
+	<section>
+    <div class="rounded-lg shadow-xl w-11/12 mx-auto bg-white pt-10 pb-2 px-6" style="margin-top: 70px; margin-bottom: 30px;">
+      <div style="font-size: 20px; font-weight: bold; margin-bottom: 10px; text-align: center;">
+        {{ guideBlog.title }}
+      </div>
+      <div class="py-4 px-6">
+        {{guideBlog.description | safe}}
+      </div>
+      <div  style="text-align: right; margin-top: 10px; color: gray;font-style: italic; font-size: 14;">
+        Category: {{guideBlog.category}}
+      </div>
+    </div>     
+		{% comment %} <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
 			<div class="mt-10 max-w-screen-lg text-gray-500 sm:text-lg">
-				<h2 class="mb-4 text-4xl tracking-tight font-bold text-gray-900">{{guideBlog.title}}</h2>
+				<h2 class="mb-4 text-4xl tracking-tight font-bold text-gray-900">{{guideBlog.title}} k</h2>
 				<h3 class="mt-2 mb-4 text-md font-semibold text-blue-500"><span class="text-gray-700">Category:</span> {{guideBlog.category}}</h3>
 			<img class="h-auto max-w-xl rounded-lg shadow-xl mb-5" src="{{guideBlog.thumbnail.url}}" alt="image description">
 
 				<p class="mb-4 font-light">{{guideBlog.description | safe}}</p>
 				
 			</div>
-		</div>
+		</div> {% endcomment %}
 	  </section>
-	{% comment %} <div class="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
-		<div class="absolute inset-0 -z-10 overflow-hidden">
-		  <svg class="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]" aria-hidden="true">
-			<defs>
-			  <pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="200" height="200" x="50%" y="-1" patternUnits="userSpaceOnUse">
-				<path d="M100 200V.5M.5 .5H200" fill="none" />
-			  </pattern>
-			</defs>
-			<svg x="50%" y="-1" class="overflow-visible fill-gray-50">
-			  <path d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z" stroke-width="0" />
-			</svg>
-			<rect width="100%" height="100%" stroke-width="0" fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)" />
-		  </svg>
-		</div>
-		<div class="lg:items-start">
-		  <div class="p-10">
-			<div class="">
-			  <div class="">
-				<p class="font-semibold text-indigo-600">{{guideBlog.category}}</p>
-				<h1 class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{guideBlog.title}}</h1>
-				<p class="mt-6 text-xl text-gray-700">{{guideBlog.description | safe}}</p>
-			  </div>
-			</div>
-		  </div>
-		</div>
-	  </div> {% endcomment %}
-	  
-	  
+	
 
+	  
+    <footer id="footer" class="footer text-base py-2" style="background-color: #F9F9F9;">
+      <div class="container mx-auto" style="text-align: center;">
+                      &copy; Copyright <strong><span>SAJILOTANTRA</span></strong>. All Rights Reserved
+          
+      </div>
+  </footer>
+  
+  
 </body>
 </html>
