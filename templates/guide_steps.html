@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://kit.fontawesome.com/c30dadd52a.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"  rel="stylesheet" />
+	
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+		<link rel="stylesheet" href="static\css\dashboard.css">
+		<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+  </head>
+
+<body class="bg-blue-50">
+<header class="">
+<nav class="fixed bg-white shadow flex justify-between items-center w-[100%]  mx-auto">
+            <div>
+            <a href="/dashboard#">  <img style="width:17rem;" src="\static\assets\LogoWhite.png" alt="..."></a>
+            </div>
+            <div class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
+            <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
+            <li>
+            <a class="" href="/dashboard#">
+                            <div class="text-xl bg-red-800 text-white w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="#">
+                            <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+                                <i class="fa-regular fa-calendar-days"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="#">
+                            <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+                                <i class="fa-solid fa-people-group"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="#">
+                            <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+                                <i class="fa-solid fa-map-location-dot"></i>                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <form class="flex items-center">
+                            <label for="simple-search" class="sr-only">Search</label>
+                            <div class="relative w-full">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg aria-hidden="true" class="w-5 h-5 text-[#858EAD]" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <input type="text" id="simple-search" class="block w-full p-2.5 pl-20 text-sm text-[#858EAD] rounded-lg bg-[#F4F6F8] border focus:ring-primary-100 focus:border-primary-100" placeholder="Type here to search..." required="">
+                            </div>
+                        </form>
+    
+                    </li>
+                </ul>
+            </div>
+            <div class="flex items-center gap-6">
+                {% comment %} <button class="bg-[#043172] text-white px-5 py-2 rounded-full hover:bg-[#10223B]">Sign in</button> {% endcomment %}
+                
+                <button id="notificationButton" type="button" data-dropdown-toggle="notification-dropdown" class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-blue-800 hover:text-white dark:text-gray-400 dark:hover:text-white dark:hover:bg-blue-800 focus:ring-4 focus:ring-blue-800 dark:focus:ring-blue-800">
+                    <span class="sr-only">View notifications</span>
+                    <!-- Bell icon -->
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20"><path d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"/></svg>
+                </button>
+    
+                {% comment %} Notifications {% endcomment %}
+                 <!-- Dropdown menu -->
+                {% comment %} Profile Secion {% endcomment %}
+                <div id="profileContainer" class="flex items-center gap-3 cursor-pointer mx-2 rounded-full focus:ring-2 hover:ring-2 hover:ring-gray-600 focus:ring-gray-800 ">
+                    <img class="w-10 h-10 rounded-full" src="https://placekitten.com/40/40" alt="Profile Picture">
+                </div>
+                <div id="profileDropdown"
+                    class="hidden origin-top-right absolute right-2 top-14 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="profileContainer">
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            role="menuitem">Profile Settings</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            role="menuitem">Logout</a>
+                    </div>
+                </div>
+                {% comment %} Hamburger {% endcomment %}
+                <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
+            </div>
+    </header>
+
+
+	<section class=" bg-white ">
+		<div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+			<div class="mt-10 max-w-screen-lg text-gray-500 sm:text-lg">
+				<h2 class="mb-4 text-4xl tracking-tight font-bold text-gray-900">{{guideBlog.title}}</h2>
+				<h3 class="mt-2 mb-4 text-md font-semibold text-blue-500"><span class="text-gray-700">Category:</span> {{guideBlog.category}}</h3>
+			<img class="h-auto max-w-xl rounded-lg shadow-xl mb-5" src="{{guideBlog.thumbnail.url}}" alt="image description">
+
+				<p class="mb-4 font-light">{{guideBlog.description | safe}}</p>
+				
+			</div>
+		</div>
+	  </section>
+	{% comment %} <div class="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
+		<div class="absolute inset-0 -z-10 overflow-hidden">
+		  <svg class="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]" aria-hidden="true">
+			<defs>
+			  <pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="200" height="200" x="50%" y="-1" patternUnits="userSpaceOnUse">
+				<path d="M100 200V.5M.5 .5H200" fill="none" />
+			  </pattern>
+			</defs>
+			<svg x="50%" y="-1" class="overflow-visible fill-gray-50">
+			  <path d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z" stroke-width="0" />
+			</svg>
+			<rect width="100%" height="100%" stroke-width="0" fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)" />
+		  </svg>
+		</div>
+		<div class="lg:items-start">
+		  <div class="p-10">
+			<div class="">
+			  <div class="">
+				<p class="font-semibold text-indigo-600">{{guideBlog.category}}</p>
+				<h1 class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{guideBlog.title}}</h1>
+				<p class="mt-6 text-xl text-gray-700">{{guideBlog.description | safe}}</p>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div> {% endcomment %}
+	  
+	  
+
+</body>
+</html>

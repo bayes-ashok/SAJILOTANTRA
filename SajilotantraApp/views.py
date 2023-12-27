@@ -4,15 +4,16 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 from Sajilotantra import settings
-from SajilotantraApp.models import Event, GovernmentProfile
+from SajilotantraApp.models import Event
 
-from .models import Notification
+from .models import GovernmentProfile, Guidance, Notification
 from .tokens import generate_token
 
 
@@ -98,11 +99,6 @@ def signin(request):
     form = AuthenticationForm()
     return render(request, 'signin.html', {'form': form})
 
-# def playground(request):
-#     return render(request,"playground.html")
-
-# def dashboard(request):
-#     return render(request,"dashboard.html")
 
 def activate(request,uidb64,token):#activate user account if the confirmation link is clicked
     try:
@@ -122,21 +118,88 @@ def activate(request,uidb64,token):#activate user account if the confirmation li
         return render(request,'activation_failed.html')
     
 
-def dashboard(request):
-    notifications = Notification.objects.all()
-    return render(request, 'dashboard.html', {'notifications': notifications}) 
-# events calendar
+
+
+     
 def events(request):
+    all_events = Event.objects.all()
+    context = {
+        "events":all_events,
+    }
+    return render(request,'events.html',context)
+
+def all_events(request):
+    all_events = Event.objects.all()
+    out = []
+    for event in all_events:
+        out.append({
+            'title': event.name,
+            'id': event.id,
+            'description': event.description,
+            'start': event.start.isoformat(),  # Use isoformat() here
+            'end': event.end.isoformat(),      # Use isoformat() here
+        })
+    return JsonResponse(out, safe=False)
+
+    all_events = Event.objects.all()
+    out = []
+    for event in all_events:
+        out.append({
+            'title': event.name,
+            'id': event.id,
+            'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),
+            'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),
+        })
+    return JsonResponse(out, safe=False)
     return render(request,'events.html')
 
-#government profiles
+# def map(request):
+#     return render(request, 'map.html')
+
+def dashboard(request):
+    notifications = Notification.objects.all()
+    guidance = Guidance.objects.all().order_by('-pk')
+    
+    context = {
+        'notifications': notifications,
+        'guidance_items': guidance[:6],  # Fetching the first 6 guidance items
+    }
+
+    return render(request, 'dashboard.html', context)
+
+def card(request):
+    details=Guidance.objects.all().order_by('-pk')
+    context={
+        'details':details
+    }
+    return render(request, 'guidelines_details.html',context)
+
+def guide_blog(request,pk):
+    # print(f"Guide steps function called with pk={pk} and category={category}")
+    # guidance = get_object_or_404(Guidance, id=pk, category=category)
+    # print(f"Guidance object retrieved: {guidance}")
+    # return render(request, 'guide_steps.html', {'guidance': guidance})
+   guideBlog=Guidance.objects.get(id=pk)
+   blog={
+    'guideBlog':guideBlog
+   }
+   return render(request,'guide_steps.html',blog)
+
 def government_profiles(request):
     profiles=GovernmentProfile.objects.all().order_by('-pk')
     data={
         'profiles':profiles
     }
-    return render(request, 'government_profiles.html',data)
+    return render(request, 'government_profiles.html', data)
+
+def map(request):
+    profiles=GovernmentProfile.objects.all().order_by("-pk")
+    data={
+        'profiles':profiles
+    }
+    return render(request,'map.html',data)
+
 
 def government_profiles_details(request,pk):
-    profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
+    profiles = get_object_or_404(GovernmentProfile, id=pk)
     return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
