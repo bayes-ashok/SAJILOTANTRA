@@ -11,7 +11,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 from Sajilotantra import settings
-from SajilotantraApp.models import Event, GovernmentProfile
+from SajilotantraApp.models import Event
 
 from .models import GovernmentProfile, Guidance, Notification
 from .tokens import generate_token
@@ -131,28 +131,30 @@ def events(request):
 def all_events(request):
     all_events = Event.objects.all()
     out = []
-    for event in all_events:                                                                                             
-        out.append({                                                                                                     
-            'title': event.name,                                                                                         
-            'id': event.id,    
-            'description': event.description,                                                                                          
-            'start': event.start.isoformat(),  # Use isoformat() here                                                       
-            'end': event.end.isoformat(),      # Use isoformat() here                                                       
-        })                                                                                    
+    for event in all_events:
+        out.append({
+            'title': event.name,
+            'id': event.id,
+            'description': event.description,
+            'start': event.start.isoformat(),  # Use isoformat() here
+            'end': event.end.isoformat(),      # Use isoformat() here
+        })
     return JsonResponse(out, safe=False)
 
-    all_events = Event.objects.all()                                                                                    
-    out = []                                                                                                             
-    for event in all_events:                                                                                             
-        out.append({                                                                                                     
+    all_events = Event.objects.all()
+    out = []
+    for event in all_events:
+        out.append({
             'title': event.name,
-            'id': event.id,                                                                                              
-            'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),                                                         
-            'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),                                                             
+            'id': event.id,
+            'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),
+            'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),
         })
-    return JsonResponse(out, safe=False) 
+    return JsonResponse(out, safe=False)
     return render(request,'events.html')
 
+# def map(request):
+#     return render(request, 'map.html')
 
 def dashboard(request):
     notifications = Notification.objects.all()
@@ -179,18 +181,24 @@ def guide_blog(request,pk):
     # return render(request, 'guide_steps.html', {'guidance': guidance})
    guideBlog=Guidance.objects.get(id=pk)
    blog={
-       'guideBlog':guideBlog
+    'guideBlog':guideBlog
    }
    return render(request,'guide_steps.html',blog)
 
-
-#government profiles
 def government_profiles(request):
     profiles=GovernmentProfile.objects.all().order_by('-pk')
     data={
         'profiles':profiles
     }
-    return render(request, 'government_profiles.html',data)
+    return render(request, 'government_profiles.html', data)
+
+def map(request):
+    profiles=GovernmentProfile.objects.all().order_by("-pk")
+    data={
+        'profiles':profiles
+    }
+    return render(request,'map.html',data)
+
 
 def government_profiles_details(request,pk):
     profiles = get_object_or_404(GovernmentProfile, id=pk)
