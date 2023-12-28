@@ -138,3 +138,7 @@ STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'static'),)
 from .juzmin import JAZZMIN_SETTINGS
 
 JAZZMIN_SETTINGS=JAZZMIN_SETTINGS
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'create_post')
+

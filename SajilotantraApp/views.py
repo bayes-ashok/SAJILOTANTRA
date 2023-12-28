@@ -9,12 +9,21 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from SajilotantraApp.forms import FileUploadForm
 from SajilotantraApp.models import Event
 
 from Sajilotantra import settings
 
 from .models import Notification, Guidance, GovernmentProfile
 from .tokens import generate_token
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+# from .forms import UploadFileForm
+
+from django.shortcuts import render, redirect
+from .models import Post
+from .forms import PostForm
 
 
 def index(request):
@@ -203,3 +212,114 @@ def map(request):
 def government_profiles_details(request,pk):
     profiles = get_object_or_404(GovernmentProfile, id=pk)
     return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
+
+# from .forms import FileUploadForm
+
+# def upload_file(request):
+#     if request.method == 'POST':
+#         form = FileUploadForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()  # Save the form data to the database
+#             return redirect('success_url')  # Redirect to success page after a successful upload
+#     else:
+#         form = FileUploadForm()
+#     return render(request, 'upload.html', {'form': form})
+
+
+
+
+# @login_required
+# def upload_file(request):
+#     if request.method == 'POST':
+#         form = UploadFileForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             # Assign the logged-in user's ID to the 'user_id' field of the UploadFile object
+#             upload_file_obj = form.save(commit=False)
+#             upload_file_obj.user_id = request.user.id  # Assuming 'user_id' is the field in model
+#             upload_file_obj.save()
+#             return redirect('success')  # Redirect to a success page or another appropriate URL
+#     else:
+#         form = UploadFileForm()
+#     return render(request, 'upload.html', {'form': form})
+
+# from django.contrib.auth.decorators import login_required
+
+# @login_required
+# def upload_file(request):
+#     if request.method == 'POST':
+#         form = FileUploadForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             # Assign the current logged-in user to the 'user' field
+#             upload_file = form.save(commit=False)
+#             upload_file.user = request.user  # Set the user to the currently logged-in user
+#             upload_file.save()
+#             return redirect('success_url')  # Redirect to a success URL
+#     else:
+#         form = FileUploadForm()
+#     return render(request, 'upload.html', {'form': form})
+
+# from django.shortcuts import render, redirect
+# from .models import Category, Post
+# from .forms import PostForm  # Create a form using Django's forms module
+
+# def create_post(request):
+#     if request.method == 'POST':
+#         form = PostForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             new_post = form.save(commit=False)
+#             new_post.user = request.user  # Assign current user to the post
+#             new_post.save()
+#             return redirect('view_post', post_id=new_post.id)  # Redirect to view the created post
+#     else:
+#         form = PostForm()
+#     return render(request, 'create_post.html', {'form': form})
+
+
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_post = form.save(commit=False)
+            new_post.user = request.user
+            new_post.save()
+            return redirect('dashboard')  # Redirect to 'dashboard' view
+    else:
+        form = PostForm()
+    return render(request, 'create_post.html', {'form': form})
+
+
+def post_list(request):
+    posts = Post.objects.all()  # Retrieve all posts
+    return render(request, 'post_list.html', {'posts': posts})
+
+
+# from django.shortcuts import render, redirect
+# from .forms import PostForm
+
+# def create_post(request):
+#     if request.method == 'POST':
+#         form = PostForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             post = form.save(commit=False)
+#             post.user = request.user
+#             post.save()
+#             return redirect('post_detail', pk=post.pk)
+#     else:
+#         form = PostForm()
+#     return render(request, 'create_post.html', {'form': form})
+
+
+# from django.shortcuts import render
+# from .models import Post
+
+# def post_list(request):
+#     posts = Post.objects.all()
+#     return render(request, 'post_list.html', {'posts': posts})
+
+# from django.shortcuts import render, get_object_or_404
+# from .models import Post
+
+# def post_detail(request, pk):
+#     post = get_object_or_404(Post, pk=pk)
+#     return render(request, 'post_detail.html', {'post': post})
+
