@@ -32,21 +32,21 @@
 					</a>
 				</li>
 				<li>
-					<a class="" href="#">
+					<a class="" href="/events">
 						<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
 							<i class="fa-regular fa-calendar-days"></i>
 						</div>
 					</a>
 				</li>
 				<li>
-					<a class="" href="#">
+					<a class="" href="/government_profiles">
 						<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
-							<i class="fa-solid fa-people-group"></i>
+							<i class="fa fa-building-o"></i>
 						</div>
 					</a>
 				</li>
 				<li>
-					<a class="" href="#">
+					<a class="" href="/map/">
 						<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
 							<i class="fa-solid fa-map-location-dot"></i>                            </div>
 					</a>
@@ -138,7 +138,7 @@
 				<div>
 					<b id="name" class="mb-2 capitalize">Detailed Guide for Government Offices</b>
 				</div>
-				{% for item in guidance_items %}
+				{% for item in guidance_items|slice:":4" %}
 				<a href="/guide/{{item.id}}">
 					<div class="flex items-center mt-2 gap-4 cursor-pointer hover:bg-gray-300 rounded-md">
 							<img src="{{ item.thumbnail.url }}" alt="Image" class="w-20 h-20 object-cover rounded-md" style="margin-top: 5px;">

@@ -205,49 +205,32 @@
 	</div>
 
     {% comment %} Cards {% endcomment %}
-    <section id="blog" class="blog min-h-screen mt-12 items-center justify-center" style="padding-top: 30px;">
-      <h1 class="text-4xl font-bold ml-10">Document Guides</h1>
-      <div class="container" data-aos="fade-up">
-        <div class="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-10 items-center justify-center lg:p-10 ml-2 md:ml-20">
-          {% for det in details %}
-<div class="max-w-sm bg-white hover:shadow-indigo-500/60 border border-gray-200 rounded-lg shadow">
-  <a href="/guide/{{det.id}}">
-      <img class="rounded-t-lg w-full h-40 object-cover" src="{{ det.thumbnail.url }}" alt="" />
-  </a>
-  <div class="p-5">
-      <a href="/guide/{{det.id}}">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{det.title}}</h5>
-      </a>
-      <p class="mb-3 font-normal text-gray-700 ">{{ det.description|truncatewords:10|safe }}</p>
-      <a href="/guide/{{det.id}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-          View
-           <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-          </svg>
-      </a>
-  </div>
-</div>
-
-
-
-            {% comment %} <div class="flex items-stretch">
-              <article class="post-container bg-white shadow-md rounded-lg overflow-hidden">
-                <div class="post-img">
-                  <div class="image-container">
-                    <img src="{{ det.thumbnail.url }}" alt="" class="img-fluid post-image" />
-                  </div>
+  <section id="blog" class="blog min-h-screen mt-12 items-center justify-center" style="padding-top: 30px;">
+    <h1 class="text-4xl font-bold ml-10">Document Guides</h1>
+    <div class="container" data-aos="fade-up">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-10 items-center justify-center lg:p-10 ml-2 md:ml-20">
+            {% for det in details %}
+            <div class="max-w-sm bg-white hover:shadow-indigo-500/60 border border-gray-200 rounded-lg shadow">
+                <a href="/guide/{{det.id}}">
+                    <img class="rounded-t-lg w-full h-40 object-cover" src="{{ det.thumbnail.url }}" alt="" />
+                </a>
+                <div class="p-5">
+                    <a href="/guide/{{det.id}}">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{det.title}}</h5>
+                    </a>
+                    <p class="mb-3 font-normal text-gray-700 ">{{ det.description|safe|truncatewords_html:10 }}</p>
+                    <a href="/guide/{{det.id}}" class="inline-flex mt-3 items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-300 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                        {{det.category}}
+                    </a>
                 </div>
-                <div class="post-content p-4">
-                  <h3 class="post-title text-sm font-semibold mb-2">{{ det.title }}</h3>
-                  <h4 class="post-category text-sm font-semibold mb-2">{{ det.category }}</h4>
-                  <p class="post-description text-sm">{{ det.description|truncatewords:10 }}</p>
-                </div>
-              </article>
-            </div> {% endcomment %}
-          {% endfor %}
+            </div>
+            {% endfor %}
         </div>
-      </div>
-    </section>
+    </div>
+</section>
+
+  
+  
     
   <script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
