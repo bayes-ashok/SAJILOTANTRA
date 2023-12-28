@@ -1,3 +1,2 @@
-SajilotantraApp/__pycache__
-SajilotantraApp/migrations
+*.pyc
 db.sqlite3
