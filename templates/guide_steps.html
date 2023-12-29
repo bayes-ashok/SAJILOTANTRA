@@ -99,27 +99,21 @@ safe
 </div>
 	<section>
     <div class="rounded-lg shadow-xl w-11/12 mx-auto bg-white pt-10 pb-2 px-6" style="margin-top: 70px; margin-bottom: 30px;">
-      <div style="font-size: 20px; font-weight: bold; margin-bottom: 10px; text-align: center;">
+        <div class="font-semibold" style="text-align: center; margin-top: 10px;font-size: 14;">
+            {{guideBlog.category}}
+          </div>
+          <hr style="width:60px;margin: 0 auto; margin-top: 10px; margin-bottom: 10px; border: none; background-color: blue; height: 2px;">
+
+        <div style="font-size: 20px; font-weight: bold; margin-bottom: 10px; text-align: center;">
         {{ guideBlog.title }}
       </div>
       <div class="py-4 px-6">
         {{guideBlog.description | safe}}
       </div>
-      <div  style="text-align: right; margin-top: 10px; color: gray;font-style: italic; font-size: 14;">
-        Category: {{guideBlog.category}}
-      </div>
+      
     </div>     
-		{% comment %} <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-			<div class="mt-10 max-w-screen-lg text-gray-500 sm:text-lg">
-				<h2 class="mb-4 text-4xl tracking-tight font-bold text-gray-900">{{guideBlog.title}} k</h2>
-				<h3 class="mt-2 mb-4 text-md font-semibold text-blue-500"><span class="text-gray-700">Category:</span> {{guideBlog.category}}</h3>
-			<img class="h-auto max-w-xl rounded-lg shadow-xl mb-5" src="{{guideBlog.thumbnail.url}}" alt="image description">
 
-				<p class="mb-4 font-light">{{guideBlog.description | safe}}</p>
-				
-			</div>
-		</div> {% endcomment %}
-	  </section>
+    </section>
 	
 
 	  
