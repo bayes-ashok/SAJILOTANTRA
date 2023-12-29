@@ -140,29 +140,18 @@ def all_events(request):
             'end': event.end.isoformat(),      # Use isoformat() here
         })
     return JsonResponse(out, safe=False)
-
-    all_events = Event.objects.all()
-    out = []
-    for event in all_events:
-        out.append({
-            'title': event.name,
-            'id': event.id,
-            'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),
-            'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),
-        })
-    return JsonResponse(out, safe=False)
-    return render(request,'events.html')
-
 # def map(request):
 #     return render(request, 'map.html')
 
 def dashboard(request):
     notifications = Notification.objects.all()
     guidance = Guidance.objects.all().order_by('-pk')
+    events = Event.objects.all().order_by('-pk')
     
     context = {
         'notifications': notifications,
         'guidance_items': guidance[:6],  # Fetching the first 6 guidance items
+        'events': events[:3],
     }
 
     return render(request, 'dashboard.html', context)
