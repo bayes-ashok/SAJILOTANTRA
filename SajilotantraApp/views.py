@@ -20,6 +20,13 @@ from .tokens import generate_token
 def index(request):
     return render(request, 'index.html')
 
+
+def profile(request):
+    return render(request, 'profile.html')
+
+def selfprofile(request):
+    return render(request, 'selfprofile.html')
+
 def signup(request):
     if request.method=="POST":
         username=request.POST.get("username")
