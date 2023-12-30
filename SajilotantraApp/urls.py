@@ -17,4 +17,6 @@ urlpatterns = [
     path('government_profile/<int:pk>', views.government_profiles_details, name='government_profiles_details'),
     path('all_events/', views.all_events, name='all_events'),
     path('map/', views.map, name='map'),
+    path('profile/<str:username>/', views.profile, name='profile'),
+    path('view_profile/<str:username>/', views.view_profile, name='view_profile'),
 ]
