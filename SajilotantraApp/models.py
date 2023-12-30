@@ -1,4 +1,5 @@
 from ckeditor.fields import RichTextField
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -15,7 +16,6 @@ class User(models.Model):
 
 
 class GovernmentProfile(models.Model):
-    profile_id=models.AutoField(primary_key=True)
     name= models.CharField(max_length=100)
     thumbnail = models.ImageField(upload_to='static/thumbnails/')
     description = models.TextField()
@@ -28,7 +28,7 @@ class GovernmentProfile(models.Model):
 class Guidance(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
-    description = RichTextField() 
+    description = RichTextField()
     thumbnail = models.ImageField(upload_to='static/thumbnails/')
     category = models.CharField(max_length=100)
     
@@ -55,3 +55,41 @@ class Event(models.Model):
     
     def __str__(self):
         return self.name
+    
+
+# class Post(models.Model):
+#     CATEGORY_CHOICES = [
+#         ('query', 'Query'),
+#         ('rant', 'Rant'),
+#         ('problem', 'Problem'),
+#         ('local_government', 'Local Government'),
+#     ]
+
+#     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)  # Assuming Django's built-in User model
+#     caption = models.TextField()
+#     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
+#     thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         return self.caption[:50]
+    
+from django.contrib.auth.models import User
+from django.db import models
+
+CATEGORY_CHOICES = (
+    ('query', 'Query'),
+    ('rant', 'Rant'),
+    ('problems', 'Problems'),
+    ('local government', 'Local Government')
+)
+
+class Post(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    caption = models.TextField()
+    category = models.CharField(choices=CATEGORY_CHOICES, max_length=50)
+    thumbnail = models.ImageField(upload_to='thumbnails/')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.caption[:50]

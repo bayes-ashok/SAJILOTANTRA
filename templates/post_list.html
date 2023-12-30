@@ -1,0 +1,36 @@
+{% for post in posts %}
+    <div class="border border-gray-300 rounded-md p-4 mb-4">
+        <h2 class="text-xl font-bold mb-2">{{ post.caption }}</h2>
+        <div class="mb-4">
+            <!-- Other details like category, thumbnail, created_at -->
+            <img src="{{ post.thumbnail.url }}" alt="{{ post.caption }}" class="rounded-lg shadow-md">
+        </div>
+        <div class="flex items-center justify-between border-t pt-4">
+            <!-- Box for Like section -->
+            <div class="flex items-center space-x-4">
+                <button class="flex items-center text-gray-500 hover:text-blue-500 focus:outline-none">
+                    <svg class="w-6 h-6 mr-1 fill-current" viewBox="0 0 24 24">
+                        <!-- Your like icon -->
+                    </svg>
+                    Like
+                </button>
+                <p class="text-sm text-gray-500">3 Likes</p> <!-- Show the number of likes -->
+            </div>
+            <!-- Box for Comment section -->
+            <div class="flex items-center space-x-4">
+                <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md" rows="2" placeholder="Add a comment..."></textarea>
+                <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none">Post</button>
+            </div>
+        </div>
+        <!-- Comments -->
+        <div class="mt-4">
+            <div class="flex items-center mb-2">
+                <span class="font-bold mr-2">User123:</span>
+                <p class="text-sm">This is a comment!</p>
+            </div>
+            <!-- Add more comments here -->
+        </div>
+        <p class="text-sm text-gray-500">Category: {{ post.category }}</p>
+        <p class="text-sm text-gray-500">Created at: {{ post.created_at }}</p>
+    </div>
+{% endfor %}
