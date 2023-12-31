@@ -1,17 +1,31 @@
 from ckeditor.fields import RichTextField
 from django.db import models
+from django.contrib.auth.models import User
 
 
-class User(models.Model):
-    user_id = models.AutoField(primary_key=True)
-    fName = models.CharField(max_length=200)
-    lName = models.CharField(max_length=200)
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=128)
-    # image = models.ImageField()
+
+
+# class User(models.Model):
+#     user_id = models.AutoField(primary_key=True)
+#     fName = models.CharField(max_length=200)
+#     lName = models.CharField(max_length=200)
+#     email = models.EmailField(unique=True)
+#     password = models.CharField(max_length=128)
+#     # image = models.ImageField()
+
+#     def __str__(self):
+#         return self.user_id
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='static/profile_images/', null=True, blank=True)
+    cover = models.ImageField(upload_to='static/cover_images/', null=True, blank=True)
+    bio = models.CharField(max_length=255, null=True, blank=True)
+    # Add other fields as needed
 
     def __str__(self):
-        return self.user_id
+        return self.user.username
 
 
 class GovernmentProfile(models.Model):
