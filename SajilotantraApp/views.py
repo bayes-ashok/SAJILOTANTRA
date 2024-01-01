@@ -11,7 +11,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-
+from django.http import HttpResponseRedirect
+from .models import Feedback, UploadedFile
 from Sajilotantra import settings
 from SajilotantraApp.models import Event, GovernmentProfile
 
@@ -272,3 +273,22 @@ def view_profile(request, username):
     }
 
     return render(request, 'frontprofile.html', context)
+
+def feedback(request):
+    if request.method == 'POST':
+        category = request.POST.get('category')
+        suggestion = request.POST.get('Suggestion')
+
+        feedback = Feedback(category=category, suggestion=suggestion)
+        feedback.save()
+
+        # Handle file uploads
+        uploaded_files = request.FILES.getlist('user_avatar')
+        for uploaded_file in uploaded_files:
+            file_instance = UploadedFile(feedback=feedback, file=uploaded_file)
+            file_instance.save()
+        messages.success(request, "A new feedback is added go and check through!")
+        # Redirect or render a thank you page
+        return HttpResponseRedirect('feedback')  # Replace '/thank-you/' with your desired URL
+
+    return render(request, 'feedback.html') 
