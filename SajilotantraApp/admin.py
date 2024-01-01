@@ -8,3 +8,15 @@ from SajilotantraApp.models import Event, User
 
 admin.site.register(GovernmentProfile)
 admin.site.register(Event)
+
+from .models import Feedback, UploadedFile
+
+class UploadedFileInline(admin.TabularInline):
+    model = UploadedFile
+
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    inlines = [UploadedFileInline]
+    
+
+admin.site.register(UploadedFile)
