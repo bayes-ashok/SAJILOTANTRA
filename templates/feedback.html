@@ -24,110 +24,53 @@
       }
   
       .image-preview {
-        height: 200px;
-        width: 200px;
+        height: 100px;
+        width: 100px;
         object-fit: cover;
       }
   </style>
 </head>
-<body class="bg-gray-100">
-  <div class="container mx-auto px-4">
-    <h1 class="text-2xl font-bold text-center text-gray-700 my-6">Feedback Form</h1>
-    <form class="max-w-lg mx-auto">
-        <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a Category</label>
-        <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-      
-          <option>United States</option>
-          <option>Canada</option>
-          <option>France</option>
-          <option>Germany</option>
-        </select>
-    </form>
 
-    <form class="max-w-lg mx-auto mt-5">
-        <label for="Suggestion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Suggestion</label>
-        <textarea id="Suggestion" rows="7" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave your suggestion..."></textarea>
-    </form>
-    
-    <form class="max-w-lg mx-auto mt-5">
-      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload file</label>
-      <div id="dropArea" class="drop-area p-4">
-        <input class="hidden" aria-describedby="user_avatar_help" id="user_avatar" type="file" multiple>
-        <p class="text-gray-500 cursor-pointer">Drag and drop files here or <span id="fileInputText" class="underline">click to select files</span>.</p>
-      </div>
-      <div id="filePreview" class=" preview-container mt-4"></div>
-    </form>
-  </div>
+<body class="bg-blue-50">
+    <div class="container mx-auto px-4 py-6 mt-10">
+        <div class="max-w-xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="p-6">
+                <h1 class="text-2xl font-bold text-center text-gray-700 my-6">Feedback Form</h1>
+                <form class="max-w-lg mx-auto">
+                    <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a Category</label>
+                    <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option>Feature Request</option>
+                    <option>Report Bug</option>
+                    <option>Guidance Section</option>
+                    <option>Government Profile Section</option>
+                    <option>Events Section</option>
+                    <option>Inappropriate Content</option>
+                    </select>
+                </form>
 
-  <script>
-    const dropArea = document.getElementById('dropArea');
-    const fileInput = document.getElementById('user_avatar');
-    const filePreview = document.getElementById('filePreview');
-    let selectedFiles = [];
+                <form class="max-w-lg mx-auto mt-5">
+                    <label for="Suggestion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Suggestion</label>
+                    <textarea id="Suggestion" rows="7" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave your suggestion..."></textarea>
+                </form>
+                
+                <form class="max-w-lg mx-auto mt-5">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload file</label>
+                <div id="dropArea" class="drop-area p-4">
+                    <input class="hidden" aria-describedby="user_avatar_help" id="user_avatar" type="file" multiple>
+                    <p class="text-gray-500 cursor-pointer">Drag and drop files here or <span id="fileInputText" class="underline">click to select files</span>.</p>
+                </div>
+                <div id="filePreview" class=" preview-container mt-4"></div>
+                </form>
+                <div class="flex justify-center mt-4">
+                    <button type="submit" class="btn btn-primary bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-      dropArea.addEventListener(eventName, preventDefaults, false);
-    });
+  <script src="static/javascript/feedback.js"></script>
 
-    function preventDefaults(e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
-    ['dragenter', 'dragover'].forEach(eventName => {
-      dropArea.addEventListener(eventName, highlight, false);
-    });
-
-    ['dragleave', 'drop'].forEach(eventName => {
-      dropArea.addEventListener(eventName, unhighlight, false);
-    });
-
-    function highlight() {
-      dropArea.classList.add('dragged-over');
-    }
-
-    function unhighlight() {
-      dropArea.classList.remove('dragged-over');
-    }
-
-    dropArea.addEventListener('drop', handleDrop, false);
-
-    function handleDrop(e) {
-      const dt = e.dataTransfer;
-      const files = dt.files;
-
-      handleFiles(files);
-    }
-
-    dropArea.addEventListener('click', function() {
-      fileInput.click();
-    });
-
-    fileInput.addEventListener('change', function(e) {
-      handleFiles(e.target.files);
-    });
-
-    function handleFiles(files) {
-      selectedFiles = [...selectedFiles, ...files];
-
-      filePreview.innerHTML = '';
-
-      selectedFiles.forEach(file => {
-        if (!file.type.startsWith('image/')) {
-          const nonImageFile = document.createElement('p');
-          nonImageFile.textContent = file.name;
-          filePreview.appendChild(nonImageFile);
-        } else {
-          const img = document.createElement('img');
-          img.classList.add('image-preview');
-          img.src = URL.createObjectURL(file);
-          img.onload = function() {
-            URL.revokeObjectURL(this.src);
-          }
-          filePreview.appendChild(img);
-        }
-      });
-    }
-  </script>
 </body>
 </html>
