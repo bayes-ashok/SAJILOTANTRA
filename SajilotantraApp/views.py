@@ -12,20 +12,12 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-<<<<<<< HEAD
-
-from Sajilotantra import settings
-from SajilotantraApp.models import Event, GovernmentProfile
-
-from .models import Notification, Guidance, GovernmentProfile
-=======
 from django.http import HttpResponseRedirect
 from .models import Feedback, UploadedFile
 from Sajilotantra import settings
 from SajilotantraApp.models import Event, GovernmentProfile
 
 from .models import GovernmentProfile, Guidance, Notification, UserProfile
->>>>>>> a08833bde7cec65671ec21f56c7af687132b5105
 from .tokens import generate_token
 
 
@@ -152,8 +144,6 @@ def all_events(request):
             'end': event.end.isoformat(),      # Use isoformat() here
         })
     return JsonResponse(out, safe=False)
-<<<<<<< HEAD
-=======
 
     all_events = Event.objects.all()
     out = []
@@ -167,7 +157,6 @@ def all_events(request):
     return JsonResponse(out, safe=False)
     return render(request,'events.html')
 
->>>>>>> a08833bde7cec65671ec21f56c7af687132b5105
 # def map(request):
 #     return render(request, 'map.html')
 
@@ -220,8 +209,6 @@ def map(request):
 def government_profiles_details(request,pk):
     profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
     return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
-<<<<<<< HEAD
-=======
 
 from django.http import Http404
 
@@ -308,4 +295,3 @@ def feedback(request):
         return HttpResponseRedirect('feedback')  # Replace '/thank-you/' with your desired URL
 
     return render(request, 'feedback.html') 
->>>>>>> a08833bde7cec65671ec21f56c7af687132b5105

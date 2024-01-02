@@ -66,8 +66,6 @@ class Event(models.Model):
     
     def __str__(self):
         return self.name
-<<<<<<< HEAD
-=======
     
 class Feedback(models.Model):
     category = models.CharField(max_length=100)
@@ -79,4 +77,3 @@ class UploadedFile(models.Model):
 
     def __str__(self):
         return self.file.name
->>>>>>> a08833bde7cec65671ec21f56c7af687132b5105
