@@ -77,19 +77,37 @@ class Event(models.Model):
 from django.contrib.auth.models import User
 from django.db import models
 
-CATEGORY_CHOICES = (
-    ('query', 'Query'),
-    ('rant', 'Rant'),
-    ('problems', 'Problems'),
-    ('local government', 'Local Government')
-)
+# CATEGORY_CHOICES = (
+#     ('query', 'Query'),
+#     ('rant', 'Rant'),
+#     ('problems', 'Problems'),
+#     ('local government', 'Local Government')
+# )
+
+# class Post(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     caption = models.TextField()
+#     category = models.CharField(choices=CATEGORY_CHOICES, max_length=50)
+#     thumbnail = models.ImageField(upload_to='thumbnails/')
+#     created_at = models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         return self.caption[:50]
+
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     caption = models.TextField()
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=50)
-    thumbnail = models.ImageField(upload_to='thumbnails/')
+    category = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='post_images/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.caption[:50]
+class PostLike(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class PostComment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

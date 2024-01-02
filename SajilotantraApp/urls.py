@@ -18,5 +18,7 @@ urlpatterns = [
     path('all_events/', views.all_events, name='all_events'),
     path('map/', views.map, name='map'),
     path('create_post/', views.create_post, name='create_post'),
-    path('post_list/', views.post_list, name='post_list'),
+    path('create_post_new/', views.create_post_new, name='create_post_new'),
+    # path('post_list/', views.post_list, name='post_list'),
+
 ]

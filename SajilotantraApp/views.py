@@ -9,7 +9,9 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from SajilotantraApp.forms import FileUploadForm
+# from SajilotantraApp.forms import FileUploadForm
+from .forms import PostForm
+from django.contrib.auth.decorators import login_required
 from SajilotantraApp.models import Event
 
 from Sajilotantra import settings
@@ -275,22 +277,22 @@ def government_profiles_details(request,pk):
 #     return render(request, 'create_post.html', {'form': form})
 
 
-def create_post(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            new_post = form.save(commit=False)
-            new_post.user = request.user
-            new_post.save()
-            return redirect('dashboard')  # Redirect to 'dashboard' view
-    else:
-        form = PostForm()
-    return render(request, 'create_post.html', {'form': form})
+# def create_post(request):
+#     if request.method == 'POST':
+#         form = PostForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             new_post = form.save(commit=False)
+#             new_post.user = request.user
+#             new_post.save()
+#             return redirect('dashboard')  # Redirect to 'dashboard' view
+#     else:
+#         form = PostForm()
+#     return render(request, 'dashboard.html', {'form': form})
 
 
-def post_list(request):
-    posts = Post.objects.all()  # Retrieve all posts
-    return render(request, 'post_list.html', {'posts': posts})
+# def post_list(request):
+#     posts = Post.objects.all()  # Retrieve all posts
+#     return render(request, 'post_list.html', {'posts': posts})
 
 
 # from django.shortcuts import render, redirect
@@ -323,3 +325,38 @@ def post_list(request):
 #     post = get_object_or_404(Post, pk=pk)
 #     return render(request, 'post_detail.html', {'post': post})
 
+@login_required
+def create_post(request):
+    if request.method == 'POST':
+        caption = request.POST.get('postCaption')
+        category= request.POST.get('category')
+        image= request.POST.get('post-image')
+
+        user_profile = User.objects.get(user=request.user)
+
+        post = Post.objects.create(
+            user=user_profile,
+            caption=caption,
+            category=category,
+            image=input
+        )
+        return redirect('events.html')
+   
+
+    return render(request, 'dashboard.html', {'form': form})
+
+def create_post_new(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user.userprofile
+            post.save()
+            return redirect('create_post.html')
+        else:
+            # Print form errors to the console for debugging
+            print(form.errors)
+    else:
+        form = PostForm()
+
+    return render(request, 'create_post.html', {'form': form})
