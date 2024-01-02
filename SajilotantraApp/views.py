@@ -201,5 +201,5 @@ def map(request):
 
 
 def government_profiles_details(request,pk):
-    profiles = get_object_or_404(GovernmentProfile, id=pk)
+    profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
     return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
