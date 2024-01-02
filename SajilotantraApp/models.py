@@ -1,18 +1,31 @@
 from ckeditor.fields import RichTextField
+from django.contrib.auth.models import User
 from django.db import models
 
+from Sajilotantra import settings
 
-class User(models.Model):
-    user_id = models.AutoField(primary_key=True)
-    fName = models.CharField(max_length=200)
-    lName = models.CharField(max_length=200)
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=128)
-    # image = models.ImageField()
+# class User(models.Model):
+#     user_id = models.AutoField(primary_key=True)
+#     fName = models.CharField(max_length=200)
+#     lName = models.CharField(max_length=200)
+#     email = models.EmailField(unique=True)
+#     password = models.CharField(max_length=128)
+#     image = models.ImageField(upload_to='static/profiles/', null=True, blank=True)
+#     bio = models.CharField(max_length=255, null=True, blank=True)
+#     # image = models.ImageField()
+
+#     def __str__(self):
+#         return self.user_id
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='static/profile_images/', null=True, blank=True)
+    cover = models.ImageField(upload_to='static/cover_images/', null=True, blank=True)
+    bio = models.CharField(max_length=255, null=True, blank=True)
+    # Add other fields as needed
 
     def __str__(self):
-        return self.user_id
-
+        return self.user.username
 
 class GovernmentProfile(models.Model):
     profile_id=models.AutoField(primary_key=True)
@@ -21,10 +34,6 @@ class GovernmentProfile(models.Model):
     description = RichTextField() 
     address = models.CharField(max_length=200)
 
-    def __str__(self):
-        return self.name
-    
-    
 class Guidance(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
@@ -57,3 +66,17 @@ class Event(models.Model):
     
     def __str__(self):
         return self.name
+<<<<<<< HEAD
+=======
+    
+class Feedback(models.Model):
+    category = models.CharField(max_length=100)
+    suggestion = models.TextField()
+
+class UploadedFile(models.Model):
+    feedback = models.ForeignKey(Feedback, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='static/feedback_files/')
+
+    def __str__(self):
+        return self.file.name
+>>>>>>> a08833bde7cec65671ec21f56c7af687132b5105

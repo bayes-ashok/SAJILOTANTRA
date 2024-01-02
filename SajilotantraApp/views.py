@@ -1,19 +1,31 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User  # default user model
+from django.contrib.auth.models import User as AuthUser
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+<<<<<<< HEAD
 
 from Sajilotantra import settings
 from SajilotantraApp.models import Event, GovernmentProfile
 
 from .models import Notification, Guidance, GovernmentProfile
+=======
+from django.http import HttpResponseRedirect
+from .models import Feedback, UploadedFile
+from Sajilotantra import settings
+from SajilotantraApp.models import Event, GovernmentProfile
+
+from .models import GovernmentProfile, Guidance, Notification, UserProfile
+>>>>>>> a08833bde7cec65671ec21f56c7af687132b5105
 from .tokens import generate_token
 
 
@@ -140,6 +152,22 @@ def all_events(request):
             'end': event.end.isoformat(),      # Use isoformat() here
         })
     return JsonResponse(out, safe=False)
+<<<<<<< HEAD
+=======
+
+    all_events = Event.objects.all()
+    out = []
+    for event in all_events:
+        out.append({
+            'title': event.name,
+            'id': event.id,
+            'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),
+            'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),
+        })
+    return JsonResponse(out, safe=False)
+    return render(request,'events.html')
+
+>>>>>>> a08833bde7cec65671ec21f56c7af687132b5105
 # def map(request):
 #     return render(request, 'map.html')
 
@@ -192,3 +220,92 @@ def map(request):
 def government_profiles_details(request,pk):
     profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
     return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
+<<<<<<< HEAD
+=======
+
+from django.http import Http404
+
+
+# @login_required
+def profile(request, username):
+    auth_user = request.user
+    print(auth_user)
+
+    try:
+        # Retrieve the user based on the provided username
+        user = User.objects.get(username=username)
+
+        if auth_user != user:
+            # If they don't match, redirect to the login page
+            return redirect('signin')
+
+        if user is None:
+            return render(request, "user_does_not_exist.html")
+
+        # Retrieve or create UserProfile based on user_id
+        profile, created = UserProfile.objects.get_or_create(user=user)
+
+        # Handle profile update
+        if request.method == 'POST':
+            profile.bio = request.POST.get('bio', '')
+            
+            # Update profile picture
+            if 'picture' in request.FILES:
+                profile.image = request.FILES['picture']
+
+            # Update cover photo
+            if 'cover' in request.FILES:
+                profile.cover = request.FILES['cover']
+
+            profile.save()
+
+        context = {
+            'user': user,
+            'auth_user': auth_user,
+        }
+
+    except User.DoesNotExist:
+        raise Http404("User does not exist")
+
+    return render(request, 'profile.html', context)
+
+
+def view_profile(request, username):
+    user = get_object_or_404(User, username=username)
+    
+    # try:
+    #     profile = UserProfile.objects.get(user=user)
+    # except UserProfile.DoesNotExist:
+    #     return render(request, 'user_does_not_exist.html')
+
+    if user is None:
+        return render(request, 'user_does_not_exist.html')
+    
+    profile = UserProfile.objects.get(user=user)
+
+    context = {
+        'user': user,
+        'profile': profile,
+    }
+
+    return render(request, 'frontprofile.html', context)
+
+def feedback(request):
+    if request.method == 'POST':
+        category = request.POST.get('category')
+        suggestion = request.POST.get('Suggestion')
+
+        feedback = Feedback(category=category, suggestion=suggestion)
+        feedback.save()
+
+        # Handle file uploads
+        uploaded_files = request.FILES.getlist('user_avatar')
+        for uploaded_file in uploaded_files:
+            file_instance = UploadedFile(feedback=feedback, file=uploaded_file)
+            file_instance.save()
+        messages.success(request, "A new feedback is added go and check through!")
+        # Redirect or render a thank you page
+        return HttpResponseRedirect('feedback')  # Replace '/thank-you/' with your desired URL
+
+    return render(request, 'feedback.html') 
+>>>>>>> a08833bde7cec65671ec21f56c7af687132b5105

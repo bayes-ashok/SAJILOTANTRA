@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Profile</title>
+</head>
+<body>
+
+<h1>User Profile</h1>
+
+<!-- Display user details -->
+<p>Username: {{ user.username }}</p>
+<p>First Name: {{ user.first_name }}</p>
+<p>Last Name: {{ user.last_name }}</p>
+<p>Email: {{ user.email }}</p>
+<p>Bio: {{ user.userprofile.bio }}</p>
+
+<!-- Display profile picture -->
+{% with profile=user.userprofile %}
+    {% if profile and profile.image %}
+        <img src="{{ profile.image.url }}" alt="Profile Picture">
+    {% endif %}
+{% endwith %}
+
+<!-- Display cover photo -->
+{% with profile=user.userprofile %}
+    {% if profile and profile.cover %}
+        <img src="{{ profile.cover.url }}" alt="Cover Photo">
+    {% endif %}
+{% endwith %}
+
+<!-- Profile update form -->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!-- Bio input field -->
+    <label for="id_bio">Bio:</label>
+    <textarea name="bio" id="id_bio" rows="3">{{ user.userprofile.bio }}</textarea><br>
+
+    <!-- Profile picture input field -->
+    <label for="id_picture">Select a new profile picture:</label>
+    <input type="file" name="picture" id="id_picture" accept="image/*"><br>
+
+    <!-- Cover photo input field -->
+    <label for="id_cover">Select a new cover photo:</label>
+    <input type="file" name="cover" id="id_cover" accept="image/*"><br>
+
+    <button type="submit">Update Profile</button>
+</form>
+
+</body>
+</html>
