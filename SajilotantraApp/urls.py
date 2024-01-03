@@ -17,4 +17,7 @@ urlpatterns = [
     path('government_profile/<int:pk>', views.government_profiles_details, name='government_profiles_details'),
     path('all_events/', views.all_events, name='all_events'),
     path('map/', views.map, name='map'),
+    path('create_post/', views.create_post, name='create_post'),
+    # path('create_post_new/', views.create_post_new, name='create_post_new'),
+
 ]

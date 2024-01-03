@@ -9,13 +9,18 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth.decorators import login_required
+
+# from .forms import PostForm
 
 from Sajilotantra import settings
 from SajilotantraApp.models import Event, GovernmentProfile
 
-from .models import Notification, Guidance, GovernmentProfile
+from .models import Notification, Guidance, GovernmentProfile, UserProfile
+from .models import Post, PostComment, PostLike
 from .tokens import generate_token
-
+from django.http import Http404
 
 def index(request):
     return render(request, 'index.html')
@@ -159,10 +164,13 @@ def all_events(request):
 def dashboard(request):
     notifications = Notification.objects.all()
     guidance = Guidance.objects.all().order_by('-pk')
+    posts= Post.objects.all().order_by('-pk')
+
     
     context = {
         'notifications': notifications,
         'guidance_items': guidance[:6],  # Fetching the first 6 guidance items
+        'posts':posts,
     }
 
     return render(request, 'dashboard.html', context)
@@ -203,3 +211,130 @@ def map(request):
 def government_profiles_details(request,pk):
     profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
     return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
+
+
+# @login_required
+def profile(request, username):
+    auth_user = request.user
+    print(auth_user)
+
+    try:
+        # Retrieve the user based on the provided username
+        user = User.objects.get(username=username)
+
+        if auth_user != user:
+            # If they don't match, redirect to the login page
+            return redirect('signin')
+
+        if user is None:
+            return render(request, "user_does_not_exist.html")
+
+        # Retrieve or create UserProfile based on user_id
+        profile, created = UserProfile.objects.get_or_create(user=user)
+
+        # Handle profile update
+        if request.method == 'POST':
+            profile.bio = request.POST.get('bio', '')
+            
+            # Update profile picture
+            if 'picture' in request.FILES:
+                profile.image = request.FILES['picture']
+
+            # Update cover photo
+            if 'cover' in request.FILES:
+                profile.cover = request.FILES['cover']
+
+            profile.save()
+
+        context = {
+            'user': user,
+            'auth_user': auth_user,
+        }
+
+    except User.DoesNotExist:
+        raise Http404("User does not exist")
+
+    return render(request, 'profileupdate.html', context)
+
+
+def view_profile(request, username):
+    user = get_object_or_404(User, username=username)
+    
+    try:
+        profile = UserProfile.objects.get(user=user)
+    except UserProfile.DoesNotExist:
+        return render(request, 'user_does_not_exist.html')
+
+    # if user is None:
+    #     return render(request, 'user_does_not_exist.html')
+    
+    profile = UserProfile.objects.get(user=user)
+
+    context = {
+        'user': user,
+        'profile': profile,
+    }
+
+    return render(request, 'frontprofile.html', context)
+
+
+@login_required(login_url='/signin')
+def create_post(request):
+    if request.method == 'POST':
+        caption = request.POST.get('postCaption')
+        category= request.POST.get('category')
+        image= request.POST.get('post-image')
+
+
+        auth_user= request.user
+        # Cur_user = User.objects.get(username=auth_user)
+        U_profile, created = UserProfile.objects.get_or_create(user=auth_user)
+        print(U_profile.pk)
+        print(auth_user)
+        # Check if the user is authenticated
+        if isinstance(request.user, AnonymousUser):
+            return render(request, 'signin.html')  # or redirect to login page
+
+        try:
+            user_profile = UserProfile.objects.get(user=U_profile.pk)
+        except UserProfile.DoesNotExist as e:
+            # Handle the case when the user profile does not exist
+            print(f"Error: {e}")
+            return render(request, 'signup.html')
+
+        # print("USer: "+user_profile)
+        
+        
+        post = Post.objects.create(
+            user=user_profile,
+            # user="demo",
+            caption=caption,
+            category=category,
+            image=image
+        )
+        return redirect('dashboard')
+   
+
+    # return render(request, 'dashboard.html', {'form': form})
+    return redirect('map.html')
+
+# def create_post_new(request):
+#     if request.method == 'POST':
+#         form = PostForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             post = form.save(commit=False)
+#             post.user = request.user.userprofile
+#             post.save()
+#             return redirect('create_post.html')
+#         else:
+#             # Print form errors to the console for debugging
+#             print(form.errors)
+#     else:
+#         form = PostForm()
+
+#     return render(request, 'create_post.html', {'form': form})
+
+
+
+
+
