@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Profile</title>
+    <!-- Add this script in the head to handle modal visibility and drag and drop functionality -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      var openProfileFormBtn = document.getElementById("openProfileFormBtn");
+      var closeModalBtn = document.getElementById("closeModalBtn");
+      var profileUpdateForm = document.getElementById("profileUpdateForm");
+      var modal = document.getElementById("profileModal");
+
+      openProfileFormBtn.addEventListener("click", function () {
+          modal.classList.add("flex");
+          modal.classList.remove("hidden");
+      });
+
+      closeModalBtn.addEventListener("click", function () {
+          modal.classList.add("hidden");
+          modal.classList.remove("flex");
+      });
+
+      // Handle drag and drop events for profile picture
+      handleDragAndDrop('drop-area-profile', 'id_picture', 'profileImage', 'selectedImageNameProfile');
+
+      // Handle drag and drop events for cover photo
+      handleDragAndDrop('drop-area-cover', 'id_cover', 'coverImage', 'selectedImageNameCover');
+  });
+
+  function handleDragAndDrop(dropAreaId, fileInputId, previewImageId, selectedImageNameId) {
+      const dropArea = document.getElementById(dropAreaId);
+      const selectedImageName = document.getElementById(selectedImageNameId);
+
+      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+          dropArea.addEventListener(eventName, preventDefaults, false);
+      });
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+          dropArea.addEventListener(eventName, highlight, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+          dropArea.addEventListener(eventName, unhighlight, false);
+      });
+
+      dropArea.addEventListener('drop', function (e) {
+          handleDrop(e, fileInputId, previewImageId, selectedImageName);
+      }, false);
+  }
+
+  function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+  }
+
+  function highlight(e) {
+      const dropArea = e.currentTarget;
+      dropArea.classList.add('border-indigo-500');
+  }
+
+  function unhighlight(e) {
+      const dropArea = e.currentTarget;
+      dropArea.classList.remove('border-indigo-500');
+  }
+
+  function handleDrop(e, fileInputId, previewImageId, selectedImageName) {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+
+      // Update the text in the drag and drop area
+      const dropArea = e.currentTarget;
+      dropArea.innerHTML = `<p class="text-gray-500">${files[0].name} selected.</p>`;
+      selectedImageName.textContent = files[0].name;
+
+      // Additional logic for handling the dropped file if needed
+
+      // Simulate a click on the hidden file input to trigger its onchange event
+      const fileInput = document.getElementById(fileInputId);
+      const previewImage = document.getElementById(previewImageId);
+      fileInput.files = files;
+
+      // If a preview image is available, update its source
+      if (previewImage) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+              previewImage.src = e.target.result;
+          };
+          reader.readAsDataURL(files[0]);
+      }
+
+      fileInput.dispatchEvent(new Event('change'));
+  }
+
+  // Handle bio input field
+  const bioContent = document.getElementById('bioContent');
+  const bioInput = document.getElementById('id_bio');
+
+  bioInput.addEventListener('input', function () {
+      bioContent.textContent = bioInput.value || bioContent.textContent;
+  });
+</script>
+
+<body>
+    <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
+<link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+
+<main class="profile-page">
+  <section class="relative block h-500-px">
+    <!-- Display cover photo -->
+    {% with profile=user.userprofile %}
+    {% if profile and profile.cover %}
+    <div class="absolute top-0 w-full h-full bg-center bg-cover" style="
+            background-image: url('{{ profile.cover.url }}');
+          ">
+              {% endif %}
+              {% endwith %}
+      <span id="blackOverlay" class="w-full h-full absolute opacity-50 bg-black"></span>
+    </div>
+    <div class="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px" style="transform: translateZ(0px)">
+      <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" version="1.1" viewBox="0 0 2560 100" x="0" y="0">
+        <polygon class="text-blueGray-200 fill-current" points="2560 0 2560 100 0 100"></polygon>
+      </svg>
+    </div>
+  </section>
+  <section class="relative py-16 bg-blueGray-200">
+    <div class="container mx-auto px-4">
+      <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
+        <div class="px-6">
+          <div class="flex flex-wrap justify-center">
+            <div class="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
+              <div class="relative">
+                {% with profile=user.userprofile %}
+                {% if profile and profile.image %}
+                  <img alt="..." src="{{ profile.image.url }}" id="profileImage" class="shadow-lg rounded-full border-0" style="width: 150px; height: 150px;">
+                  {% endif %}
+                  {% endwith %}
+                  <input type="file" id="imageInput" style="display: none;" accept="image/*" onchange="previewImage(event)">
+              </div>
+          </div>
+            <div class="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
+              <div class="py-6 px-3 mt-32 sm:mt-0">
+              </div>
+            </div>
+            <div class="w-full lg:w-4/12 px-4 lg:order-1">
+              <div class="flex justify-center py-4 lg:pt-4 pt-2">
+                <div class="mr-4 p-3 text-center">
+                  <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600"></span><span class="text-sm text-blueGray-400"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-8">
+            <h3 class="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+              {{ user.username }}
+            </h3>
+            <div class="mb-2 text-blueGray-600 mt-10">
+          </div>
+          <div class="mt-10 py-10 border-t border-blueGray-200 text-center">
+            <div class="flex flex-wrap justify-center">
+                <div class="w-full lg:w-9/12 px-4">
+                    <p class="mb-4 text-lg leading-relaxed text-blueGray-700">
+                        <span id="bioContent">{{ user.userprofile.bio }}</span>
+                    </p>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="relative bg-blueGray-200 pt-8 pb-6 mt-8">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-wrap items-center md:justify-between justify-center">
+      <div class="w-full md:w-6/12 px-4 mx-auto text-center">
+      </div>
+    </div>
+  </div>
+
+  <button id="openProfileFormBtn" class="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-10 focus:outline-none hover:bg-indigo-600 rounded text-lg">Update Profile</button>
+
+
+<!-- Profile update form modal (hidden initially) -->
+<div id="profileModal" class="fixed inset-0 z-50 hidden overflow-auto bg-transparent-75 items-center justify-center">
+  <div class="bg-white w-1/2 p-6 rounded-lg shadow-lg">
+      <button id="closeModalBtn" class="absolute top-4 right-4 text-gray-600 hover:text-gray-800 focus:outline-none">
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+      </button>
+
+      <!-- Profile update form content -->
+      <form id="profileUpdateForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}          <!-- Profile picture input field -->
+                    <!-- Bio input field -->
+                    <div class="mb-4">
+                      <label for="id_bio" class="block text-sm font-medium text-gray-600">Bio:</label>
+                      <textarea name="bio" id="id_bio" placeholder="{{ user.userprofile.bio }}" rows="3" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
+                  </div>
+          <div class="mb-4">
+              <label for="id_picture" class="block text-sm font-medium text-gray-600">Select a new profile picture:</label>
+
+              <!-- File input field for choosing image -->
+              <div class="mt-1 flex items-center">
+                  <label for="id_picture" class="px-4 py-2 bg-indigo-500 text-white rounded-md cursor-pointer">
+                      Choose Image
+                  </label>
+                  <input type="file" name="picture" id="id_picture" accept="image/*" class="hidden" onchange="handleFileSelect(event)">
+              </div>
+
+              <!-- Or drag and drop area -->
+              <div id="drop-area-profile" class="mt-3 p-4 border-dashed border-2 border-gray-300 rounded-md">
+                  <p class="text-gray-500">Drag & drop an image here or click to select one.</p>
+              </div>
+
+          </div>
+
+          <!-- Cover photo input field -->
+          <div class="mb-4">
+              <label for="id_cover" class="block text-sm font-medium text-gray-600">Select a new cover photo:</label>
+
+              <!-- File input field for choosing image -->
+              <div class="mt-1 flex items-center">
+                  <label for="id_cover" class="px-4 py-2 bg-indigo-500 text-white rounded-md cursor-pointer">
+                      Choose Image
+                  </label>
+                  <input type="file" name="cover" id="id_cover" accept="image/*" class="hidden" onchange="handleFileSelect(event)">
+              </div>
+
+              <!-- Or drag and drop area -->
+              <div id="drop-area-cover" class="mt-3 p-4 border-dashed border-2 border-gray-300 rounded-md">
+                  <p class="text-gray-500">Drag & drop an image here or click to select one.</p>
+              </div>
+
+          </div>
+
+          <!-- Your additional form content here -->
+
+          <button id="updateprofilebtn" class="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-10 focus:outline-none hover:bg-indigo-600 rounded text-lg">Update Profile</button>
+      </form>
+  </div>
+</div>
+
+
+
+<!-- Add this script at the end of the body to handle the button click and form visibility -->
+<script>
+  document.getElementById("openProfileFormBtn").addEventListener("click", function() {
+    var profileForm = document.getElementById("profileUpdateForm");
+    profileForm.style.display = (profileForm.style.display === "none" || profileForm.style.display === "") ? "block" : "none";
+  });
+</script>
+</body>
+</html>
+  
+</body>
+</html>
