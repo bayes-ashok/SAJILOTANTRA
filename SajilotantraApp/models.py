@@ -73,7 +73,9 @@ class Post(models.Model):
     caption = models.TextField()
     category = models.CharField(max_length=50)
     image = models.ImageField(upload_to='static/post_images/', blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now=True)
+    # date_posted=models.DateTimeField(auto_now_add=True)
+
 
 class PostLike(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

@@ -283,8 +283,7 @@ def create_post(request):
     if request.method == 'POST':
         caption = request.POST.get('postCaption')
         category= request.POST.get('category')
-        image= request.POST.get('post-image')
-
+        image= request.FILES.get('file_input')
 
         auth_user= request.user
         # Cur_user = User.objects.get(username=auth_user)

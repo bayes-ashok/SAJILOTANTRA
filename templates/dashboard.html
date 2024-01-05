@@ -254,9 +254,9 @@
 							</div>
 							<main class="container mx-auto max-w-screen-lg h-full">
 								<!-- file upload modal -->
-								<article aria-label="File Upload Modal" class="relative h-full flex flex-col" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);" ondragenter="dragEnterHandler(event);">
+								{% comment %} <article aria-label="File Upload Modal" class="relative h-full flex flex-col" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);" ondragenter="dragEnterHandler(event);"> {% endcomment %}
 					
-							<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
+							{% comment %} <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label> {% endcomment %}
 							<input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" name="file_input" type="file" accept="image/*">
 							<p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
 								<!-- sticky footer -->
@@ -290,8 +290,9 @@
 								<b id="name" class="mb-2 capitalize">{{post.user.user.first_name}} {{post.user.user.last_name}}</b>
 								<p id="username" class="text-gray-700 text-xs">{{post.user.user}}</p>
 								</div>
-								<time datetime="06-08-21" class="text-gray-400 text-xs">{{post.created_at}}
-								</time>
+								{% load tz %}
+								<p class="text-gray-400 text-xs">{{post.created_at|timezone:"Asia/Kathmandu"}}
+								</p>
 							</div>
 						</div>
 						<div class="bg-gray-100	rounded-full h-3.5 flex	items-center justify-center">
