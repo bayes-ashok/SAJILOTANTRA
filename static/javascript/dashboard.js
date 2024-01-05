@@ -64,3 +64,6 @@ const profileContainer = document.getElementById('profileContainer');
             createModal.classList.add('hidden');
         }
     });
+
+    // Post Images 
+  
