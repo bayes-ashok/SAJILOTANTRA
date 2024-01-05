@@ -7,6 +7,10 @@
     <script src="https://kit.fontawesome.com/c30dadd52a.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"  rel="stylesheet" />
+  {% block heading %}
+  
+  {% endblock heading %}
+
 
     <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,8 +18,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
         rel="stylesheet">
 		<link rel="stylesheet" href="static\css\dashboard.css">
-		<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-</head>
+    
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+
+  </head>
 <body class="bg-blue-50">
 <header class="">
 	<nav class="fixed bg-white shadow flex justify-between items-center w-[100%]  mx-auto">
@@ -130,14 +136,14 @@
 	</div>
 	
 
+{% block content %}
 
+{% endblock content %}
 
 
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
-    <script src="static/javascript/dashboard.js"></script>
-    <script src="static/javascript/fileUpload.js"></script>
 </body>
 
 </html>
