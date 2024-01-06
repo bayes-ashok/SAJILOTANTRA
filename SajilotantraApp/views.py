@@ -6,7 +6,7 @@ from django.contrib.auth.models import User  # default user model
 from django.contrib.auth.models import User as AuthUser
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
@@ -230,8 +230,11 @@ def profile(request, username):
 
         # Handle profile update
         if request.method == 'POST':
-            profile.bio = request.POST.get('bio', '')
-            
+            # Preserve the existing bio if the new bio is empty
+            new_bio = request.POST.get('bio', '')
+            if new_bio != '':
+                profile.bio = new_bio
+
             # Update profile picture
             if 'picture' in request.FILES:
                 profile.image = request.FILES['picture']
@@ -240,7 +243,17 @@ def profile(request, username):
             if 'cover' in request.FILES:
                 profile.cover = request.FILES['cover']
 
+            #drag and drop profile
+            if 'drop-area-profile' in request.FILES:
+                profile.image= request.FILES['drop-area-profile']
+
+            #drag and drop cover
+            if 'drop-area-cover' in request.FILES:
+                profile.cover= request.FILES['drop-area-cover']
+
             profile.save()
+            messages.success(request,"Your profile has been updated successfully")
+
 
         context = {
             'user': user,
@@ -250,19 +263,20 @@ def profile(request, username):
     except User.DoesNotExist:
         raise Http404("User does not exist")
 
-    return render(request, 'profile.html', context)
+    return render(request, 'profileupdate.html', context)
+
 
 
 def view_profile(request, username):
     user = get_object_or_404(User, username=username)
     
-    # try:
-    #     profile = UserProfile.objects.get(user=user)
-    # except UserProfile.DoesNotExist:
-    #     return render(request, 'user_does_not_exist.html')
-
-    if user is None:
+    try:
+        profile = UserProfile.objects.get(user=user)
+    except UserProfile.DoesNotExist:
         return render(request, 'user_does_not_exist.html')
+
+    # if user is None:
+    #     return render(request, 'user_does_not_exist.html')
     
     profile = UserProfile.objects.get(user=user)
 
