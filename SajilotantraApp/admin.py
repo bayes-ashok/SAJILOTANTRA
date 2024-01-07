@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 # from SajilotantraApp.models import User
+from .models import Post
 
 from .models import GovernmentProfile, Guidance, Notification
 
@@ -15,7 +16,6 @@ admin.site.register(GovernmentProfile)
 
 admin.site.register(Event)
 
-from .models import Post
 admin.site.register(Post)
 
 from django.contrib.auth.models import User

@@ -9,9 +9,14 @@ from django.core.mail import EmailMessage, send_mail
 from django.forms import ValidationError
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+# from SajilotantraApp.forms import FileUploadForm
+from .forms import PostForm
+from django.contrib.auth.decorators import login_required
+from SajilotantraApp.models import Event
 
 from Sajilotantra import settings
 from SajilotantraApp.models import Event, GovernmentProfile
@@ -223,22 +228,22 @@ from django.shortcuts import render, redirect
 from .models import Post
 from .forms import PostForm
 
-def create_post(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            new_post = form.save(commit=False)
-            new_post.user = request.user
-            new_post.save()
-            return redirect('dashboard')  # Redirect to 'dashboard' view
-    else:
-        form = PostForm()
-    return render(request, 'create_post.html', {'form': form})
+# def create_post(request):
+#     if request.method == 'POST':
+#         form = PostForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             new_post = form.save(commit=False)
+#             new_post.user = request.user
+#             new_post.save()
+#             return redirect('dashboard')  # Redirect to 'dashboard' view
+#     else:
+#         form = PostForm()
+#     return render(request, 'dashboard.html', {'form': form})
 
 
-def post_list(request):
-    posts = Post.objects.all()  # Retrieve all posts
-    return render(request, 'post_list.html', {'posts': posts})
+# def post_list(request):
+#     posts = Post.objects.all()  # Retrieve all posts
+#     return render(request, 'post_list.html', {'posts': posts})
 
 from django.http import Http404
 
