@@ -1,4 +1,8 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
+from django.views.generic import TemplateView
+
+
 
 from . import views
 
@@ -19,4 +23,9 @@ urlpatterns = [
     path('map/', views.map, name='map'),
     path('create_post/', views.create_post, name='create_post'),
     path('post_list/', views.post_list, name='post_list'),
-]
+    path('change_password/', views.change_password, name='change_password'),
+    path('change_password/<str:username>/', views.change_password, name='change_password'),
+
+    path('view_profile/<str:username>/', views.view_profile, name='view_profile'),
+    
+] 

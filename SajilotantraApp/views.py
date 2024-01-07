@@ -1,30 +1,32 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User  # default user model
+from django.contrib.auth.models import User as AuthUser
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
+from django.forms import ValidationError
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
-from django.http import JsonResponse
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from SajilotantraApp.forms import FileUploadForm
-from SajilotantraApp.models import Event
 
 from Sajilotantra import settings
+from SajilotantraApp.models import Event, GovernmentProfile
 
-from .models import Notification, Guidance, GovernmentProfile
+from .models import GovernmentProfile, Guidance, Notification, UserProfile
 from .tokens import generate_token
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-# from .forms import UploadFileForm
-
-from django.shortcuts import render, redirect
-from .models import Post
-from .forms import PostForm
-
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+# import os
 
 def index(request):
     return render(request, 'index.html')
@@ -210,70 +212,16 @@ def map(request):
 
 
 def government_profiles_details(request,pk):
-    profiles = get_object_or_404(GovernmentProfile, id=pk)
+    profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
     return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
 
-# from .forms import FileUploadForm
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+# from .forms import UploadFileForm
 
-# def upload_file(request):
-#     if request.method == 'POST':
-#         form = FileUploadForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()  # Save the form data to the database
-#             return redirect('success_url')  # Redirect to success page after a successful upload
-#     else:
-#         form = FileUploadForm()
-#     return render(request, 'upload.html', {'form': form})
-
-
-
-
-# @login_required
-# def upload_file(request):
-#     if request.method == 'POST':
-#         form = UploadFileForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             # Assign the logged-in user's ID to the 'user_id' field of the UploadFile object
-#             upload_file_obj = form.save(commit=False)
-#             upload_file_obj.user_id = request.user.id  # Assuming 'user_id' is the field in model
-#             upload_file_obj.save()
-#             return redirect('success')  # Redirect to a success page or another appropriate URL
-#     else:
-#         form = UploadFileForm()
-#     return render(request, 'upload.html', {'form': form})
-
-# from django.contrib.auth.decorators import login_required
-
-# @login_required
-# def upload_file(request):
-#     if request.method == 'POST':
-#         form = FileUploadForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             # Assign the current logged-in user to the 'user' field
-#             upload_file = form.save(commit=False)
-#             upload_file.user = request.user  # Set the user to the currently logged-in user
-#             upload_file.save()
-#             return redirect('success_url')  # Redirect to a success URL
-#     else:
-#         form = FileUploadForm()
-#     return render(request, 'upload.html', {'form': form})
-
-# from django.shortcuts import render, redirect
-# from .models import Category, Post
-# from .forms import PostForm  # Create a form using Django's forms module
-
-# def create_post(request):
-#     if request.method == 'POST':
-#         form = PostForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             new_post = form.save(commit=False)
-#             new_post.user = request.user  # Assign current user to the post
-#             new_post.save()
-#             return redirect('view_post', post_id=new_post.id)  # Redirect to view the created post
-#     else:
-#         form = PostForm()
-#     return render(request, 'create_post.html', {'form': form})
-
+from django.shortcuts import render, redirect
+from .models import Post
+from .forms import PostForm
 
 def create_post(request):
     if request.method == 'POST':
@@ -292,34 +240,131 @@ def post_list(request):
     posts = Post.objects.all()  # Retrieve all posts
     return render(request, 'post_list.html', {'posts': posts})
 
-
-# from django.shortcuts import render, redirect
-# from .forms import PostForm
-
-# def create_post(request):
-#     if request.method == 'POST':
-#         form = PostForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             post = form.save(commit=False)
-#             post.user = request.user
-#             post.save()
-#             return redirect('post_detail', pk=post.pk)
-#     else:
-#         form = PostForm()
-#     return render(request, 'create_post.html', {'form': form})
+from django.http import Http404
 
 
-# from django.shortcuts import render
-# from .models import Post
+# @login_required
+def profile(request, username):
+    auth_user = request.user
+    print(auth_user)
 
-# def post_list(request):
-#     posts = Post.objects.all()
-#     return render(request, 'post_list.html', {'posts': posts})
+    try:
+        # Retrieve the user based on the provided username
+        user = User.objects.get(username=username)
 
-# from django.shortcuts import render, get_object_or_404
-# from .models import Post
+        if auth_user != user:
+            # If they don't match, redirect to the login page
+            return redirect('signin')
 
-# def post_detail(request, pk):
-#     post = get_object_or_404(Post, pk=pk)
-#     return render(request, 'post_detail.html', {'post': post})
+        if user is None:
+            return render(request, "user_does_not_exist.html")
 
+        # Retrieve or create UserProfile based on user_id
+        profile, created = UserProfile.objects.get_or_create(user=user)
+
+        # Handle profile update
+        if request.method == 'POST':
+            profile.bio = request.POST.get('bio', '')
+            
+            # Update profile picture
+            if 'picture' in request.FILES:
+                profile.image = request.FILES['picture']
+
+            # Update cover photo
+            if 'cover' in request.FILES:
+                profile.cover = request.FILES['cover']
+
+            profile.save()
+
+        context = {
+            'user': user,
+            'auth_user': auth_user,
+        }
+
+    except User.DoesNotExist:
+        raise Http404("User does not exist")
+
+    return render(request, 'profileupdate.html', context)
+
+
+def view_profile(request, username):
+    user = get_object_or_404(User, username=username)
+    
+    try:
+        profile = UserProfile.objects.get(user=user)
+    except UserProfile.DoesNotExist:
+        return render(request, 'user_does_not_exist.html')
+
+    # if user is None:
+    #     return render(request, 'user_does_not_exist.html')
+    
+    profile = UserProfile.objects.get(user=user)
+
+    context = {
+        'user': user,
+        'profile': profile,
+    }
+
+    return render(request, 'frontprofile.html', context)
+
+# MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'create_post')
+
+from django.contrib.auth.forms import PasswordChangeForm
+
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from django.contrib.auth import update_session_auth_hash
+
+from django.http import JsonResponse
+
+
+def change_password(request, username):
+
+    curr_user = request.user
+    
+    user = User.objects.get(username=username)
+    if curr_user!=user:
+        return redirect ('siginin')
+    error_message = None
+
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            old_password = form.cleaned_data['old_password']
+            new_password = form.cleaned_data['new_password1']
+            
+            # Check if the old password matches the user's current password
+            if not curr_user.check_password(old_password):
+                error_message = 'The old password is incorrect.'
+            else:
+                try:
+                    # Validate the new password
+                    validate_password(new_password, user=request.user)
+                except ValidationError as error:
+                    # Password validation failed
+                    for message in error.messages:
+                        if 'This password is too short' in message:
+                            form.add_error('new_password1', 'Password must be at least 8 characters long.')
+                        elif 'This password is too common' in message:
+                            form.add_error('new_password1', 'Password must contain at least one lowercase character.')
+                        elif 'This password is entirely numeric' in message:
+                            form.add_error('new_password1', 'Password must contain at least one special character, e.g., ! @ # ?')
+                    return JsonResponse({'error': form.errors}, status=400)  # Return form errors as JSON response
+
+                # Change the user's password and update the session
+                curr_user.set_password(new_password)
+                curr_user.save()
+                update_session_auth_hash(request, curr_user)
+                
+                success_message = 'Password changed successfully.'
+                messages.error(request, success_message)
+        else:
+            error_message = 'Please correct the errors below.'
+            messages.error(request, error_message)
+    else:
+        form = PasswordChangeForm(user=request.user)
+    
+    return render(request, 'change_password.html', {'form': form, 'error_message': error_message})

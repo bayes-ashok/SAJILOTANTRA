@@ -86,7 +86,10 @@
 				class="hidden origin-top-right absolute right-2 top-14 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
 				<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="profileContainer">
 					<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-						role="menuitem">Profile Settings</a>
+						role="menuitem">Profile Settings
+						<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+						role="menuitem">change_password</a>
+					</a>
 					<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Logout</a>
 				</div>
@@ -636,6 +639,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
     <script src="static/javascript/dashboard.js"></script>
     <script src="static/javascript/fileUpload.js"></script>
+
+{% if success_message %}
+	<div class="mt-4 p-3 bg-green-200 text-green-800 text-center rounded-md">
+        {{ success_message }}
+    </div>
+{% endif %}
+
+
+	
 </body>
 
 </html>
