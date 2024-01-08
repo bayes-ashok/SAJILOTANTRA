@@ -451,3 +451,23 @@ def create_post(request):
 
     # return render(request, 'dashboard.html', {'form': form})
     return redirect('map.html')
+
+from .models import UserProfile
+def get_names(request):
+    search = request.GET.get('search')
+    payload = []
+
+    if search:
+        objs = UserProfile.objects.filter(user__username__startswith=search)
+
+        for obj in objs:
+            payload.append({
+                'user': obj.user.username
+            })
+
+    return JsonResponse(
+        {
+            'status': True,
+            'payload': payload,
+        }
+    )

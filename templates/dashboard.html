@@ -15,6 +15,7 @@
         rel="stylesheet">
 		<link rel="stylesheet" href="static\css\dashboard.css">
 		<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+		<script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
 </head>
 <body class="bg-blue-50">
 <header class="">
@@ -60,10 +61,12 @@
 							  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
 							</svg>
 						  </div>
-						  <input type="text" id="simple-search" class="block w-full p-2.5 pl-20 text-sm text-[#858EAD] rounded-lg bg-[#F4F6F8] border focus:ring-primary-100 focus:border-primary-100" placeholder="Type here to search..." required="">
+						  <div id="autocomplete" class="autocomplete">
+							<input class="autocomplete-input block w-full p-2.5 pl-20 text-sm text-[#858EAD] rounded-lg bg-[#F4F6F8] border focus:ring-primary-100 focus:border-primary-100" placeholder="Type here to search..." required="" />
+							<ul class="autocomplete-result-list"></ul>
+						  </div>
 						</div>
 					  </form>
-
 				</li>
 			</ul>
 		</div>  
@@ -423,6 +426,14 @@
         event.preventDefault();
         $(this).ekkoLightbox();
       });
+</script>
+<script>
+
+	new Autocomplete('#autocomplete',{
+		search : input => {
+			console.log(input)
+		}
+	})
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
