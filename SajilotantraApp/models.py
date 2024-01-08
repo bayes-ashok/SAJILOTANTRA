@@ -77,3 +77,22 @@ class UploadedFile(models.Model):
 
     def __str__(self):
         return self.file.name
+
+class Post(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    caption = models.TextField()
+    category = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='static/post_images/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now=True)
+    # date_posted=models.DateTimeField(auto_now_add=True)
+
+
+class PostLike(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+class PostComment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
