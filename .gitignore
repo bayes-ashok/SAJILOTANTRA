@@ -1,2 +1,15 @@
 *.pyc
 db.sqlite3
+
+# Ignore Django migrations
+/migrations/
+!*/migrations/init.py
+
+/feedback/
+/post_images/
+/images/
+/Image/
+/cover_images/
+/thumnails/
+/profile_images/
+/feedback_files/
