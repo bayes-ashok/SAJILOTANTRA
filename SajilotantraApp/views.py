@@ -441,6 +441,24 @@ def create_post(request):
             print(f"Error creating post: {e}")
     return redirect('map.html')
 
+@login_required(login_url='/signin')
+def like_post(request, post_id):
+    if request.method == 'POST':
+        post = get_object_or_404(Post, pk=post_id)
+        user_profile = request.user.userprofile
+
+        # Check if the user has already liked the post
+        if PostLike.objects.filter(post=post, user=user_profile).exists():
+            # User has already liked the post, you might want to handle this case
+            return JsonResponse({'message': 'You have already liked this post'})
+
+        # Create a new PostLike instance
+        like = PostLike.objects.create(post=post, user=user_profile)
+        return JsonResponse({'message': 'Post liked successfully', 'like_id': like.pk})
+
+    # Handle cases for GET requests or other HTTP methods
+    return JsonResponse({'message': 'Method not allowed'}, status=405)
+
 from .models import UserProfile
 
 
