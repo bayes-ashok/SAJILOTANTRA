@@ -80,7 +80,7 @@
 			 <!-- Dropdown menu -->
 			{% comment %} Profile Secion {% endcomment %}
 			<div id="profileContainer" class="flex items-center gap-3 cursor-pointer mx-2 rounded-full focus:ring-2 hover:ring-2 hover:ring-gray-600 focus:ring-gray-800 ">
-				<img class="w-10 h-10 rounded-full" src="https://placekitten.com/40/40" alt="Profile Picture">
+				<img class="w-10 h-10 rounded-full" src="{{ user_profile.image.url }}" alt="{{auth_user.username}}'s Profile Picture">
 			</div>
 			<div id="profileDropdown"
 				class="hidden origin-top-right absolute right-2 top-14 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
@@ -193,11 +193,12 @@
 		</div>
 		<div class="w-3/4">
 			<!-- Modal toggle -->
+			
 			<div id="createPostToggle" class="flex cursor-pointer justify-center my-0 py-0 px-0 mt-2" style="margin-top: 20px;">
 				<button id="defaultModalButton" data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="block text-white hover:drop-shadow-md font-medium rounded-lg text-sm text-center" type="button">
 					<div class="flex border justify-left bg-white mt-0 rounded-2xl pl-2 pr-20 py-4">
 						<div id="profileContainer" class="flex object-cover gap-3 cursor-pointer mx-2 rounded-full">
-							<img class="object-cover w-12 h-12 rounded-full" src="https://scontent.fbir7-1.fna.fbcdn.net/v/t39.30808-6/349104167_268251369000105_5995744721495170880_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=efb6e6&_nc_aid=0&_nc_ohc=Mg5mNv-yfhwAX-L2coI&_nc_ht=scontent.fbir7-1.fna&oh=00_AfAjc5NvA8NEv-uXu6_GwW-skddjsh2LzbB7XJ98z7pnVA&oe=65764D77" alt="Profile Picture">
+							<img class="object-cover w-12 h-12 rounded-full" src="{{post.user.image}}" alt="Profile Picture">
 						</div>
 						<p class="text-gray-500 text-lg text-left font-normal  ml-6 mr-20 flex items-center">Share your story on bureaucratic process or ask related questions</p>
 					</div>
@@ -328,7 +329,7 @@
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" viewBox="0 0 20 20" fill="currentColor">
 									<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
 								</svg>
-								<div class="text-sm" id="like-count">5 </div> <!-- Add an ID for updating like count -->
+								<div class="text-sm" id="like-count">5  </div> <!-- Add an ID for updating like count -->
 								<button onclick="likePost({{ post.id }})">Like</button> <!-- Your like button -->
 							</div>
 

@@ -1,5 +1,6 @@
-from django.contrib import messages
 import os
+
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -10,7 +11,6 @@ from django.core.mail import EmailMessage, send_mail
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
-from django.http import JsonResponse
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
@@ -419,42 +419,46 @@ def feedback(request):
     return render(request, 'feedback.html') 
 
 
-
 @login_required(login_url='/signin')
 def create_post(request):
     if request.method == 'POST':
         caption = request.POST.get('postCaption')
-        category= request.POST.get('category')
-        image= request.FILES.get('file_input')
+        category = request.POST.get('category')
+        image = request.FILES.get('file_input')
 
-        auth_user= request.user
-        # Cur_user = User.objects.get(username=auth_user)
-        U_profile, created = UserProfile.objects.get_or_create(user=auth_user)
-        print(U_profile.pk)
-        print(auth_user)
-        # Check if the user is authenticated
-        if isinstance(request.user, AnonymousUser):
-            return render(request, 'signin.html')  # or redirect to login page
+        auth_user = request.user
+        user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
 
         try:
-            user_profile = UserProfile.objects.get(user=U_profile.pk)
-        except UserProfile.DoesNotExist as e:
-            # Handle the case when the user profile does not exist
-            print(f"Error: {e}")
-            return render(request, 'signup.html')
-
-        # print("USer: "+user_profile)
-        
-        
-        post = Post.objects.create(
-            user=user_profile,
-            # user="demo",
-            caption=caption,
-            category=category,
-            image=image
-        )
-        return redirect('dashboard')
-   
-
-    # return render(request, 'dashboard.html', {'form': form})
+            post = Post.objects.create(
+                user=user_profile,
+                caption=caption,
+                category=category,
+                image=image
+            )
+            return redirect('dashboard')
+        except Exception as e:
+            print(f"Error creating post: {e}")
     return redirect('map.html')
+
+from .models import UserProfile
+
+
+def get_names(request):
+    search = request.GET.get('search')
+    payload = []
+
+    if search:
+        objs = UserProfile.objects.filter(user__username__startswith=search)
+
+        for obj in objs:
+            payload.append({
+                'user': obj.user.username
+            })
+
+    return JsonResponse(
+        {
+            'status': True,
+            'payload': payload,
+        }
+    )
