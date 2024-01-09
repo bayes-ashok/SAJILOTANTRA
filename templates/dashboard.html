@@ -85,7 +85,7 @@
 			<div id="profileDropdown"
 				class="hidden origin-top-right absolute right-2 top-14 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
 				<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="profileContainer">
-					<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+					<a href="{% url 'profile' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Profile Settings</a>
 					<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Logout</a>
@@ -303,15 +303,14 @@
 					</div>
 						<div class=" h-16 border-b  flex items-center justify-around	">
 							{% comment %} likes {% endcomment %}
-							<div class="flex items-center	gap-3">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" viewBox="0 0 20 20"
-									fill="currentColor">
-									<path fill-rule="evenodd"
-										d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-										clip-rule="evenodd" />
+							<div class="flex items-center gap-3">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+									<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
 								</svg>
-								<div class="text-sm">5 Likes</div>
+								{% comment %} <div class="text-sm" id="like-count">5 Likes</div> <!-- Add an ID for updating like count --> {% endcomment %}
+								<button onclick="likePost({{ post.id }})">Like</button> <!-- Your like button -->
 							</div>
+
 							{% comment %} comment {% endcomment %}
 							<div class="flex items-center	gap-3">
 								<svg width="20px" height="19px" viewBox="0 0 20 19" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -434,6 +433,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
     <script src="static/javascript/dashboard.js"></script>
     <script src="static/javascript/fileUpload.js"></script>
+    <script src="static/javascript/likePost.js"></script>
+
 </body>
 
 </html>
