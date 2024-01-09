@@ -1,0 +1,87 @@
+{% extends "index.html" %}
+
+{% block heading %}
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+<style>
+  .drop-area {
+    border-width: 2px;
+    border-radius: 0.25rem;
+    border-color: #3E8EFF;
+      border-style: dashed;
+      transition: border 0.3s ease-in-out;
+    }
+    .drop-area.dragged-over {
+      border-color: #4a5568;
+    }
+
+    .preview-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+    }
+    
+    .image-preview {
+      height: 100px;
+      width: 100px;
+      object-fit: cover;
+    }
+  </style>
+  {% endblock heading %}
+{% block content %}
+
+<div class="container mx-auto px-4 py-6">
+  {% if success_message %}
+  <div class="alert alert-success">
+                <p>{{ success_message }}</p>
+              </div>
+              {% endif %}
+              <div class="max-w-xl mx-auto bg-white rounded-lg shadow-md overflow-hidden" style="margin-top: 55px;">
+                <div class="p-6">
+                  <h1 class="text-2xl font-bold text-center text-gray-700 my-6">Feedback Form</h1>
+                  <form method="post" action="{% url 'feedback' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+            <div class="max-w-lg mx-auto">
+              <label for="category" class="block mb-2 text-sm font-medium ">Select a Category</label>
+              <select id="category" name="category" class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                <option>Feature Request</option>
+                <option>Report Bug</option>
+                <option>Guidance Section</option>
+                <option>Government Profile Section</option>
+                <option>Events Section</option>
+                <option>Inappropriate Content</option>
+                
+              </select>
+            </div>
+            
+            <div class="max-w-lg mx-auto mt-5">
+              <label for="Suggestion" class="block mb-2 text-sm font-medium">Your Suggestion</label>
+              <textarea id="Suggestion" name="Suggestion" rows="7" class="block p-2.5 w-full text-sm rounded-lg border  focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500" placeholder="Leave your suggestion..." style="border-color: lightgrey;"></textarea>
+            </div>
+            
+            <div class="max-w-lg mx-auto mt-5">
+              <label for="user_avatar" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload file</label>
+              <div id="dropArea" class="drop-area p-4">
+                <input aria-describedby="user_avatar_help" id="user_avatar" name="user_avatar" type="file" multiple class="hidden">
+                <p class="text-gray-500 cursor-pointer">Drag and drop files here or <span id="fileInputText" class="underline">click to select files</span>.</p>
+              </div>
+              <div id="filePreview" class="preview-container mt-4"></div>
+            </div>
+            
+            <div class="flex justify-center mt-4">
+              <button type="submit" class="btn btn-primary bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <script src="static/javascript/feedback.js"></script>
+    <footer id="footer" class="footer text-base py-2" style="background-color: #F9F9F9;">
+      <div class="container mx-auto" style="text-align: center;">
+                      &copy; Copyright <strong><span>SAJILOTANTRA</span></strong>. All Rights Reserved
+          
+      </div>
+  </footer>
+    {% endblock content %}
+

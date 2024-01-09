@@ -3,10 +3,10 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User  # default user model
-from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth.models import AnonymousUser
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
-from django.http import Http404, JsonResponse
+from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
@@ -15,7 +15,8 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from Sajilotantra import settings
 from SajilotantraApp.models import Event, GovernmentProfile
 
-from .models import GovernmentProfile, Guidance, Notification, UserProfile
+from .models import (Feedback, GovernmentProfile, Guidance, Notification, Post,
+                     PostComment, PostLike, UploadedFile, UserProfile)
 from .tokens import generate_token
 
 
@@ -161,10 +162,14 @@ def all_events(request):
 def dashboard(request):
     notifications = Notification.objects.all()
     guidance = Guidance.objects.all().order_by('-pk')
-    
+    events = Event.objects.all().order_by('-pk')
+    posts= Post.objects.all().order_by('-pk')
+  
     context = {
         'notifications': notifications,
         'guidance_items': guidance[:6],  # Fetching the first 6 guidance items
+        'events': events[:3],
+        'posts':posts,
     }
 
     return render(request, 'dashboard.html', context)
@@ -288,3 +293,160 @@ def view_profile(request, username):
     return render(request, 'frontprofile.html', context)
 
 
+def government_profiles(request):
+    profiles=GovernmentProfile.objects.all().order_by('-pk')
+    data={
+        'profiles':profiles
+    }
+    return render(request, 'government_profiles.html', data)
+
+def map(request):
+    profiles=GovernmentProfile.objects.all().order_by("-pk")
+    data={
+        'profiles':profiles
+    }
+    return render(request,'map.html',data)
+
+
+def government_profiles_details(request,pk):
+    profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
+    return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
+
+from django.http import Http404
+
+
+# @login_required
+def profile(request, username):
+    auth_user = request.user
+    print(auth_user)
+
+    try:
+        # Retrieve the user based on the provided username
+        user = User.objects.get(username=username)
+
+        if auth_user != user:
+            # If they don't match, redirect to the login page
+            return redirect('signin')
+
+        if user is None:
+            return render(request, "user_does_not_exist.html")
+
+        # Retrieve or create UserProfile based on user_id
+        profile, created = UserProfile.objects.get_or_create(user=user)
+
+        # Handle profile update
+        if request.method == 'POST':
+            # Preserve the existing bio if the new bio is empty
+            new_bio = request.POST.get('bio', '')
+            if new_bio != '':
+                profile.bio = new_bio
+
+            # Update profile picture
+            if 'picture' in request.FILES:
+                profile.image = request.FILES['picture']
+
+            # Update cover photo
+            if 'cover' in request.FILES:
+                profile.cover = request.FILES['cover']
+
+            #drag and drop profile
+            if 'drop-area-profile' in request.FILES:
+                profile.image= request.FILES['drop-area-profile']
+
+            #drag and drop cover
+            if 'drop-area-cover' in request.FILES:
+                profile.cover= request.FILES['drop-area-cover']
+
+            profile.save()
+            messages.success(request,"Your profile has been updated successfully")
+
+
+        context = {
+            'user': user,
+            'auth_user': auth_user,
+        }
+
+    except User.DoesNotExist:
+        raise Http404("User does not exist")
+
+    return render(request, 'profileupdate.html', context)
+
+def view_profile(request, username):
+    user = get_object_or_404(User, username=username)
+    
+    try:
+        profile = UserProfile.objects.get(user=user)
+    except UserProfile.DoesNotExist:
+        return render(request, 'user_does_not_exist.html')
+
+    # if user is None:
+    #     return render(request, 'user_does_not_exist.html')
+    
+    profile = UserProfile.objects.get(user=user)
+
+    context = {
+        'user': user,
+        'profile': profile,
+    }
+
+    return render(request, 'frontprofile.html', context)
+
+def feedback(request):
+    if request.method == 'POST':
+        category = request.POST.get('category')
+        suggestion = request.POST.get('Suggestion')
+
+        feedback = Feedback(category=category, suggestion=suggestion)
+        feedback.save()
+
+        # Handle file uploads
+        uploaded_files = request.FILES.getlist('user_avatar')
+        for uploaded_file in uploaded_files:
+            file_instance = UploadedFile(feedback=feedback, file=uploaded_file)
+            file_instance.save()
+        messages.success(request, "A new feedback is added go and check through!")
+        # Redirect or render a thank you page
+        return HttpResponseRedirect('feedback')  # Replace '/thank-you/' with your desired URL
+
+    return render(request, 'feedback.html') 
+
+
+
+@login_required(login_url='/signin')
+def create_post(request):
+    if request.method == 'POST':
+        caption = request.POST.get('postCaption')
+        category= request.POST.get('category')
+        image= request.FILES.get('file_input')
+
+        auth_user= request.user
+        # Cur_user = User.objects.get(username=auth_user)
+        U_profile, created = UserProfile.objects.get_or_create(user=auth_user)
+        print(U_profile.pk)
+        print(auth_user)
+        # Check if the user is authenticated
+        if isinstance(request.user, AnonymousUser):
+            return render(request, 'signin.html')  # or redirect to login page
+
+        try:
+            user_profile = UserProfile.objects.get(user=U_profile.pk)
+        except UserProfile.DoesNotExist as e:
+            # Handle the case when the user profile does not exist
+            print(f"Error: {e}")
+            return render(request, 'signup.html')
+
+        # print("USer: "+user_profile)
+        
+        
+        post = Post.objects.create(
+            user=user_profile,
+            # user="demo",
+            caption=caption,
+            category=category,
+            image=image
+        )
+        return redirect('dashboard')
+   
+
+    # return render(request, 'dashboard.html', {'form': form})
+    return redirect('map.html')

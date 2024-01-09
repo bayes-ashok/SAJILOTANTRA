@@ -34,10 +34,6 @@ class GovernmentProfile(models.Model):
     description = RichTextField() 
     address = models.CharField(max_length=200)
 
-    def __str__(self):
-        return self.name
-    
-    
 class Guidance(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
@@ -63,8 +59,40 @@ class Event(models.Model):
     id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=255,null=True,blank=True)
     description = models.TextField()
-    start=models.DateTimeField(null=True,blank=True)
-    end=models.DateTimeField(null=True,blank=True)
+    start=models.DateField(null=True,blank=True)
+    end=models.DateField(null=True,blank=True)
+    Location=models.CharField(max_length=255,null=True,blank=True)
+
     
     def __str__(self):
         return self.name
+    
+class Feedback(models.Model):
+    category = models.CharField(max_length=100)
+    suggestion = models.TextField()
+
+class UploadedFile(models.Model):
+    feedback = models.ForeignKey(Feedback, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='static/feedback_files/')
+
+    def __str__(self):
+        return self.file.name
+
+class Post(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    caption = models.TextField()
+    category = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='static/post_images/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now=True)
+    # date_posted=models.DateTimeField(auto_now_add=True)
+
+
+class PostLike(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+class PostComment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
