@@ -1,4 +1,5 @@
 from django.contrib import messages
+import os
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -164,6 +165,12 @@ def dashboard(request):
     guidance = Guidance.objects.all().order_by('-pk')
     events = Event.objects.all().order_by('-pk')
     posts= Post.objects.all().order_by('-pk')
+    
+    for post in posts:
+        if post.image:  # Check if the image field is not None
+            # Get the file extension
+            file_extension = os.path.splitext(post.image.url)[1][1:].lower()
+            post.file_extension = file_extension
     
     context = {
         'notifications': notifications,

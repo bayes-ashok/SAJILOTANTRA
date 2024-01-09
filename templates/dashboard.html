@@ -279,6 +279,7 @@
 				{% comment %} Trying Out Post Card {% endcomment %}
 			<!-- component -->
 
+
 			{%for post in posts%}
 			<main class="w-full flex items-center justify-center">
 				<div class="border max-w-screen-md lg:w-full bg-white mt-6 rounded-2xl p-4">
@@ -287,7 +288,7 @@
 							<img src="{{post.user.image}}" class="object-cover bg-yellow-500 rounded-full w-10 h-10" />
 							<div class="flex flex-col">
 								<div>
-								<b id="name" class="mb-2 capitalize">{{post.user.user.last_name}} {{post.user.user.first_name}}</b>
+								<b id="name" class="mb-2 capitalize">{{post.user.user.first_name}} {{post.user.user.last_name}}</b>
 								<p id="username" class="text-gray-700 text-xs">{{post.user.user}}</p>
 								</div>
 								{% load tz %}
@@ -306,12 +307,15 @@
 					<div class="whitespace-pre-wrap mt-7">{{post.caption}}</div>
 					<div class="mt-2 flex gap-2	 justify-center border-b pb-4 flex-wrap	">
 					
-						{% comment %} <img src="{{post.image}}" class="bg-red-500 rounded-2xl w-1/3 object-cover h-96 flex-auto" alt="photo"> {% endcomment %}
 						{% if post.image %}
-						{% comment %} <a href="https://unsplash.it/1200/768.jpg?image=254" data-lightbox="gallery" class="w-full md:w-1/3 p-2">
-							<img src="https://unsplash.it/600.jpg?image=254" class="w-full h-auto rounded">
-						  </a> {% endcomment %}
-						<img src="{{ post.image.url }}" class="bg-red-500 rounded-2xl w-1/3 object-cover h-96 flex-auto" alt="photo">
+						{% if post.file_extension == 'mp4' or post.file_extension == 'mov' or post.file_extension == 'avi' %}
+							<video class="bg-gray-900 rounded-2xl w-1/3 object-cover flex-auto" controls>
+								<source src="{{ post.image.url }}" type="video/mp4">
+								Your browser does not support the video tag.
+							</video>
+						{% else %}
+							<img src="{{ post.image.url }}" class="bg-gray-900 rounded-2xl w-1/3 object-cover flex-auto" alt="photo">
+						{% endif %}
 					{% endif %}
 					</div>
 						<div class=" h-16 border-b  flex items-center justify-around	">
