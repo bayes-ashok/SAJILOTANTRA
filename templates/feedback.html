@@ -1,65 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Feedback Form</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    .drop-area {
-        border-width: 2px;
-        border-radius: 0.25rem;
-        border-color: #3E8EFF;
-        border-style: dashed;
-        transition: border 0.3s ease-in-out;
-      }
-      .drop-area.dragged-over {
-        border-color: #4a5568;
-      }
+{% extends "index.html" %}
 
-      .preview-container {
-        display: flex;
-        overflow-x: auto;
-        gap: 10px;
-      }
-  
-      .image-preview {
-        height: 100px;
-        width: 100px;
-        object-fit: cover;
-      }
+{% block heading %}
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+<style>
+  .drop-area {
+    border-width: 2px;
+    border-radius: 0.25rem;
+    border-color: #3E8EFF;
+      border-style: dashed;
+      transition: border 0.3s ease-in-out;
+    }
+    .drop-area.dragged-over {
+      border-color: #4a5568;
+    }
+
+    .preview-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+    }
+    
+    .image-preview {
+      height: 100px;
+      width: 100px;
+      object-fit: cover;
+    }
   </style>
-</head>
+  {% endblock heading %}
+{% block content %}
 
-
-<body class="bg-blue-50">
-    <div class="container mx-auto px-4 py-6 mt-10">
-        {% if success_message %}
-            <div class="alert alert-success">
+<div class="container mx-auto px-4 py-6">
+  {% if success_message %}
+  <div class="alert alert-success">
                 <p>{{ success_message }}</p>
-            </div>
-        {% endif %}
-      <div class="max-w-xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-        <div class="p-6">
-          <h1 class="text-2xl font-bold text-center text-gray-700 my-6">Feedback Form</h1>
-          <form method="post" action="{% url 'feedback' %}" enctype="multipart/form-data">
-            {% csrf_token %}
+              </div>
+              {% endif %}
+              <div class="max-w-xl mx-auto bg-white rounded-lg shadow-md overflow-hidden" style="margin-top: 55px;">
+                <div class="p-6">
+                  <h1 class="text-2xl font-bold text-center text-gray-700 my-6">Feedback Form</h1>
+                  <form method="post" action="{% url 'feedback' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
             <div class="max-w-lg mx-auto">
-              <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a Category</label>
-              <select id="category" name="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <label for="category" class="block mb-2 text-sm font-medium ">Select a Category</label>
+              <select id="category" name="category" class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                 <option>Feature Request</option>
                 <option>Report Bug</option>
                 <option>Guidance Section</option>
                 <option>Government Profile Section</option>
                 <option>Events Section</option>
                 <option>Inappropriate Content</option>
-
+                
               </select>
             </div>
-  
+            
             <div class="max-w-lg mx-auto mt-5">
-              <label for="Suggestion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Suggestion</label>
-              <textarea id="Suggestion" name="Suggestion" rows="7" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave your suggestion..."></textarea>
+              <label for="Suggestion" class="block mb-2 text-sm font-medium">Your Suggestion</label>
+              <textarea id="Suggestion" name="Suggestion" rows="7" class="block p-2.5 w-full text-sm rounded-lg border  focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500" placeholder="Leave your suggestion..." style="border-color: lightgrey;"></textarea>
             </div>
             
             <div class="max-w-lg mx-auto mt-5">
@@ -78,12 +75,13 @@
         </div>
       </div>
     </div>
+    
     <script src="static/javascript/feedback.js"></script>
-  </body>
-
-  <footer id="footer" class="footer text-base py-2" style="background-color: #F9F9F9;">
-    <div class="container mx-auto" style="text-align: center;">
-      &copy; Copyright <strong><span>SAJILOTANTRA</span></strong>. All Rights Reserved
-    </div>
+    <footer id="footer" class="footer text-base py-2" style="background-color: #F9F9F9;">
+      <div class="container mx-auto" style="text-align: center;">
+                      &copy; Copyright <strong><span>SAJILOTANTRA</span></strong>. All Rights Reserved
+          
+      </div>
   </footer>
-</html>
+    {% endblock content %}
+
