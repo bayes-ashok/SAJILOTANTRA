@@ -417,39 +417,22 @@ def feedback(request):
 def create_post(request):
     if request.method == 'POST':
         caption = request.POST.get('postCaption')
-        category= request.POST.get('category')
-        image= request.FILES.get('file_input')
+        category = request.POST.get('category')
+        image = request.FILES.get('file_input')
 
-        auth_user= request.user
-        # Cur_user = User.objects.get(username=auth_user)
-        U_profile, created = UserProfile.objects.get_or_create(user=auth_user)
-        print(U_profile.pk)
-        print(auth_user)
-        # Check if the user is authenticated
-        if isinstance(request.user, AnonymousUser):
-            return render(request, 'signin.html')  # or redirect to login page
+        auth_user = request.user
+        user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
 
         try:
-            user_profile = UserProfile.objects.get(user=U_profile.pk)
-        except UserProfile.DoesNotExist as e:
-            # Handle the case when the user profile does not exist
-            print(f"Error: {e}")
-            return render(request, 'signup.html')
-
-        # print("USer: "+user_profile)
-        
-        
-        post = Post.objects.create(
-            user=user_profile,
-            # user="demo",
-            caption=caption,
-            category=category,
-            image=image
-        )
-        return redirect('dashboard')
-   
-
-    # return render(request, 'dashboard.html', {'form': form})
+            post = Post.objects.create(
+                user=user_profile,
+                caption=caption,
+                category=category,
+                image=image
+            )
+            return redirect('dashboard')
+        except Exception as e:
+            print(f"Error creating post: {e}")
     return redirect('map.html')
 
 from .models import UserProfile

@@ -220,7 +220,7 @@
 						</div>
 						<!-- Modal body -->
 						{% comment %} <form method="post" action="" enctype="multipart/form-data"> {% endcomment %}
-						<form method="post" action="{% url 'create_post' %}" enctype="multipart/form-data">
+						<form method="POST" action="{% url 'create_post' %}" enctype="multipart/form-data">
 							{% csrf_token %}
 							<div class="grid gap-4 mb-4 sm:grid-cols-2">
 								<div class="sm:col-span-2">
@@ -428,13 +428,33 @@
       });
 </script>
 <script>
-
-	new Autocomplete('#autocomplete',{
-		search : input => {
-			console.log(input)
+	new Autocomplete('#autocomplete', {
+		search: input => {
+			console.log(input);
+			const url = `/get-names/?search=${input}`; // Fixed the string interpolation
+			return new Promise(resolve => {
+				fetch(url)
+					.then(response => response.json())
+					.then(data => {
+						resolve(data.payload);
+					});
+			});
+		},
+		renderResult: (result, props) => {
+			console.log(props);
+			let group = '';
+			if (result.index % 3 === 0) {
+				group = `<li class="group">Group</li>`;
+			}
+			return `${group}<li ${props}>
+				<div class="wiki-title">
+					${result.user.username}
+				</div>
+			</li>`; // Fixed the template literal
 		}
-	})
+	});
 </script>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
     <script src="static/javascript/dashboard.js"></script>
