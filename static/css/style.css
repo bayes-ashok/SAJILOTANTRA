@@ -1,0 +1,207 @@
+/* body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+header {
+    background-color: #3498db;
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+
+section {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1, h2 {
+    color: #3498db;
+}
+
+p {
+    line-height: 1.6;
+}
+
+footer {
+    background-color: #3498db;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+} */
+.header {
+    display: flex;
+    flex-direction: column;
+    width: 1440px;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 20px 22px;
+    position: relative;
+    background-color: var(--secondary-colorbackground);
+  }
+  
+  .header .main {
+    display: flex;
+    width: 1360px;
+    align-items: center;
+    gap: 84px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .header .icons {
+    gap: 20px;
+    display: inline-flex;
+    align-items: flex-start;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .header .home {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+    flex: 0 0 auto;
+    background-color: #db133c;
+    border-radius: 7px;
+  }
+  
+  .header .img-2 {
+    position: relative;
+    width: 20px;
+    height: 20px;
+  }
+  
+  .header .div-2 {
+    gap: 10px;
+    padding: 10px;
+    background-color: var(--secondary-colorbackground);
+    border-radius: 7px;
+    display: inline-flex;
+    align-items: flex-start;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .header .search {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 58px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .header .title-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 440px;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 20px;
+    position: relative;
+    background-color: var(--secondary-colorsecondary-6);
+    border-radius: 8px;
+  }
+  
+  .header .type-here-to-search {
+    position: relative;
+    width: 140px;
+    margin-top: -1px;
+    font-family: var(--regular-14-font-family);
+    font-weight: var(--regular-14-font-weight);
+    color: var(--secondary-colorsecondary-4);
+    font-size: var(--regular-14-font-size);
+    letter-spacing: var(--regular-14-letter-spacing);
+    line-height: var(--regular-14-line-height);
+    font-style: var(--regular-14-font-style);
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+  
+  .header .search-icon {
+    position: relative;
+    width: 20.5px;
+    height: 20.5px;
+    margin-right: -0.5px;
+  }
+  
+  .header .right-info {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 25px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .header .img-wrapper {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+    flex: 0 0 auto;
+    background-color: var(--secondary-colorsecondary-6);
+    border-radius: 7px;
+  }
+  
+  .header .profile-image {
+    position: relative;
+    width: 41.92px;
+    height: 41.05px;
+  }
+  
+  .header .rectangle {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 0;
+    left: 0;
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: #ffffff;
+  }
+  
+  .header .rectangle-2 {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    top: 3px;
+    left: 3px;
+    background-color: #ffffff;
+    border-radius: 6px;
+  }
+  
+  .header .profile {
+    position: absolute;
+    width: 39px;
+    height: 38px;
+    top: 3px;
+    left: 3px;
+  }
+  
+  .header .AR-jakir {
+    position: relative;
+    width: 71px;
+    font-family: var(--bold-16-font-family);
+    font-weight: var(--bold-16-font-weight);
+    color: var(--secondary-colorsecondary-1);
+    font-size: var(--bold-16-font-size);
+    letter-spacing: var(--bold-16-letter-spacing);
+    line-height: var(--bold-16-line-height);
+    font-style: var(--bold-16-font-style);
+  }
+  

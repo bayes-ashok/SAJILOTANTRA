@@ -1,0 +1,450 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/c30dadd52a.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"  rel="stylesheet" />
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+		<link rel="stylesheet" href="static\css\dashboard.css">
+		<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+</head>
+<body class="bg-blue-50">
+<header class="">
+	<nav class="fixed bg-white shadow flex justify-between items-center w-[100%]  mx-auto">
+		<div>
+		<a href="#">  <img style="width:17rem;" src="static\assets\LogoWhite.png" alt="..."></a>
+		</div>
+		<div class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
+		<ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
+		<li>
+		<a class="" href="#">
+						<div class="text-xl bg-red-800 text-white w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800">
+							<i class="fa-solid fa-house"></i>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a class="" href="/events">
+						<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+							<i class="fa-regular fa-calendar-days"></i>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a class="" href="/government_profiles">
+						<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+							<i class="fa fa-building-o"></i>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a class="" href="/map/">
+						<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+							<i class="fa-solid fa-map-location-dot"></i>                            </div>
+					</a>
+				</li>
+				<li>
+					<form class="flex items-center">
+						<label for="simple-search" class="sr-only">Search</label>
+						<div class="relative w-full">
+						<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+							<svg aria-hidden="true" class="w-5 h-5 text-[#858EAD]" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+							</svg>
+						</div>
+						<input type="text" id="simple-search" class="block w-full p-2.5 pl-20 text-sm text-[#858EAD] rounded-lg bg-[#F4F6F8] border focus:ring-primary-100 focus:border-primary-100" placeholder="Type here to search..." required="">
+						</div>
+					</form>
+
+				</li>
+			</ul>
+		</div>
+		<div class="flex items-center gap-6">
+			{% comment %} <button class="bg-[#043172] text-white px-5 py-2 rounded-full hover:bg-[#10223B]">Sign in</button> {% endcomment %}
+			
+			<button id="notificationButton" type="button" data-dropdown-toggle="notification-dropdown" class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-blue-800 hover:text-white dark:text-gray-400 dark:hover:text-white dark:hover:bg-blue-800 focus:ring-4 focus:ring-blue-800 dark:focus:ring-blue-800">
+				<span class="sr-only">View notifications</span>
+				<!-- Bell icon -->
+				<svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20"><path d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"/></svg>
+			</button>
+
+			{% comment %} Notifications {% endcomment %}
+			 <!-- Dropdown menu -->
+			{% comment %} Profile Secion {% endcomment %}
+			<div id="profileContainer" class="flex items-center gap-3 cursor-pointer mx-2 rounded-full focus:ring-2 hover:ring-2 hover:ring-gray-600 focus:ring-gray-800 ">
+				<img class="w-10 h-10 rounded-full" src="https://placekitten.com/40/40" alt="Profile Picture">
+			</div>
+			<div id="profileDropdown"
+				class="hidden origin-top-right absolute right-2 top-14 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+				<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="profileContainer">
+					<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+						role="menuitem">Profile Settings</a>
+					<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+						role="menuitem">Logout</a>
+				</div>
+			</div>
+			{% comment %} Hamburger {% endcomment %}
+			<ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
+		</div>
+</header>
+{% comment %} Notifications {% endcomment %}
+<div class="hidden overflow-hidden absolute right-10 z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg" id="notification-dropdown">
+	<div class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50">
+		Notifications
+	</div>
+	<div class="flex flex-col-reverse">
+		{% comment %} just like for loop {% endcomment %}
+		{% for notification in notifications %}
+	<a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
+		<div class="flex-shrink-0">
+		{% comment %} <img class="w-11 h-11 rounded-full" src="https://scontent.fbir7-1.fna.fbcdn.net/v/t39.30808-6/401139858_1055566672306633_6984792515935984599_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=HLNDQ-IEXB8AX9-e7Sf&_nc_oc=AQlYEi_rCVJIymDr-PTbvSYhni0LOElcybukqRao40MEZqc-M5BWVnLS8IwQkMkVXJU&_nc_ht=scontent.fbir7-1.fna&oh=00_AfD3QFpClxZFCUALxrqZ8QPBomQf2lALwrfGv-7HQBbznA&oe=657654A9" alt="Nikesh"> {% endcomment %}
+		<i class="fa-solid fa-bell" style="color: #e00b0b;"></i>
+		<div class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-primary-700">
+			{% comment %} <svg class="w-2 h-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18"><path d="M15.977.783A1 1 0 0 0 15 0H3a1 1 0 0 0-.977.783L.2 9h4.239a2.99 2.99 0 0 1 2.742 1.8 1.977 1.977 0 0 0 3.638 0A2.99 2.99 0 0 1 13.561 9H17.8L15.977.783ZM6 2h6a1 1 0 1 1 0 2H6a1 1 0 0 1 0-2Zm7 5H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Z"/><path d="M1 18h16a1 1 0 0 0 1-1v-6h-4.439a.99.99 0 0 0-.908.6 3.978 3.978 0 0 1-7.306 0 .99.99 0 0 0-.908-.6H0v6a1 1 0 0 0 1 1Z"/></svg> {% endcomment %}
+		</div>
+		</div> 
+		<div class="pl-3 w-full">
+			<div class="text-gray-500 font-normal text-sm mb-1.5"><span class="font-semibold text-gray-900">{{notification.notice_title}}</span>: {{notification.notice_description}}</div>
+			<div class="flex gap-5">
+			<div class="text-xs font-medium text-primary-700">{{notification.date_posted}}</div>
+			<div class="text-xs text-primary-500">{{notification.posted_by}}</div>
+			</div>
+			</div>
+		</a>
+		{% endfor %}
+		</div>
+		<a href="#" class="block py-2 text-base mt-2 font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-200">
+			<div class="inline-flex items-center ">
+			<svg aria-hidden="true" class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
+			View all
+			</div>
+		</a>
+	</div>
+	
+
+	<div class="flex bg-blue-50 mt-20">
+		<div class="w-1/4" style="margin-left: 50px;">
+
+			<!--guidance Sections-->
+			<div class="border bg-white rounded-2xl p-4" style="margin-top: 20px;">
+				<div>
+					<b id="name" class="mb-2 capitalize">Detailed Guide for Government Offices</b>
+				</div>
+				{% for item in guidance_items|slice:":4" %}
+				<a href="/guide/{{item.id}}">
+					<div class="flex items-center mt-2 gap-4 cursor-pointer hover:bg-gray-300 rounded-md">
+							<img src="{{ item.thumbnail.url }}" alt="Image" class="w-20 h-20 object-cover rounded-md" style="margin-top: 5px;">
+						
+						<div>
+							<p class="text-xs" style="margin-bottom: -5px;">
+								<span style="font-size: larger;">{{ item.title }}</span>
+							</p>
+							<p class="mt-2 text-gray-700 text-xs">
+								<span style="font-size: smaller;">{{ item.category }}</span>
+							</p>
+						</div>
+					</div>
+				</a>
+				{% endfor %}
+				<a href="/allguides" class="block py-2 text-base font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100">
+					<div class="inline-flex items-center ">
+					<svg aria-hidden="true" class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
+					View all
+					</div>
+				</a>
+			</div>
+
+		<!-- Content of public events -->
+			<div class="border  bg-white mt-6 rounded-2xl p-4 ">
+				<div>
+					<b id="name" class="mb-2 capitalize">Public Events</b>
+			
+				</div>
+				<div class="flex items-center  ">
+					<img src="/static/Image/Date.svg" alt="Image" class="w-15 h-15 object-cover " style="margin-top: 5px;">
+					<div>
+					<p class="mt-2 text-xs" style="margin-bottom: -5px;">
+						<span style="font-size: larger;">Fulpati Celebration by Nepal Army</span>
+					</p>
+					<p class="mt-1 text-gray-700 text-xs">
+						<span style="font-size: smaller;">Nepal Army Ground, Tundikhel, Kathmandu</span>
+					</p>
+					</div>
+				</div>
+				<div class="flex items-center  ">
+					<img src="/static/Image/Date.svg" alt="Image" class="w-15 h-15 object-cover " style="margin-top: 5px;">
+					<div>
+					<p class="mt-2 text-xs" style="margin-bottom: -5px;">
+						<span style="font-size: larger;">Bagmati Sarsafai</span>
+					</p>
+					<p class="mt-1 text-gray-700 text-xs">
+						<span style="font-size: smaller;">Pashupati Bikas Kos  •  Bagmati Bridge, Gaushala</span>
+					</p>
+					</div>
+				</div>
+
+				<div class="flex items-center  ">
+					<img src="/static/Image/Date.svg" alt="Image" class="w-15 h-15 object-cover " style="margin-top: 5px;">
+					<div>
+					<p class="mt-2 text-xs" style="margin-bottom: -5px;">
+						<span style="font-size: larger;">Kora-Cycling Rally</span>
+					</p>
+					<p class="mt-1 text-gray-700 text-xs">
+						<span style="font-size: smaller;">Nepal Cycle Society  •  Pulchowk, Lalitpur</span>
+					</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="w-3/4">
+			<!-- Modal toggle -->
+			<div id="createPostToggle" class="flex cursor-pointer justify-center my-0 py-0 px-0 mt-2" style="margin-top: 20px;">
+				<button id="defaultModalButton" data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="block text-white hover:drop-shadow-md font-medium rounded-lg text-sm text-center" type="button">
+					<div class="flex border justify-left bg-white mt-0 rounded-2xl pl-2 pr-20 py-4">
+						<div id="profileContainer" class="flex object-cover gap-3 cursor-pointer mx-2 rounded-full">
+							<img class="object-cover w-12 h-12 rounded-full" src="https://scontent.fbir7-1.fna.fbcdn.net/v/t39.30808-6/349104167_268251369000105_5995744721495170880_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=efb6e6&_nc_aid=0&_nc_ohc=Mg5mNv-yfhwAX-L2coI&_nc_ht=scontent.fbir7-1.fna&oh=00_AfAjc5NvA8NEv-uXu6_GwW-skddjsh2LzbB7XJ98z7pnVA&oe=65764D77" alt="Profile Picture">
+						</div>
+						<p class="text-gray-500 text-lg text-left font-normal  ml-6 mr-20 flex items-center">Share your story on bureaucratic process or ask related questions</p>
+					</div>
+				</button>
+			</div>
+
+			<!-- Main modal -->
+			<div id="defaultModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full h-full" style="padding-top: 100px;">
+				<div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+					<!-- Modal content -->
+					<div class="relative p-4 bg-white rounded-lg shadow sm:p-5 h-full">
+						<!-- Modal header -->
+						<div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5">
+							<h3 class="text-lg font-semibold text-gray-900">
+								Create Post
+							</h3>
+							<button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="defaultModal">
+								<svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+								<span class="sr-only">Close modal</span>
+							</button>
+						</div>
+						<!-- Modal body -->
+						{% comment %} <form method="post" action="" enctype="multipart/form-data"> {% endcomment %}
+						<form method="post" action="{% url 'create_post' %}" enctype="multipart/form-data">
+							{% csrf_token %}
+							<div class="grid gap-4 mb-4 sm:grid-cols-2">
+								<div class="sm:col-span-2">
+									{% comment %} <label for="postCaption" class="block mb-2 text-sm font-medium text-gray-900">Caption</label> {% endcomment %}
+									<textarea id="postCaption" name="postCaption" rows="2" class="block p-2.5 w-full text-xl text-gray-900 bg-white rounded-lg border border-white focus:border-white focus:outline-white resize-none" placeholder="Write your caption..."></textarea>                    
+								</div>
+								<div>
+									<label for="category" class="block mb-2 text-sm font-medium text-gray-900">Post Category</label>
+									<select id="category" name="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+										<option selected="">Select category</option>
+										<option value="Query">Query</option>
+										<option value="Rant">Rant</option>
+										<option value="Problems">Problems</option>
+										<option value="Local Government">Local Government</option>
+									</select>
+								</div>
+							</div>
+							<main class="container mx-auto max-w-screen-lg h-full">
+								<!-- file upload modal -->
+								{% comment %} <article aria-label="File Upload Modal" class="relative h-full flex flex-col" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);" ondragenter="dragEnterHandler(event);"> {% endcomment %}
+					
+							{% comment %} <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label> {% endcomment %}
+							<input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" name="file_input" type="file" accept="image/*">
+							<p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
+								<!-- sticky footer -->
+								<footer class="flex justify-end px-8 pb-8 pt-4" style="padding-bottom: 5px;">
+									<button id="submit" class="rounded-md px-4 py-2 bg-blue-700 hover:bg-blue-500 text-white focus:shadow-outline focus:outline-none">
+									Upload now
+									</button>
+									<button id="cancel" class="ml-3 rounded-md px-3 py-1 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
+									Clear Selection
+									</button>
+								</footer>
+								</article>
+							</main>
+
+						</form>
+					</div>
+				</div>
+			</div>
+
+				{% comment %} Trying Out Post Card {% endcomment %}
+			<!-- component -->
+
+			{%for post in posts%}
+			<main class="w-full flex items-center justify-center">
+				<div class="border max-w-screen-md lg:w-full bg-white mt-6 rounded-2xl p-4">
+					<div class="flex items-center	justify-between">
+						<div class="gap-3.5	flex items-center ">
+							<img src="{{post.user.image}}" class="object-cover bg-yellow-500 rounded-full w-10 h-10" />
+							<div class="flex flex-col">
+								<div>
+								<b id="name" class="mb-2 capitalize">{{post.user.user.last_name}} {{post.user.user.first_name}}</b>
+								<p id="username" class="text-gray-700 text-xs">{{post.user.user}}</p>
+								</div>
+								{% load tz %}
+								<p class="text-gray-400 text-xs">{{post.created_at|timezone:"Asia/Kathmandu"}}
+								</p>
+							</div>
+						</div>
+						<div class="bg-gray-100	rounded-full h-3.5 flex	items-center justify-center">
+							<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="34px" fill="#92929D">
+								<path d="M0 0h24v24H0V0z" fill="none" />
+								<path
+									d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+							</svg>
+						</div>
+					</div>
+					<div class="whitespace-pre-wrap mt-7">{{post.caption}}</div>
+					<div class="mt-2 flex gap-2	 justify-center border-b pb-4 flex-wrap	">
+					
+						{% comment %} <img src="{{post.image}}" class="bg-red-500 rounded-2xl w-1/3 object-cover h-96 flex-auto" alt="photo"> {% endcomment %}
+						{% if post.image %}
+						{% comment %} <a href="https://unsplash.it/1200/768.jpg?image=254" data-lightbox="gallery" class="w-full md:w-1/3 p-2">
+							<img src="https://unsplash.it/600.jpg?image=254" class="w-full h-auto rounded">
+						  </a> {% endcomment %}
+						<img src="{{ post.image.url }}" class="bg-red-500 rounded-2xl w-1/3 object-cover h-96 flex-auto" alt="photo">
+					{% endif %}
+					</div>
+						<div class=" h-16 border-b  flex items-center justify-around	">
+							
+							<div class="flex items-center	gap-3">
+								<svg width="20px" height="19px" viewBox="0 0 20 19" version="1.1" xmlns="http://www.w3.org/2000/svg"
+									xmlns:xlink="http://www.w3.org/1999/xlink">
+									<g id="?-Social-Media" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+										<g id="Square_Timeline" transform="translate(-312.000000, -746.000000)">
+											<g id="Post-1" transform="translate(280.000000, 227.000000)">
+												<g id="Post-Action" transform="translate(0.000000, 495.000000)">
+													<g transform="translate(30.000000, 21.000000)" id="Comment">
+														<g>
+															<g id="ic_comment-Component/icon/ic_comment">
+																<g id="Comments">
+																	<polygon id="Path" points="0 0 24 0 24 25 0 25"></polygon>
+																	<g id="iconspace_Chat-3_25px"
+																		transform="translate(2.000000, 3.000000)" fill="#92929D">
+																		<path
+																			d="M10.5139395,15.2840977 L6.06545155,18.6848361 C5.05870104,19.4544672 3.61004168,18.735539 3.60795568,17.4701239 L3.60413773,15.1540669 C1.53288019,14.6559967 0,12.7858138 0,10.5640427 L0,4.72005508 C0,2.11409332 2.10603901,0 4.70588235,0 L15.2941176,0 C17.893961,0 20,2.11409332 20,4.72005508 L20,10.5640427 C20,13.1700044 17.893961,15.2840977 15.2941176,15.2840977 L10.5139395,15.2840977 Z M5.60638935,16.5183044 L9.56815664,13.4896497 C9.74255213,13.3563295 9.955971,13.2840977 10.1754888,13.2840977 L15.2941176,13.2840977 C16.7876789,13.2840977 18,12.0671403 18,10.5640427 L18,4.72005508 C18,3.21695746 16.7876789,2 15.2941176,2 L4.70588235,2 C3.21232108,2 2,3.21695746 2,4.72005508 L2,10.5640427 C2,12.0388485 3.1690612,13.2429664 4.6301335,13.28306 C5.17089106,13.297899 5.60180952,13.7400748 5.60270128,14.2810352 L5.60638935,16.5183044 Z"
+																			id="Path"></path>
+																	</g>
+																</g>
+															</g>
+														</g>
+													</g>
+												</g>
+											</g>
+										</g>
+									</g>
+								</svg>
+								<div class="text-sm	">10 Comments</div>
+							</div>
+							<div class="flex items-center	gap-3">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" viewBox="0 0 20 20"
+									fill="currentColor">
+									<path fill-rule="evenodd"
+										d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+										clip-rule="evenodd" />
+								</svg>
+								<div class="text-sm">5 Likes</div>
+							</div>
+							<div class="flex items-center	gap-3">
+								<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg"
+									xmlns:xlink="http://www.w3.org/1999/xlink">
+									<g id="?-Social-Media" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+										<g id="Square_Timeline" transform="translate(-636.000000, -745.000000)">
+											<g id="Post-1" transform="translate(280.000000, 227.000000)">
+												<g id="Post-Action" transform="translate(0.000000, 495.000000)">
+													<g transform="translate(30.000000, 21.000000)" id="Share">
+														<g transform="translate(325.000000, 1.000000)">
+															<g id="ic_Share-Component/icon/ic_Share">
+																<g id="Share">
+																	<circle id="Oval" cx="12" cy="12" r="12"></circle>
+																	<g id="Group-24-Copy"
+																		transform="translate(12.000000, 12.000000) scale(-1, 1) translate(-12.000000, -12.000000) translate(1.000000, 1.000000)"
+																		fill="#92929D">
+																		<path
+																			d="M4,0 C6.209139,0 8,1.790861 8,4 C8,4.1291298 7.99388117,4.25683047 7.98191762,4.38282788 L15.371607,7.98470389 C16.0745405,7.37145444 16.9938914,7 18,7 C20.209139,7 22,8.790861 22,11 C22,13.209139 20.209139,15 18,15 C16.9572434,15 16.0076801,14.6009919 15.2956607,13.9473263 L7.98384745,17.6380767 C7.99453877,17.7572882 8,17.8780063 8,18 C8,20.209139 6.209139,22 4,22 C1.790861,22 0,20.209139 0,18 C0,15.790861 1.790861,14 4,14 C5.37147453,14 6.58173814,14.690226 7.30236849,15.7422555 L14.2017356,12.2577203 C14.0708451,11.8622268 14,11.4393868 14,11 C14,10.5276126 14.0818865,10.0743509 14.2322392,9.65363512 L7.29274641,6.27172794 C6.57099412,7.31588608 5.36538874,8 4,8 C1.790861,8 0,6.209139 0,4 C0,1.790861 1.790861,0 4,0 Z M4,16 C2.8954305,16 2,16.8954305 2,18 C2,19.1045695 2.8954305,20 4,20 C5.1045695,20 6,19.1045695 6,18 C6,16.8954305 5.1045695,16 4,16 Z M18,9 C16.8954305,9 16,9.8954305 16,11 C16,12.1045695 16.8954305,13 18,13 C19.1045695,13 20,12.1045695 20,11 C20,9.8954305 19.1045695,9 18,9 Z M4,2 C2.8954305,2 2,2.8954305 2,4 C2,5.1045695 2.8954305,6 4,6 C5.1045695,6 6,5.1045695 6,4 C6,2.8954305 5.1045695,2 4,2 Z"
+																			id="Combined-Shape"></path>
+																	</g>
+																</g>
+															</g>
+														</g>
+													</g>
+												</g>
+											</g>
+										</g>
+									</g>
+								</svg>
+								<div class="text-sm">Share</div>
+							</div>
+							<div class="flex items-center	gap-3">
+								<svg width="17px" height="22px" viewBox="0 0 17 22" version="1.1" xmlns="http://www.w3.org/2000/svg"
+									xmlns:xlink="http://www.w3.org/1999/xlink">
+									<g id="?-Social-Media" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+										<g id="Square_Timeline" transform="translate(-787.000000, -745.000000)">
+											<g id="Post-1" transform="translate(280.000000, 227.000000)">
+												<g id="Post-Action" transform="translate(0.000000, 495.000000)">
+													<g transform="translate(30.000000, 21.000000)" id="Saved">
+														<g transform="translate(473.000000, 1.000000)">
+															<g id="ic_Saved-Component/icon/ic_Saved">
+																<g id="Saved">
+																	<circle id="Oval" cx="12" cy="12" r="12"></circle>
+																	<g id="Group-13-Copy" transform="translate(5.000000, 2.000000)"
+																		fill="#92929D">
+																		<path
+																			d="M2.85714286,-0.952380952 L12.1428571,-0.952380952 C14.246799,-0.952380952 15.952381,0.753200953 15.952381,2.85714286 L15.952381,18.2119141 C15.952381,19.263885 15.09959,20.116746 14.047619,20.116746 C13.6150601,20.116746 13.1953831,19.9694461 12.8576286,19.6992071 L7.5,15.4125421 L2.14237143,19.6992071 C1.32096217,20.3564207 0.122301512,20.2233138 -0.534912082,19.4019046 C-0.805151112,19.0641501 -0.952380952,18.644473 -0.952380952,18.2119141 L-0.952380952,2.85714286 C-0.952380952,0.753200953 0.753200953,-0.952380952 2.85714286,-0.952380952 Z M2.85714286,0.952380952 C1.80517191,0.952380952 0.952380952,1.80517191 0.952380952,2.85714286 L0.952380952,18.2119141 L6.31000952,13.9252491 C7.00569973,13.3686239 7.99430027,13.3686239 8.68999048,13.9252491 L14.047619,18.2119141 L14.047619,2.85714286 C14.047619,1.80517191 13.1948281,0.952380952 12.1428571,0.952380952 L2.85714286,0.952380952 Z"
+																			id="Rectangle-92"></path>
+																	</g>
+																</g>
+															</g>
+														</g>
+													</g>
+												</g>
+											</g>
+										</g>
+									</g>
+								</svg>
+								<div class="text-sm">Saved</div>
+							</div>
+						</div>
+						<div class="flex items-center justify-between mt-4">
+							<img src="https://images.unsplash.com/photo-1595152452543-e5fc28ebc2b8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"  class="bg-yellow-500 rounded-full w-10 h-10 object-cover border">
+							<div class="flex items-center	justify-between	 bg-gray-50 h-11 w-11/12 border rounded-2xl	 overflow-hidden px-4 ">
+								<input type="text" class="h-full w-full bg-gray-50 outline-none " placeholder="Write your comment..." name="comment">
+							</div>
+						</div>
+				</div>
+			</main>
+			{%endfor%}
+
+		</div>
+	</div>
+
+	{% comment %} Create Post {% endcomment %}
+
+
+
+
+
+{% comment %} Scripts {% endcomment %}
+
+<script>
+	$(document).on("click", '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
+      });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    <script src="static/javascript/dashboard.js"></script>
+    <script src="static/javascript/fileUpload.js"></script>
+</body>
+
+</html>
