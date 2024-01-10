@@ -84,12 +84,17 @@ class Post(models.Model):
     category = models.CharField(max_length=50)
     image = models.ImageField(upload_to='static/post_images/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
-    # date_posted=models.DateTimeField(auto_now_add=True)
-
+    like_count = models.IntegerField(default=0)  # New field for storing like count
 
 class PostLike(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        # Override save method to update like count in the associated post
+        super(PostLike, self).save(*args, **kwargs)
+        self.post.like_count = PostLike.objects.filter(post=self.post).count()
+        self.post.save()
 
 class PostComment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
