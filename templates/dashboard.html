@@ -62,8 +62,11 @@
 							</svg>
 						  </div>
 						  <div id="autocomplete" class="autocomplete" >
-							<input class="autocomplete-input block w-full p-2.5 pl-10 text-sm text-gray-700 rounded-lg bg-gray-00 border border-gray-300 focus:ring-primary-100 focus:border-primary-100" placeholder="Type here to search..." required />
-							<ul class="autocomplete-result-list"></ul>
+							<input class="autocomplete-input block w-full p-2.5 pl-10 text-sm text-gray-700 rounded-lg bg-gray-100 border border-gray-300 focus:ring-primary-100 focus:border-primary-100 transition-all duration-300 ease-in-out" placeholder="Type here to search..." required />
+
+							<ul class="autocomplete-result-list bg-white border border-gray-300 rounded-lg shadow-md mt-2 overflow-hidden">
+								<!-- Your JavaScript will dynamically add list items here -->
+							</ul>
 						  </div>
 						</div>
 					  </form>
@@ -466,6 +469,8 @@
 				</div>
 			  </li>`;
 		  }
+		  
+		  
 		  
 	});
 
