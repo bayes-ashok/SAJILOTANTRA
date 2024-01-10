@@ -14,6 +14,7 @@ function getCookie(name) {
     return cookieValue;
 }
 
+
 // Function to handle liking a post
 function likePost(postId) {
     // Retrieve CSRF token
