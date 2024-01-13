@@ -328,12 +328,14 @@
 							{% csrf_token %}
 							
 							<div class="flex items-center gap-3">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+								<button class="like-button" data-post-id="{{ post.id }}" onclick="likePost(this)">
+								  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" viewBox="0 0 20 20" fill="currentColor">
 									<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-								</svg>
-								<div class="text-sm" id="like-count-{{ post.id }}">{{ post.like_count }}</div> <!-- Add an ID for updating like count -->
-								<button class="like-button" data-post-id="{{ post.id }}">Like</button>
-							</div>
+								  </svg>
+								</button>
+								<div class="text-sm" id="like-count-{{ post.id }}">{{ post.like_count }}</div>
+							  </div>
+							  
 							
 
 							{% comment %} comment {% endcomment %}
