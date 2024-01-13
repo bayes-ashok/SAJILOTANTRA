@@ -227,11 +227,11 @@
 							<div class="grid gap-4 mb-4 sm:grid-cols-2">
 								<div class="sm:col-span-2">
 									{% comment %} <label for="postCaption" class="block mb-2 text-sm font-medium text-gray-900">Caption</label> {% endcomment %}
-									<textarea id="postCaption" name="postCaption" rows="2" class="block p-2.5 w-full text-xl text-gray-900 bg-white rounded-lg border border-white focus:border-white focus:outline-white resize-none" placeholder="Write your caption..."></textarea>                    
+									<textarea id="postCaption" name="postCaption" rows="2" class="block p-2.5 w-full text-xl text-gray-900 bg-white rounded-lg border border-white focus:border-white focus:outline-white resize-none" placeholder="Write your caption..." required></textarea>                    
 								</div>
 								<div>
 									<label for="category" class="block mb-2 text-sm font-medium text-gray-900">Post Category</label>
-									<select id="category" name="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+									<select id="category" name="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5" required>
 										<option selected="">Select category</option>
 										<option value="Query">Query</option>
 										<option value="Rant">Rant</option>
@@ -245,7 +245,7 @@
 								{% comment %} <article aria-label="File Upload Modal" class="relative h-full flex flex-col" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);" ondragenter="dragEnterHandler(event);"> {% endcomment %}
 					
 							{% comment %} <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label> {% endcomment %}
-							<input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" name="file_input" type="file" accept="image/*">
+							<input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" name="file_input" type="file" accept="image/*, video/*">
 							<p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
 								<!-- sticky footer -->
 								<footer class="flex justify-end px-8 pb-8 pt-4" style="padding-bottom: 5px;">
@@ -310,6 +310,7 @@
 						</div>
 					</div>
 					<div class="whitespace-pre-wrap mt-7">{{post.caption}}</div>
+					<p class="font-bold text-blue-800">#{{post.category}}</p>
 					<div class="mt-2 flex gap-2	 justify-center border-b pb-4 flex-wrap	">
 					
 						{% if post.image %}
