@@ -167,6 +167,8 @@ def dashboard(request):
     guidance = Guidance.objects.all().order_by('-pk')
     events = Event.objects.all().order_by('-pk')
     posts= Post.objects.all().order_by('-pk')
+    auth_user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
     
     for post in posts:
         if post.image:  # Check if the image field is not None
@@ -182,6 +184,7 @@ def dashboard(request):
         'guidance_items': guidance[:6],  # Fetching the first 6 guidance items
         'events': events[:3],
         'posts':posts,
+        'user_profile':user_profile
     }
 
     return render(request, 'dashboard.html', context)
@@ -429,15 +432,11 @@ def create_post(request):
         caption = request.POST.get('postCaption')
         category = request.POST.get('category')
         image = request.FILES.get('file_input')
-
         auth_user = request.user
         user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
-
         try:
             # Calling the Huffman Coding:
             encoded_caption, encoding_dict = huffman_encode(caption)
-
-
             # encoded_caption, _ = huffman_encode(caption)
             post = Post.objects.create(
                 user=user_profile,
@@ -446,7 +445,6 @@ def create_post(request):
                 image=image,
                 encoding_dict=json.dumps(encoding_dict)
             )
-
             return redirect('dashboard')
         except Exception as e:
             print(f"Error creating post: {e}")
