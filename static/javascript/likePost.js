@@ -31,7 +31,7 @@ function likePost(postId) {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.message === 'Post liked successfully') {
+        if (data.message === 'Post laiked successfully') {
             let likeCountElement = document.getElementById('like-count-' + postId);
             likeCountElement.innerText = parseInt(likeCountElement.innerText) + 1;
         } else {

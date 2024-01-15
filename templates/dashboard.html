@@ -227,11 +227,11 @@
 							<div class="grid gap-4 mb-4 sm:grid-cols-2">
 								<div class="sm:col-span-2">
 									{% comment %} <label for="postCaption" class="block mb-2 text-sm font-medium text-gray-900">Caption</label> {% endcomment %}
-									<textarea id="postCaption" name="postCaption" rows="2" class="block p-2.5 w-full text-xl text-gray-900 bg-white rounded-lg border border-white focus:border-white focus:outline-white resize-none" placeholder="Write your caption..."></textarea>                    
+									<textarea id="postCaption" name="postCaption" rows="2" class="block p-2.5 w-full text-xl text-gray-900 bg-white rounded-lg border border-white focus:border-white focus:outline-white resize-none" placeholder="Write your caption..." required></textarea>                    
 								</div>
 								<div>
 									<label for="category" class="block mb-2 text-sm font-medium text-gray-900">Post Category</label>
-									<select id="category" name="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+									<select id="category" name="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5" required>
 										<option selected="">Select category</option>
 										<option value="Query">Query</option>
 										<option value="Rant">Rant</option>
@@ -273,7 +273,7 @@
 				<div class="border max-w-screen-md lg:w-full bg-white mt-6 rounded-2xl p-4">
 					<div class="flex items-center	justify-between">
 						<div class="gap-3.5	flex items-center ">
-							<img src="{{post.user.image}}" class="object-cover bg-yellow-500 rounded-full w-10 h-10" />
+							<img class="object-cover w-12 h-12 rounded-full" src="{{post.user.image}}" alt="Profile Picture">
 							{% comment %} {% if request.user.is_authenticated %} {% endcomment %}
     {% comment %} {% if post.user == request.user %}
         <!-- If the user of the post is the logged-in user, link to the profile -->
@@ -309,7 +309,8 @@
 							</svg>
 						</div>
 					</div>
-					<div class="whitespace-pre-wrap mt-7">{{post.caption}}</div>
+					<div class="whitespace-pre-wrap mt-7">{{post.decoded_caption}}</div>
+					<p class="font-bold text-blue-800">#{{post.category}}</p>
 					<div class="mt-2 flex gap-2	 justify-center border-b pb-4 flex-wrap	">
 					
 						{% if post.image %}
@@ -461,6 +462,7 @@
     <script src="static/javascript/dashboard.js"></script>
     <script src="static/javascript/fileUpload.js"></script>
     <script src="static/javascript/likePost.js"></script>
+	
 
 </body>
 

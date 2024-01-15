@@ -1,8 +1,12 @@
+import json
+
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.db import models
 
 from Sajilotantra import settings
+
+from .utils import *
 
 # class User(models.Model):
 #     user_id = models.AutoField(primary_key=True)
@@ -80,12 +84,29 @@ class UploadedFile(models.Model):
 
 class Post(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    caption = models.TextField()
+    encoded_caption = models.TextField()
     category = models.CharField(max_length=50)
     image = models.ImageField(upload_to='static/post_images/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
     like_count = models.IntegerField(default=0)  # New field for storing like count
+    encoding_dict = models.TextField(null=True)
 
+    def decode_caption(self):
+        print(f"Encoding Dict: {self.encoding_dict}")
+        if self.encoding_dict:
+            encoding_dict = json.loads(self.encoding_dict)
+            print(f"Decoding with Dict: {encoding_dict}")
+            return huffman_decode(self.encoded_caption, encoding_dict)
+        else:
+            print("Unable to decode caption: Encoding Dict is None")
+            return "Unable to decode caption"
+
+    def save(self, *args, **kwargs):
+        # Ensure that encoding_dict is not saved as None to prevent future errors
+        if self.encoding_dict is None:
+            self.encoding_dict = json.dumps({})  # Provide an empty dictionary as a default
+        super().save(*args, **kwargs)
+    
 class PostLike(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)

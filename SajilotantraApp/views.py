@@ -1,5 +1,9 @@
+import heapq
+import json
 import os
+from collections import defaultdict
 
+from bitarray import bitarray
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -20,6 +24,7 @@ from SajilotantraApp.models import Event, GovernmentProfile
 from .models import (Feedback, GovernmentProfile, Guidance, Notification, Post,
                      PostComment, PostLike, UploadedFile, UserProfile)
 from .tokens import generate_token
+from .utils import *
 
 
 def index(request):
@@ -172,7 +177,9 @@ def dashboard(request):
             # Get the file extension
             file_extension = os.path.splitext(post.image.url)[1][1:].lower()
             post.file_extension = file_extension
-    
+            
+        post.decoded_caption = post.decode_caption()
+        print(f"(dashboard) Decoded Caption: {post.decoded_caption}")
     context = {
         'notifications': notifications,
         'guidance_items': guidance[:6],  # Fetching the first 6 guidance items
@@ -430,16 +437,23 @@ def create_post(request):
         user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
 
         try:
+            # Calling the Huffman Coding:
+            encoded_caption, encoding_dict = huffman_encode(caption)
+
+
+            # encoded_caption, _ = huffman_encode(caption)
             post = Post.objects.create(
                 user=user_profile,
-                caption=caption,
+                encoded_caption=encoded_caption,
                 category=category,
-                image=image
+                image=image,
+                encoding_dict=json.dumps(encoding_dict)
             )
+
             return redirect('dashboard')
         except Exception as e:
             print(f"Error creating post: {e}")
-    return redirect('map.html')
+    return redirect('dashboard.html')
 
 @login_required(login_url='/signin')
 def like_post(request, post_id):
