@@ -16,8 +16,10 @@ from Sajilotantra import settings
 from SajilotantraApp.models import Event, GovernmentProfile
 
 from .models import (Feedback, GovernmentProfile, Guidance, Notification, Post,
-                     PostComment, PostLike, UploadedFile, UserProfile)
+                     PostComment, PostLike, UploadedFile, UserProfile, ReportedPost)
 from .tokens import generate_token
+
+from django.contrib.auth.models import User
 
 
 def index(request):
@@ -391,24 +393,7 @@ def view_profile(request, username):
 
     return render(request, 'frontprofile.html', context)
 
-def feedback(request):
-    if request.method == 'POST':
-        category = request.POST.get('category')
-        suggestion = request.POST.get('Suggestion')
 
-        feedback = Feedback(category=category, suggestion=suggestion)
-        feedback.save()
-
-        # Handle file uploads
-        uploaded_files = request.FILES.getlist('user_avatar')
-        for uploaded_file in uploaded_files:
-            file_instance = UploadedFile(feedback=feedback, file=uploaded_file)
-            file_instance.save()
-        messages.success(request, "A new feedback is added go and check through!")
-        # Redirect or render a thank you page
-        return HttpResponseRedirect('feedback')  # Replace '/thank-you/' with your desired URL
-
-    return render(request, 'feedback.html') 
 
 
 
@@ -450,3 +435,173 @@ def create_post(request):
 
     # return render(request, 'dashboard.html', {'form': form})
     return redirect('map.html')
+
+
+
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+
+# @login_required
+def change_password(request, username):
+    auth_user = request.user
+    print(auth_user)
+    user = User.objects.get(username=username)
+
+
+    error_message = None
+    password_changed = False  # Assuming this variable is used to display a success message
+    
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            new_password = form.cleaned_data['new_password1']
+            
+            # Change the user's password and update the session
+            request.user.set_password(new_password)
+            request.user.save()
+            update_session_auth_hash(request, request.user)
+            
+            messages.success(request, 'Password changed successfully.')
+            password_changed = True
+        else:
+            error_message = 'Please correct the errors below.'
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")  # Add form errors to messages
+    else:
+        form = PasswordChangeForm(user=request.user)
+    
+    return render(request, 'change_password.html', {'form': form, 'error_message': error_message, 'password_changed': password_changed})
+
+
+def feedback(request):
+    if request.method == 'POST':
+        category = request.POST.get('category')
+        suggestion = request.POST.get('Suggestion')
+
+        feedback = Feedback(category=category, suggestion=suggestion)
+        feedback.save()
+
+        # Handle file uploads
+        uploaded_files = request.FILES.getlist('user_avatar')
+        for uploaded_file in uploaded_files:
+            file_instance = UploadedFile(feedback=feedback, file=uploaded_file)
+            file_instance.save()
+        messages.success(request, "A new feedback is added go and check through!")
+        # Redirect or render a thank you page
+        return HttpResponseRedirect('feedback')  # Replace '/thank-you/' with your desired URL
+
+    return render(request, 'feedback.html') 
+
+from .forms import ReportForm
+
+def report_post(request):
+    if request.method == 'POST':
+        form = ReportForm(request.POST, request.FILES)
+        if form.is_valid():
+            reported_post = form.save()
+            messages.success(request, "Post reported successfully")
+            return redirect('dashboard')
+        else:
+            messages.error(request, "Error reporting post")
+    else:
+        form = ReportForm()
+
+    return render(request, 'report_post.html', {'form': form})
+
+
+
+from django.shortcuts import render, get_object_or_404
+from .models import ReportedPost
+
+def view_reported_post(request, post_id):
+    reported_post = get_object_or_404(ReportedPost, post_id=post_id)
+
+    # Assuming the content is not a text file, you may need to handle different content types
+    content_type = reported_post.post.content_type
+
+    return render(request, 'view_reported_post.html', {'reported_post': reported_post, 'content_type': content_type})
+
+#reset Password
+from django.shortcuts import render, redirect
+from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.core.mail import send_mail
+
+class PasswordResetForm(forms.Form):
+    email = forms.EmailField(label="Email")
+
+def password_reset(request):
+    form = PasswordResetForm()
+
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        try:
+            user = User.objects.get(email=email)
+            
+            # Generate verification code and send it to the user's email
+            token = default_token_generator.make_token(user)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            verification_link = f"http://yourdomain.com/reset/{uid}/{token}/"
+            
+            send_mail(
+                'Password Reset Verification',
+                f'Click the link to reset your password: {verification_link}',
+                'from@example.com',
+                [email],
+                fail_silently=False,
+            )
+            return redirect('verification_sent')
+        except User.DoesNotExist:
+            # Handle case where the email is not associated with any user
+            pass
+
+    return render(request, 'password_reset.html', {'form': form})
+
+
+
+
+def verify_code(request):
+    if request.method == 'POST':
+        verification_code = request.POST.get('verification_code')
+        
+        # Validate the verification code
+        if is_valid_verification_code(request.user, verification_code):  # You need to implement this function
+            return redirect('reset_password')  # Redirect to the page where users enter the new password
+        else:
+            # Display an error message for an invalid verification code
+            pass
+
+    return render(request, 'verification_code.html')
+
+
+def reset_password(request):
+    if request.method == 'POST':
+        new_password = request.POST.get('new_password')
+        
+        # Update the user's password with the new one
+        request.user.set_password(new_password)
+        request.user.save()
+        
+        # Redirect to the login page or any other desired page
+        return redirect('login')
+
+    return render(request, 'reset_password.html')
+
+
+def verification_sent(request):
+    return render(request, 'verification_sent.html')
+
+import random
+import string
+
+def generate_verification_code(length=6):
+    characters = string.ascii_letters + string.digits
+    verification_code = ''.join(random.choice(characters) for _ in range(length))
+    return verification_code

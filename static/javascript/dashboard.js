@@ -65,4 +65,11 @@ if (!createModal.classList.contains('hidden')) {
 }
 });
 
-// Post Images 
+function toggleMenu(postId) {
+    var menuOptions = document.getElementById('menuOptions' + postId);
+    if (menuOptions.style.display === 'none' || menuOptions.style.display === '') {
+        menuOptions.style.display = 'block';
+    } else {
+        menuOptions.style.display = 'none';
+    }
+}

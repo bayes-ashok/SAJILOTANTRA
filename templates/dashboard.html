@@ -295,12 +295,23 @@
 								</p>
 							</div>
 						</div>
-						<div class="bg-gray-100	rounded-full h-3.5 flex	items-center justify-center">
-							<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="34px" fill="#92929D">
-								<path d="M0 0h24v24H0V0z" fill="none" />
-								<path
-									d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-							</svg>
+
+						<!-- Ellipsis menu -->
+						<div class="ellipsis-menu">
+							<button onclick="toggleMenu('{{ post.id }}')">...</button>
+						
+							<!-- Menu options (hidden by default) -->
+							<div id="menuOptions{{ post.id }}" class="menu-options" style="display: none;">
+								<!-- Your menu options go here -->
+								<a href="{% url 'report_post' post.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Report post</a>
+								<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Edit post</a>
+						
+								<!-- Report submenu (hidden by default) -->
+								<div id="reportSubMenu{{ post.id }}" class="report-submenu" style="display: none;">
+									<!-- You can include a reason prompt here if needed -->
+									<button onclick="reportPost('{{ post.id }}')">Report</button>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="whitespace-pre-wrap mt-7">{{post.caption}}</div>
@@ -442,9 +453,52 @@
       });
 </script>
 
+<script>
+function reportPost(postId) {
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/report_post/';
+
+    var input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'post_id';
+    input.value = postId;
+
+    // Include CSRF token
+    var csrfToken = document.createElement('input');
+    csrfToken.type = 'hidden';
+    csrfToken.name = 'csrfmiddlewaretoken';
+    csrfToken.value = getCookie('csrftoken');  // Assuming you have a function getCookie to retrieve the CSRF token
+
+    form.appendChild(input);
+    form.appendChild(csrfToken);
+
+    document.body.appendChild(form);
+
+    form.submit();
+}
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
     <script src="static/javascript/dashboard.js"></script>
     <script src="static/javascript/fileUpload.js"></script>
+	<script src="static/javascript/report.js"></script>
+
 </body>
 
 </html>
