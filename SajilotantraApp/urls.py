@@ -23,4 +23,6 @@ urlpatterns = [
     path('create_post/', views.create_post, name='create_post'),
     path('post/<int:post_id>/like/', views.like_post, name='like_post'),
     path('get-names/', views.get_names, name='get_names'),
+    path('change_password/<str:username>/', views.change_password, name='change_password'),
+
 ]

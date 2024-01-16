@@ -17,7 +17,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from .models import UserProfile
 
 from Sajilotantra import settings
 from SajilotantraApp.models import Event, GovernmentProfile
@@ -434,21 +433,23 @@ def create_post(request):
         caption = request.POST.get('postCaption')
         category = request.POST.get('category')
         image = request.FILES.get('file_input')
-
         auth_user = request.user
         user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
-
         try:
+            # Calling the Huffman Coding:
+            encoded_caption, encoding_dict = huffman_encode(caption)
+            # encoded_caption, _ = huffman_encode(caption)
             post = Post.objects.create(
                 user=user_profile,
-                caption=caption,
+                encoded_caption=encoded_caption,
                 category=category,
-                image=image
+                image=image,
+                encoding_dict=json.dumps(encoding_dict)
             )
             return redirect('dashboard')
         except Exception as e:
             print(f"Error creating post: {e}")
-    return redirect('map.html')
+    return redirect('dashboard.html')
 
 def get_names(request):
     search = request.GET.get('search')
@@ -487,4 +488,41 @@ def like_post(request, post_id):
     # Handle cases for GET requests or other HTTP methods
     return JsonResponse({'message': 'Method not allowed'}, status=405)
 
-  
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import redirect, render
+
+
+# @login_required
+def change_password(request, username):
+    auth_user = request.user
+    print(auth_user)
+    user = User.objects.get(username=username)
+
+
+    error_message = None
+    password_changed = False  # Assuming this variable is used to display a success message
+    
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            new_password = form.cleaned_data['new_password1']
+            
+            # Change the user's password and update the session
+            request.user.set_password(new_password)
+            request.user.save()
+            update_session_auth_hash(request, request.user)
+            
+            messages.success(request, 'Password changed successfully.')
+            password_changed = True
+        else:
+            error_message = 'Please correct the errors below.'
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")  # Add form errors to messages
+    else:
+        form = PasswordChangeForm(user=request.user)
+    
+    return render(request, 'change_password.html', {'form': form, 'error_message': error_message, 'password_changed': password_changed})

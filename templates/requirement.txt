@@ -1,0 +1,23 @@
+Whats is the responsible of controller in MVC pattern?-> interaction between model and view 
+what is idiotproof?
+which quality attribute does idiotproof determines? (usability)
+
+what is value stream mapping in lean? (bottleneck)
+what is the purpose state diagram?  (flow of control)
+
+who prioritize the user story in SCRUm? 
+
+direct or normal ma ________ in line
+ani assciation ma -------------------- 
+
+what is the purpose of design pattern?
+--> to standarize the development process
+
+who does TDD? --> development team 
+functionality chai --> PO 
+
+How is recurring problem managed in sprint retrosceptive(ek arka ko kamjori thapauni meeting ho yo chai)? 
+--> Brainstorming
+
+
+
