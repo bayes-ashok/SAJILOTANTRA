@@ -22,5 +22,5 @@ urlpatterns = [
     path('feedback', views.feedback, name='feedback'),
     path('create_post/', views.create_post, name='create_post'),
     path('post/<int:post_id>/like/', views.like_post, name='like_post'),
-
+    path('get-names/', views.get_names, name='get_names'),
 ]
