@@ -1,3 +1,9 @@
+import heapq
+import json
+import os
+from collections import defaultdict
+
+from bitarray import bitarray
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -9,9 +15,9 @@ from django.core.mail import EmailMessage, send_mail
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
-from django.http import JsonResponse
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from .models import UserProfile
 
 from Sajilotantra import settings
 from SajilotantraApp.models import Event, GovernmentProfile
@@ -19,6 +25,7 @@ from SajilotantraApp.models import Event, GovernmentProfile
 from .models import (Feedback, GovernmentProfile, Guidance, Notification, Post,
                      PostComment, PostLike, UploadedFile, UserProfile)
 from .tokens import generate_token
+from .utils import *
 
 
 def index(request):
@@ -165,7 +172,15 @@ def dashboard(request):
     guidance = Guidance.objects.all().order_by('-pk')
     events = Event.objects.all().order_by('-pk')
     posts= Post.objects.all().order_by('-pk')
-  
+    
+    for post in posts:
+        if post.image:  # Check if the image field is not None
+            # Get the file extension
+            file_extension = os.path.splitext(post.image.url)[1][1:].lower()
+            post.file_extension = file_extension
+            
+        post.decoded_caption = post.decode_caption()
+        print(f"(dashboard) Decoded Caption: {post.decoded_caption}")
     context = {
         'notifications': notifications,
         'guidance_items': guidance[:6],  # Fetching the first 6 guidance items
@@ -435,7 +450,6 @@ def create_post(request):
             print(f"Error creating post: {e}")
     return redirect('map.html')
 
-from .models import UserProfile
 def get_names(request):
     search = request.GET.get('search')
     payload = []
@@ -454,3 +468,23 @@ def get_names(request):
             'payload': payload,
         }
     )
+  
+@login_required(login_url='/signin')
+def like_post(request, post_id):
+    if request.method == 'POST':
+        post = get_object_or_404(Post, pk=post_id)
+        user_profile = request.user.userprofile
+
+        # Check if the user has already liked the post
+        if PostLike.objects.filter(post=post, user=user_profile).exists():
+            # User has already liked the post, you might want to handle this case
+            return JsonResponse({'message': 'You have already liked this post'})
+
+        # Create a new PostLike instance
+        like = PostLike.objects.create(post=post, user=user_profile)
+        return JsonResponse({'message': 'Post liked successfully', 'like_id': like.pk})
+
+    # Handle cases for GET requests or other HTTP methods
+    return JsonResponse({'message': 'Method not allowed'}, status=405)
+
+  
