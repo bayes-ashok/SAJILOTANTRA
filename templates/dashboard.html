@@ -15,7 +15,20 @@
         rel="stylesheet">
 		<link rel="stylesheet" href="static\css\dashboard.css">
 		<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+
+		<style>
+			.like-button {
+				color: grey; /* Default unliked state */
+			  }
+			  
+			  .like-button.liked {
+				color: red; /* Liked state */
+			  }
+		</style>	
+	
 </head>
+
+
 <body class="bg-blue-50">
 <header class="">
 	<nav class="fixed bg-white shadow flex justify-between items-center w-[100%]  mx-auto">
@@ -89,6 +102,8 @@
 						role="menuitem">Profile Settings</a>
 					<a href="{% url 'feedback' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Feedback</a>
+					<a href="{% url 'change_password' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+						role="menuitem">Change Password</a>
 					<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Logout</a>
 				</div>
@@ -329,11 +344,15 @@
 							{% csrf_token %}
 							
 							<div class="flex items-center gap-3">
-								<button class="like-button" data-post-id="{{ post.id }}" onclick="likePost(this)">
-								  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+								
+								<button class="like-button {% if post.id in liked_posts %}liked{% endif %}" data-post-id="{{ post.id }}">
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" viewBox="0 0 20 20" fill="currentColor">
 									<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
 								  </svg>
 								</button>
+								{% if post.id in liked_posts %}
+									{% comment %} {{ post.id }} {# Print the value for debugging #} {% endcomment %}
+								{% endif %}					
 								<div class="text-sm" id="like-count-{{ post.id }}">{{ post.like_count }}</div>
 							  </div>
 							  
@@ -459,6 +478,8 @@
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <script src="static/javascript/dashboard.js"></script>
     <script src="static/javascript/fileUpload.js"></script>
     <script src="static/javascript/likePost.js"></script>
