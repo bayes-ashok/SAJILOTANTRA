@@ -284,12 +284,12 @@ def view_profile(request, username):
     #     return render(request, 'user_does_not_exist.html')
     
     profile = UserProfile.objects.get(user=user)
-
+    posts= Post.objects.filter(user=profile)
     context = {
         'user': user,
         'profile': profile,
+        'posts':posts,
     }
-
     return render(request, 'frontprofile.html', context)
 
 
@@ -314,82 +314,6 @@ def government_profiles_details(request,pk):
 
 from django.http import Http404
 
-
-# @login_required
-def profile(request, username):
-    auth_user = request.user
-    print(auth_user)
-
-    try:
-        # Retrieve the user based on the provided username
-        user = User.objects.get(username=username)
-
-        if auth_user != user:
-            # If they don't match, redirect to the login page
-            return redirect('signin')
-
-        if user is None:
-            return render(request, "user_does_not_exist.html")
-
-        # Retrieve or create UserProfile based on user_id
-        profile, created = UserProfile.objects.get_or_create(user=user)
-
-        # Handle profile update
-        if request.method == 'POST':
-            # Preserve the existing bio if the new bio is empty
-            new_bio = request.POST.get('bio', '')
-            if new_bio != '':
-                profile.bio = new_bio
-
-            # Update profile picture
-            if 'picture' in request.FILES:
-                profile.image = request.FILES['picture']
-
-            # Update cover photo
-            if 'cover' in request.FILES:
-                profile.cover = request.FILES['cover']
-
-            #drag and drop profile
-            if 'drop-area-profile' in request.FILES:
-                profile.image= request.FILES['drop-area-profile']
-
-            #drag and drop cover
-            if 'drop-area-cover' in request.FILES:
-                profile.cover= request.FILES['drop-area-cover']
-
-            profile.save()
-            messages.success(request,"Your profile has been updated successfully")
-
-
-        context = {
-            'user': user,
-            'auth_user': auth_user,
-        }
-
-    except User.DoesNotExist:
-        raise Http404("User does not exist")
-
-    return render(request, 'profileupdate.html', context)
-
-def view_profile(request, username):
-    user = get_object_or_404(User, username=username)
-    
-    try:
-        profile = UserProfile.objects.get(user=user)
-    except UserProfile.DoesNotExist:
-        return render(request, 'user_does_not_exist.html')
-
-    # if user is None:
-    #     return render(request, 'user_does_not_exist.html')
-    
-    profile = UserProfile.objects.get(user=user)
-
-    context = {
-        'user': user,
-        'profile': profile,
-    }
-
-    return render(request, 'frontprofile.html', context)
 
 def feedback(request):
     if request.method == 'POST':
@@ -416,36 +340,23 @@ def feedback(request):
 def create_post(request):
     if request.method == 'POST':
         caption = request.POST.get('postCaption')
-        category= request.POST.get('category')
-        image= request.FILES.get('file_input')
+        category = request.POST.get('category')
+        image = request.FILES.get('file_input')
 
-        auth_user= request.user
-        # Cur_user = User.objects.get(username=auth_user)
-        U_profile, created = UserProfile.objects.get_or_create(user=auth_user)
-        print(U_profile.pk)
-        print(auth_user)
-        # Check if the user is authenticated
-        if isinstance(request.user, AnonymousUser):
-            return render(request, 'signin.html')  # or redirect to login page
+        auth_user = request.user
+        user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
 
         try:
-            user_profile = UserProfile.objects.get(user=U_profile.pk)
-        except UserProfile.DoesNotExist as e:
-            # Handle the case when the user profile does not exist
-            print(f"Error: {e}")
-            return render(request, 'signup.html')
-
-        # print("USer: "+user_profile)
-        
-        
-        post = Post.objects.create(
-            user=user_profile,
-            # user="demo",
-            caption=caption,
-            category=category,
-            image=image
-        )
-        return redirect('dashboard')
+            post = Post.objects.create(
+                user=user_profile,
+                caption=caption,
+                category=category,
+                image=image
+            )
+            return redirect('dashboard')
+        except Exception as e:
+            print(f"Error creating post: {e}")
+    return redirect('map.html')
    
 
     # return render(request, 'dashboard.html', {'form': form})

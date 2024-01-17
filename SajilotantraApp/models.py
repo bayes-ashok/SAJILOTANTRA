@@ -19,8 +19,8 @@ from Sajilotantra import settings
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='static/profile_images/', null=True, blank=True)
-    cover = models.ImageField(upload_to='static/cover_images/', null=True, blank=True)
+    image = models.ImageField(upload_to='static/profile_images/', blank=True, default='static/assets/images/defaultuser.png')
+    cover = models.ImageField(upload_to='static/cover_images/', default='static/assets/images/cover.png', blank=True)
     bio = models.CharField(max_length=255, null=True, blank=True)
     # Add other fields as needed
 
