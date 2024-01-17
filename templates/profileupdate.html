@@ -250,6 +250,14 @@
     <!-- Profile update form content -->
     <form id="profileUpdateForm" method="post" enctype="multipart/form-data">
       {% csrf_token %}
+      <div>
+        <label for="fname" class="block text-sm font-medium text-gray-600">First name</label>
+        <input type="text" id="fname" class="bg-gray-50 border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{ user.last_name }}" name="fname" required>
+    </div>
+    <div>
+        <label for="fname" class="block text-sm font-medium text-gray-600">Last name</label>
+        <input type="text" id="fname" class="bg-gray-50 border border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{ user.first_name }}" name="lname" required>
+    </div>
       <!-- Bio input field -->
       <div class="mb-4">
         <label for="id_bio" class="block text-sm font-medium text-gray-600">Bio:</label>
@@ -325,7 +333,5 @@
     }, 500);
   }
 </script>
-
-
 </body>
 </html>

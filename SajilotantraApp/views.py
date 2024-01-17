@@ -235,10 +235,17 @@ def profile(request, username):
 
         # Handle profile update
         if request.method == 'POST':
-            # Preserve the existing bio if the new bio is empty
             new_bio = request.POST.get('bio', '')
             if new_bio != '':
                 profile.bio = new_bio
+
+            new_f_name=request.POST.get('fname','')
+            if new_f_name != '':
+                user.last_name = new_f_name
+
+            new_l_name=request.POST.get('lname','')
+            if new_l_name != '':
+                user.first_name = new_l_name
 
             # Update profile picture
             if 'picture' in request.FILES:
@@ -255,7 +262,7 @@ def profile(request, username):
             #drag and drop cover
             if 'drop-area-cover' in request.FILES:
                 profile.cover= request.FILES['drop-area-cover']
-
+            user.save()
             profile.save()
             messages.success(request,"Your profile has been updated successfully")
 
@@ -284,7 +291,7 @@ def view_profile(request, username):
     #     return render(request, 'user_does_not_exist.html')
     
     profile = UserProfile.objects.get(user=user)
-    posts= Post.objects.filter(user=profile)
+    posts= Post.objects.filter(user=profile).order_by("-pk")
     context = {
         'user': user,
         'profile': profile,
