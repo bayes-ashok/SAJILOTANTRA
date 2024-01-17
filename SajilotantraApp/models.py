@@ -23,8 +23,8 @@ from .utils import *
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='static/profile_images/', null=True, blank=True)
-    cover = models.ImageField(upload_to='static/cover_images/', null=True, blank=True)
+    image = models.ImageField(upload_to='static/profile_images/', blank=True, default='static/assets/images/defaultuser.png')
+    cover = models.ImageField(upload_to='static/cover_images/', default='static/assets/images/cover.png', blank=True)
     bio = models.CharField(max_length=255, null=True, blank=True)
     # Add other fields as needed
 
@@ -90,6 +90,10 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     like_count = models.IntegerField(default=0)  # New field for storing like count
     encoding_dict = models.TextField(null=True)
+    
+    def is_liked_by_user(self, user):
+        return self.postlike_set.filter(user=user).exists()   
+        
 
     def decode_caption(self):
         print(f"Encoding Dict: {self.encoding_dict}")

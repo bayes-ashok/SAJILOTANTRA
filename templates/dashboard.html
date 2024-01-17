@@ -340,21 +340,7 @@
 						<div class="gap-3.5	flex items-center ">
 							<img class="object-cover w-12 h-12 rounded-full" src="{{post.user.image}}" alt="Profile Picture">
 							{% comment %} {% if request.user.is_authenticated %} {% endcomment %}
-    {% comment %} {% if post.user == request.user %}
-        <!-- If the user of the post is the logged-in user, link to the profile -->
-        <a href="{% url 'profile' %}">
-            <img src="{{ post.user.image }}" class="object-cover bg-yellow-500 rounded-full w-10 h-10" />
-        </a>
-    {% else %}
-        <!-- If the user of the post is not the logged-in user, link to the view_profile page -->
-        <a href="{% url 'view_profile' post.user.username %}">
-            <img src="{{ post.user.image }}" class="object-cover bg-yellow-500 rounded-full w-10 h-10" />
-        </a>
-    {% endif %}
-{% else %}
-    <!-- If no user is logged in, you might want to handle it differently -->
-    <img src="{{ post.user.image }}" class="object-cover bg-yellow-500 rounded-full w-10 h-10" />
-{% endif %} {% endcomment %}
+    
 
 							<div class="flex flex-col">
 								<div>

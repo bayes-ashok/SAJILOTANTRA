@@ -398,12 +398,12 @@ def view_profile(request, username):
     #     return render(request, 'user_does_not_exist.html')
     
     profile = UserProfile.objects.get(user=user)
-
+    posts= Post.objects.filter(user=profile).order_by("-pk")
     context = {
         'user': user,
         'profile': profile,
+        'posts':posts,
     }
-
     return render(request, 'frontprofile.html', context)
 
 def feedback(request):
@@ -469,7 +469,9 @@ def get_names(request):
             'payload': payload,
         }
     )
-  
+from django.http import JsonResponse
+
+
 @login_required(login_url='/signin')
 def like_post(request, post_id):
     if request.method == 'POST':
@@ -478,12 +480,12 @@ def like_post(request, post_id):
 
         # Check if the user has already liked the post
         if PostLike.objects.filter(post=post, user=user_profile).exists():
-            # User has already liked the post, you might want to handle this case
-            return JsonResponse({'message': 'You have already liked this post'})
+            # User has already liked the post
+            return JsonResponse({'message': 'You have already liked this post', 'is_liked': True})
 
         # Create a new PostLike instance
         like = PostLike.objects.create(post=post, user=user_profile)
-        return JsonResponse({'message': 'Post liked successfully', 'like_id': like.pk})
+        return JsonResponse({'message': 'Post liked successfully', 'like_id': like.pk, 'is_liked': True})
 
     # Handle cases for GET requests or other HTTP methods
     return JsonResponse({'message': 'Method not allowed'}, status=405)
