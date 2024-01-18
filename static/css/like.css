@@ -1,0 +1,7 @@
+.like-button.liked {
+    color: red; /* or any red shade you prefer */
+}
+
+.like-button.not-liked {
+    color: grey; /* or any grey shade you prefer */
+}
