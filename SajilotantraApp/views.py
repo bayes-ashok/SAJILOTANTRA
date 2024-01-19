@@ -220,9 +220,11 @@ def profile(request, username):
     print(auth_user)
 
     try:
+        auth_user = request.user
         # Retrieve the user based on the provided username
         user = User.objects.get(username=username)
-
+        profile = UserProfile.objects.get(user=user)
+        posts= Post.objects.filter(user=profile).order_by("-pk")
         if auth_user != user:
             # If they don't match, redirect to the login page
             return redirect('signin')
@@ -265,37 +267,38 @@ def profile(request, username):
             user.save()
             profile.save()
             messages.success(request,"Your profile has been updated successfully")
-
+            
 
         context = {
             'user': user,
             'auth_user': auth_user,
+            'profile': profile,
+            'posts':posts,
         }
 
     except User.DoesNotExist:
-        raise Http404("User does not exist")
+        return render(request,"user_does_not_exist.html")
 
     return render(request, 'profileupdate.html', context)
 
 
 
 def view_profile(request, username):
-    user = get_object_or_404(User, username=username)
-    
+    auth_user=request.user
     try:
-        profile = UserProfile.objects.get(user=user)
-    except UserProfile.DoesNotExist:
+        auth_user=request.user
+        auth_profile = get_object_or_404(UserProfile, user=auth_user)
+        user = get_object_or_404(User, username=username)
+        profile = get_object_or_404(UserProfile, user=user)
+        posts = Post.objects.filter(user=profile).order_by("-pk")
+    except Http404:
         return render(request, 'user_does_not_exist.html')
 
-    # if user is None:
-    #     return render(request, 'user_does_not_exist.html')
-    
-    profile = UserProfile.objects.get(user=user)
-    posts= Post.objects.filter(user=profile).order_by("-pk")
     context = {
         'user': user,
         'profile': profile,
-        'posts':posts,
+        'posts': posts,
+        'auth_profile': auth_profile
     }
     return render(request, 'frontprofile.html', context)
 

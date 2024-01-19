@@ -80,13 +80,17 @@
 			 <!-- Dropdown menu -->
 			{% comment %} Profile Secion {% endcomment %}
 			<div id="profileContainer" class="flex items-center gap-3 cursor-pointer mx-2 rounded-full focus:ring-2 hover:ring-2 hover:ring-gray-600 focus:ring-gray-800 ">
-				<img class="w-10 h-10 rounded-full" src="https://placekitten.com/40/40" alt="Profile Picture">
+				<img class="w-10 h-10 rounded-full" src="{{ user_profile.image.url }}" alt="{{auth_user.username}}'s Profile Picture">
 			</div>
 			<div id="profileDropdown"
 				class="hidden origin-top-right absolute right-2 top-14 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
 				<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="profileContainer">
-					<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+					<a href="{% url 'profile' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Profile Settings</a>
+					<a href="{% url 'feedback' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+						role="menuitem">Feedback</a>
+					{% comment %} <a href="{% url 'change_password' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+						role="menuitem">Change Password</a> {% endcomment %}
 					<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Logout</a>
 				</div>
