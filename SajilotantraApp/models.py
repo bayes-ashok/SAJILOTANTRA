@@ -89,6 +89,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='static/post_images/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
     like_count = models.IntegerField(default=0)  # New field for storing like count
+    comment_count=models.IntegerField(default=0)
     encoding_dict = models.TextField(null=True)
 
     def decode_caption(self):
@@ -122,3 +123,8 @@ class PostComment(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        super(PostComment, self).save(*args, **kwargs)
+        self.post.comment_count=PostComment.objects.filter(post=self.post).count()
+        self.post.save()

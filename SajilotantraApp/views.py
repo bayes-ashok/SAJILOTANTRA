@@ -170,7 +170,13 @@ def dashboard(request):
     auth_user = request.user
     user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
     
+
+    # fetiching comments for each post
+    post_comments={}
     for post in posts:
+        comments=PostComment.objects.filter(post=post)
+        post_comments[post.id]=comments
+
         if post.image:  # Check if the image field is not None
             # Get the file extension
             file_extension = os.path.splitext(post.image.url)[1][1:].lower()
@@ -184,6 +190,7 @@ def dashboard(request):
         'guidance_items': guidance[:6],  # Fetching the first 6 guidance items
         'events': events[:3],
         'posts':posts,
+        'post_comments':post_comments,
         'user_profile':user_profile
     }
 
@@ -449,6 +456,24 @@ def create_post(request):
         except Exception as e:
             print(f"Error creating post: {e}")
     return redirect('dashboard.html')
+
+@login_required(login_url="/signin")
+def add_comment(request, post_id):
+    if request.method =='POST':
+        post=get_object_or_404(Post, pk=post_id)
+        comment_user=request.user.userprofile
+        text = request.POST.get('commentInput')
+
+        if text:
+            comment = PostComment.objects.create(post=post, user=comment_user, text=text)
+            messages.success(request, 'Comment added successfully!')
+            return redirect("dashboard")
+        else:
+            messages.error(request, 'Invalid comment input.')
+            return redirect("map")
+
+    return redirect("dashboard")
+    
 
 @login_required(login_url='/signin')
 def like_post(request, post_id):
