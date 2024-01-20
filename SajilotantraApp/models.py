@@ -23,9 +23,10 @@ from .utils import *
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='static/profile_images/', blank=True, default='static/assets/images/defaultuser.png')
-    cover = models.ImageField(upload_to='static/cover_images/', default='static/assets/images/cover.png', blank=True)
+    image = models.ImageField(upload_to='static/profile_images/', blank=True, default='static/assets/images/defaultuser.png')    
+    cover = models.ImageField(upload_to='static/cover_images/', default='static/assets/images/default_cover.png', blank=True)    
     bio = models.CharField(max_length=255, null=True, blank=True)
+    forget_password_token = models.CharField(max_length=100, default='')
     # Add other fields as needed
 
     def __str__(self):
@@ -132,3 +133,10 @@ class PostComment(models.Model):
         super(PostComment, self).save(*args, **kwargs)
         self.post.comment_count=PostComment.objects.filter(post=self.post).count()
         self.post.save()
+        
+class ReportedPost(models.Model):
+    post_id = models.IntegerField()
+    reason = models.TextField()
+    
+    def __str__(self):
+        return f"Report for Post ID: {self.post_id}"

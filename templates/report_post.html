@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .report-button {
+        background-color: #4285f4;
+        border-radius: 50%;
+        height: 3.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .report-form {
+        display: none;
+        /* Add any additional styling for the report form */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="report-button" id="reportButton">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="24px"
+        viewBox="0 0 24 24"
+        width="34px"
+        fill="#FFFFFF"
+      >
+        <path d="M0 0h24v24H0V0z" fill="none" />
+        <path
+          d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+        />
+      </svg>
+    </div>
+
+    <div class="report-form" id="reportForm">
+      <!-- Add your report form fields and submit button here -->
+      <label for="reportReason">Reason for reporting:</label>
+      <input type="text" id="reportReason" name="reportReason" />
+      <button onclick="submitReport()">Submit Report</button>
+    </div>
+
+    <script>
+      const reportButton = document.getElementById("reportButton");
+      const reportForm = document.getElementById("reportForm");
+
+      reportButton.addEventListener("click", () => {
+        reportForm.style.display = "block";
+      });
+    </script>
+
+    <script>
+      function reportPost(postId) {
+        // Create a form element dynamically
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = `/dashboard/report_post/${postId}/`; // Replace with your actual URL
+
+        // Create a hidden input field for CSRF token
+        var csrfToken = document.createElement("input");
+        csrfToken.type = "hidden";
+        csrfToken.name = "csrfmiddlewaretoken";
+        csrfToken.value = getCookie("csrftoken"); // Assuming you have a function getCookie to retrieve the CSRF token
+
+        // Create a hidden input field for post_id
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "post_id";
+        input.value = postId;
+
+        // Append the input fields to the form
+        form.appendChild(csrfToken);
+        form.appendChild(input);
+
+        // Append the form to the document body
+        document.body.appendChild(form);
+
+        // Submit the form
+        form.submit();
+      }
+
+      // Function to get the CSRF token from cookies
+      function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          var cookies = document.cookie.split(";");
+          for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+    </script>
+  </body>
+</html>

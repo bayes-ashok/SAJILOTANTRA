@@ -136,8 +136,7 @@
 			 <!-- Dropdown menu -->
 			{% comment %} Profile Secion {% endcomment %}
 			<div id="profileContainer" class="flex items-center gap-3 cursor-pointer mx-2 rounded-full focus:ring-2 hover:ring-2 hover:ring-gray-600 focus:ring-gray-800 ">
-				<img class="w-10 h-10 rounded-full" src="{{ user_profile.image.url }}" alt="{{auth_user.username}}'s Profile Picture">
-			</div>
+				<img class="w-10 h-10 rounded-full" src="{{ user_profile.image.url }}" alt="{{auth_user.username}}'s Profile Picture">			</div>
 			<div id="profileDropdown"
 				class="hidden origin-top-right absolute right-2 top-14 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
 				<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="profileContainer">
@@ -346,12 +345,29 @@
 								</p>
 							</div>
 						</div>
-						<div class="bg-gray-100	rounded-full h-3.5 flex	items-center justify-center">
+						{% comment %} <div class="bg-gray-100	rounded-full h-3.5 flex	items-center justify-center">
 							<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="34px" fill="#92929D">
 								<path d="M0 0h24v24H0V0z" fill="none" />
 								<path
 									d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
 							</svg>
+						</div> {% endcomment %}
+						<!-- Ellipsis menu -->
+						<div class="ellipsis-menu">
+							<button onclick="reportPost('{{ post.id }}')">...</button>
+
+							<div id="menuOptions{{ post.id }}" class="menu-options" style="display: none;">
+								<form id="reportForm{{ post.id }}" method="post" action="/report-post/{{ post.id }}/">
+									{% csrf_token %}
+									<input type="hidden" name="reason" id="reasonInput{{ post.id }}">
+									<button type="button" onclick="showReasonPrompt('{{ post.id }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Report post</button>
+								</form>
+								<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Delete post</a>
+
+								<div id="reportSubMenu{{ post.id }}" class="report-submenu" style="display: none;">
+									<button onclick="reportPost('{{ post.id }}')">Report</button>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="whitespace-pre-wrap mt-7">{{post.decoded_caption}}</div>
@@ -557,6 +573,67 @@
         $(this).ekkoLightbox();
       });
 </script>
+<script>
+    function reportPost(postId) {
+        const reason = prompt('Please provide a reason for reporting this post:');
+
+        if (reason !== null && reason !== '') {
+            // Create a form element dynamically
+            const form = document.createElement('form');
+            form.method = 'post';
+            form.action = `/report-post/${postId}/`;
+
+            // Create a CSRF token input field
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = 'csrfmiddlewaretoken';
+            csrfInput.value = getCookie('csrftoken');
+
+            // Create a reason input field
+            const reasonInput = document.createElement('input');
+            reasonInput.type = 'hidden';
+            reasonInput.name = 'reason';
+            reasonInput.value = reason;
+
+            // Append inputs to the form
+            form.appendChild(csrfInput);
+            form.appendChild(reasonInput);
+
+            // Append the form to the body and submit it
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+
+    // Function to get CSRF token from cookies
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Search for a name/value pair with the given name
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+
+<script>
+    function showReasonPrompt(postId) {
+        const reason = prompt('Please provide a reason for reporting this post:');
+        if (reason !== null && reason !== '') {
+            // Set the reason in the hidden input field
+            document.getElementById(`reasonInput${postId}`).value = reason;
+            // Submit the form
+            document.getElementById(`reportForm${postId}`).submit();
+        }
+    }
+</script>
 
 
 
@@ -568,8 +645,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-    {% comment %} <script src="static/javascript/dashboard.js"></script>
-    <script src="static/javascript/fileUpload.js"></script> {% endcomment %}
+    <script src="static/javascript/dashboard.js"></script>
+    <script src="static/javascript/fileUpload.js"></script>
     <script src="static/javascript/likePost.js"></script>
 	{% comment %} <script src="static/javascript/search.js"></script> {% endcomment %}
 

@@ -1,3 +1,6 @@
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import (PasswordResetConfirmView,
+                                       PasswordResetView)
 from django.urls import path
 
 from . import views
@@ -25,4 +28,9 @@ urlpatterns = [
     path('get-names/', views.get_names, name='get_names'),
     path('change_password/<str:username>/', views.change_password, name='change_password'),
     path('post/<int:post_id>/comment/', views.add_comment, name='comment_post'),
+    path('report-post/<int:post_id>/', views.report_post, name='report_post'),
+     path('password_reset/', auth_views.PasswordResetView.as_view(template_name='passwordreset.html'), name='password_reset'),
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='resetdone.html'), name='password_reset_done'),
+    path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="password_reset_confirm.html"), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='resetcomplete.html'), name='password_reset_complete'),
 ]

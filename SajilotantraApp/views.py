@@ -22,7 +22,8 @@ from Sajilotantra import settings
 from SajilotantraApp.models import Event, GovernmentProfile
 
 from .models import (Feedback, GovernmentProfile, Guidance, Notification, Post,
-                     PostComment, PostLike, UploadedFile, UserProfile)
+                     PostComment, PostLike, ReportedPost, UploadedFile,
+                     UserProfile)
 from .tokens import generate_token
 from .utils import *
 
@@ -553,3 +554,13 @@ def change_password(request, username):
         form = PasswordChangeForm(user=request.user)
     
     return render(request, 'change_password.html', {'form': form, 'error_message': error_message, 'password_changed': password_changed})
+
+def report_post(request, post_id):
+    if request.method == 'POST':
+        reason = request.POST.get('reason', '')
+        report = ReportedPost.objects.create(post_id=post_id, reason=reason)
+        print(f"Reported post saved: {report}")
+
+        # Redirect the user to a different page or the same page
+        return redirect('dashboard')
+    return render(request, 'dashboard.html')
