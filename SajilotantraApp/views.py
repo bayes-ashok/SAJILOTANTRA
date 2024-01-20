@@ -1,3 +1,9 @@
+import heapq
+import json
+import os
+from collections import defaultdict
+
+from bitarray import bitarray
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -16,10 +22,12 @@ from Sajilotantra import settings
 from SajilotantraApp.models import Event, GovernmentProfile
 
 from .models import (Feedback, GovernmentProfile, Guidance, Notification, Post,
-                     PostComment, PostLike, UploadedFile, UserProfile, ReportedPost)
+                     PostComment, PostLike, UploadedFile, UserProfile)
 from .tokens import generate_token
+from .utils import *
 
-from django.contrib.auth.models import User
+from django.http import JsonResponse
+from .models import ReportedPost
 
 
 def index(request):
@@ -166,6 +174,15 @@ def dashboard(request):
     guidance = Guidance.objects.all().order_by('-pk')
     events = Event.objects.all().order_by('-pk')
     posts= Post.objects.all().order_by('-pk')
+
+    for post in posts:
+        if post.image:  # Check if the image field is not None
+            # Get the file extension
+            file_extension = os.path.splitext(post.image.url)[1][1:].lower()
+            post.file_extension = file_extension
+            
+        post.decoded_caption = post.decode_caption()
+        print(f"(dashboard) Decoded Caption: {post.decoded_caption}")
     
     context = {
         'notifications': notifications,
@@ -401,41 +418,43 @@ def view_profile(request, username):
 def create_post(request):
     if request.method == 'POST':
         caption = request.POST.get('postCaption')
-        category= request.POST.get('category')
-        image= request.FILES.get('file_input')
-
-        auth_user= request.user
-        # Cur_user = User.objects.get(username=auth_user)
-        U_profile, created = UserProfile.objects.get_or_create(user=auth_user)
-        print(U_profile.pk)
-        print(auth_user)
-        # Check if the user is authenticated
-        if isinstance(request.user, AnonymousUser):
-            return render(request, 'signin.html')  # or redirect to login page
-
+        category = request.POST.get('category')
+        image = request.FILES.get('file_input')
+        auth_user = request.user
+        user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
         try:
-            user_profile = UserProfile.objects.get(user=U_profile.pk)
-        except UserProfile.DoesNotExist as e:
-            # Handle the case when the user profile does not exist
-            print(f"Error: {e}")
-            return render(request, 'signup.html')
+            # Calling the Huffman Coding:
+            encoded_caption, encoding_dict = huffman_encode(caption)
+            # encoded_caption, _ = huffman_encode(caption)
+            post = Post.objects.create(
+                user=user_profile,
+                encoded_caption=encoded_caption,
+                category=category,
+                image=image,
+                encoding_dict=json.dumps(encoding_dict)
+            )
+            return redirect('dashboard')
+        except Exception as e:
+            print(f"Error creating post: {e}")
+    return redirect('dashboard.html')
 
-        # print("USer: "+user_profile)
-        
-        
-        post = Post.objects.create(
-            user=user_profile,
-            # user="demo",
-            caption=caption,
-            category=category,
-            image=image
-        )
-        return redirect('dashboard')
-   
+@login_required(login_url='/signin')
+def like_post(request, post_id):
+    if request.method == 'POST':
+        post = get_object_or_404(Post, pk=post_id)
+        user_profile = request.user.userprofile
 
-    # return render(request, 'dashboard.html', {'form': form})
-    return redirect('map.html')
+        # Check if the user has already liked the post
+        if PostLike.objects.filter(post=post, user=user_profile).exists():
+            # User has already liked the post
+            return JsonResponse({'message': 'You have already liked this post', 'is_liked': True})
 
+        # Create a new PostLike instance
+        like = PostLike.objects.create(post=post, user=user_profile)
+        return JsonResponse({'message': 'Post liked successfully', 'like_id': like.pk, 'is_liked': True})
+
+    # Handle cases for GET requests or other HTTP methods
+    return JsonResponse({'message': 'Method not allowed'}, status=405)
 
 
 from django.contrib.auth.forms import PasswordChangeForm
@@ -496,112 +515,24 @@ def feedback(request):
 
     return render(request, 'feedback.html') 
 
-from .forms import ReportForm
 
-def report_post(request):
-    if request.method == 'POST':
-        form = ReportForm(request.POST, request.FILES)
-        if form.is_valid():
-            reported_post = form.save()
-            messages.success(request, "Post reported successfully")
-            return redirect('dashboard')
-        else:
-            messages.error(request, "Error reporting post")
-    else:
-        form = ReportForm()
-
-    return render(request, 'report_post.html', {'form': form})
-
-
-
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from .models import ReportedPost
 
-def view_reported_post(request, post_id):
-    reported_post = get_object_or_404(ReportedPost, post_id=post_id)
-
-    # Assuming the content is not a text file, you may need to handle different content types
-    content_type = reported_post.post.content_type
-
-    return render(request, 'view_reported_post.html', {'reported_post': reported_post, 'content_type': content_type})
-
-#reset Password
-from django.shortcuts import render, redirect
-from django import forms
-from django.contrib.auth.models import User
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from django.core.mail import send_mail
-
-class PasswordResetForm(forms.Form):
-    email = forms.EmailField(label="Email")
-
-def password_reset(request):
-    form = PasswordResetForm()
-
+def report_post(request, post_id):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        try:
-            user = User.objects.get(email=email)
-            
-            # Generate verification code and send it to the user's email
-            token = default_token_generator.make_token(user)
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-            verification_link = f"http://yourdomain.com/reset/{uid}/{token}/"
-            
-            send_mail(
-                'Password Reset Verification',
-                f'Click the link to reset your password: {verification_link}',
-                'from@example.com',
-                [email],
-                fail_silently=False,
-            )
-            return redirect('verification_sent')
-        except User.DoesNotExist:
-            # Handle case where the email is not associated with any user
-            pass
+        reason = request.POST.get('reason', '')
 
-    return render(request, 'password_reset.html', {'form': form})
+        # Save the reported post in the database
+        report = ReportedPost.objects.create(post_id=post_id, reason=reason)
+        print(f"Reported post saved: {report}")
+
+        # Redirect the user to a different page or the same page
+        return redirect('dashboard')  # Update with the appropriate URL
+
+    return render(request, 'dashboard.html')
 
 
 
 
-def verify_code(request):
-    if request.method == 'POST':
-        verification_code = request.POST.get('verification_code')
-        
-        # Validate the verification code
-        if is_valid_verification_code(request.user, verification_code):  # You need to implement this function
-            return redirect('reset_password')  # Redirect to the page where users enter the new password
-        else:
-            # Display an error message for an invalid verification code
-            pass
-
-    return render(request, 'verification_code.html')
-
-
-def reset_password(request):
-    if request.method == 'POST':
-        new_password = request.POST.get('new_password')
-        
-        # Update the user's password with the new one
-        request.user.set_password(new_password)
-        request.user.save()
-        
-        # Redirect to the login page or any other desired page
-        return redirect('login')
-
-    return render(request, 'reset_password.html')
-
-
-def verification_sent(request):
-    return render(request, 'verification_sent.html')
-
-import random
-import string
-
-def generate_verification_code(length=6):
-    characters = string.ascii_letters + string.digits
-    verification_code = ''.join(random.choice(characters) for _ in range(length))
-    return verification_code

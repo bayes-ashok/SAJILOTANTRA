@@ -1,8 +1,11 @@
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.db import models
+import json
 
 from Sajilotantra import settings
+
+from .utils import *
 
 # class User(models.Model):
 #     user_id = models.AutoField(primary_key=True)
@@ -22,6 +25,8 @@ class UserProfile(models.Model):
     image = models.ImageField(upload_to='static/profile_images/', null=True, blank=True)
     cover = models.ImageField(upload_to='static/cover_images/', null=True, blank=True)
     bio = models.CharField(max_length=255, null=True, blank=True)
+    # verification_code=models.CharField(max_length=6, blank=True, null=True)
+    forget_password_token = models.CharField(max_length=100, default='')
     # Add other fields as needed
 
     def __str__(self):
@@ -77,19 +82,44 @@ class UploadedFile(models.Model):
         return self.file.name
     
     
-
 class Post(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    caption = models.TextField()
+    encoded_caption = models.TextField()
     category = models.CharField(max_length=50)
     image = models.ImageField(upload_to='static/post_images/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
-    # date_posted=models.DateTimeField(auto_now_add=True)
+    like_count = models.IntegerField(default=0)  # New field for storing like count
+    encoding_dict = models.TextField(null=True)
+    
+    def is_liked_by_user(self, user):
+        return self.postlike_set.filter(user=user).exists()   
+        
 
+    def decode_caption(self):
+        print(f"Encoding Dict: {self.encoding_dict}")
+        if self.encoding_dict:
+            encoding_dict = json.loads(self.encoding_dict)
+            print(f"Decoding with Dict: {encoding_dict}")
+            return huffman_decode(self.encoded_caption, encoding_dict)
+        else:
+            print("Unable to decode caption: Encoding Dict is None")
+            return "Unable to decode caption"
 
+    def save(self, *args, **kwargs):
+        # Ensure that encoding_dict is not saved as None to prevent future errors
+        if self.encoding_dict is None:
+            self.encoding_dict = json.dumps({})  # Provide an empty dictionary as a default
+        super().save(*args, **kwargs)
+    
 class PostLike(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        # Override save method to update like count in the associated post
+        super(PostLike, self).save(*args, **kwargs)
+        self.post.like_count = PostLike.objects.filter(post=self.post).count()
+        self.post.save()
 
 class PostComment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -98,14 +128,12 @@ class PostComment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
-# models.py
-from django.db import models
-
 class ReportedPost(models.Model):
-    post_id = models.CharField(max_length=255, unique=True)
-    post = models.FileField(upload_to='uploaded_files/')
+    post_id = models.IntegerField()
+    reason = models.TextField()
+
+    
 
     def __str__(self):
-        return f"Reported Post {self.post_id}"
-
+        return f"Report for Post ID: {self.post_id}"
 
