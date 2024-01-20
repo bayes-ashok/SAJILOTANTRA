@@ -171,8 +171,10 @@ def dashboard(request):
     guidance = Guidance.objects.all().order_by('-pk')
     events = Event.objects.all().order_by('-pk')
     posts= Post.objects.all().order_by('-pk')
-    
+    post_comments={}
     for post in posts:
+        comments=PostComment.objects.filter(post=post)
+        post_comments[post.id]=comments
         if post.image:  # Check if the image field is not None
             # Get the file extension
             file_extension = os.path.splitext(post.image.url)[1][1:].lower()
@@ -184,6 +186,7 @@ def dashboard(request):
         'notifications': notifications,
         'guidance_items': guidance[:6],  # Fetching the first 6 guidance items
         'events': events[:3],
+        'post_comments':post_comments,
         'posts':posts,
     }
 
@@ -451,6 +454,23 @@ def create_post(request):
             print(f"Error creating post: {e}")
     return redirect('dashboard.html')
 
+@login_required(login_url="/signin")
+def add_comment(request, post_id):
+    if request.method =='POST':
+        post=get_object_or_404(Post, pk=post_id)
+        comment_user=request.user.userprofile
+        text = request.POST.get('commentInput')
+
+        if text:
+            comment = PostComment.objects.create(post=post, user=comment_user, text=text)
+            messages.success(request, 'Comment added successfully!')
+            return redirect("dashboard")
+        else:
+            messages.error(request, 'Invalid comment input.')
+            return redirect("map")
+
+    return redirect("dashboard")
+
 def get_names(request):
     search = request.GET.get('search')
     payload = []
@@ -479,17 +499,22 @@ def like_post(request, post_id):
         user_profile = request.user.userprofile
 
         # Check if the user has already liked the post
-        if PostLike.objects.filter(post=post, user=user_profile).exists():
-            # User has already liked the post
-            return JsonResponse({'message': 'You have already liked this post', 'is_liked': True})
+        like, created = PostLike.objects.get_or_create(post=post, user=user_profile)
 
-        # Create a new PostLike instance
-        like = PostLike.objects.create(post=post, user=user_profile)
-        return JsonResponse({'message': 'Post liked successfully', 'like_id': like.pk, 'is_liked': True})
+        if not created:
+            # Unlike the post
+            like.delete()
+            post.like_count = PostLike.objects.filter(post=post).count()
+            post.save()
+            return JsonResponse({'message': 'Post unliked successfully', 'is_liked': False, 'like_count': post.like_count})
+        else:
+            # Like the post
+            post.like_count = PostLike.objects.filter(post=post).count()
+            post.save()
+            return JsonResponse({'-message': 'Post liked successfully', 'is_liked': True, 'like_count': post.like_count})
 
     # Handle cases for GET requests or other HTTP methods
     return JsonResponse({'message': 'Method not allowed'}, status=405)
-
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required

@@ -24,5 +24,5 @@ urlpatterns = [
     path('post/<int:post_id>/like/', views.like_post, name='like_post'),
     path('get-names/', views.get_names, name='get_names'),
     path('change_password/<str:username>/', views.change_password, name='change_password'),
-
+    path('post/<int:post_id>/comment/', views.add_comment, name='comment_post'),
 ]

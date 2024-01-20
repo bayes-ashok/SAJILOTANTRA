@@ -20,4 +20,37 @@ How is recurring problem managed in sprint retrosceptive(ek arka ko kamjori thap
 --> Brainstorming
 
 
+(2000)
+cover page(submitted by to module leader not name)
+
+table of content
+table of figure(ss)
+table of diagram (usecase, gantt chart ,trello)
+Introduction(what is what you use what techno  200-250)
+problem statement(200-250) why you choose this proj? 
+Agile process(why scrum? ) 200-250
+--> user story screenshot every stories (user story mapping screenshot), release plan screenshot,sprint backlog higlighting your name, summarize every aspect in it. 200-250
+Role(ur role(sm\po), how you motivate/did/help your team, team pyscology and conflict management and solution, how you make healthy environment betwn team) 500-600
+Argument(have you developed a right product/ is it solving the real life problem?, 200-250
+         evidence(code architecture(ss of folder structure), git)150
+Conclusion(summary of whole project) 300-500
+References(15-20 APA7) no need of citation (scribber)
+Link(trello, github, excelsheet-editable, max-10-12min video of ur work)
+
+for sm(what did you managed including codes, mero role yesto usto)
+
+
+----group project---
+feature complete 10
+Code architecture 10
+ui/ux 10
+testing 10
+
+version control 10
+
+cocomo method?
+--> measure complexity of software system
+--> used for price estimation
+
+
 
