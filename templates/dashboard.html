@@ -87,6 +87,10 @@
 				<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="profileContainer">
 					<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Profile Settings</a>
+
+						<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+						role="menuitem">Change Password</a>
+
 					<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Logout</a>
 				</div>
@@ -298,21 +302,22 @@
 
 						<!-- Ellipsis menu -->
 						<div class="ellipsis-menu">
-							<button onclick="toggleMenu('{{ post.id }}')">...</button>
-						
-							<!-- Menu options (hidden by default) -->
+							<button onclick="reportPost('{{ post.id }}')">...</button>
+
 							<div id="menuOptions{{ post.id }}" class="menu-options" style="display: none;">
-								<!-- Your menu options go here -->
-								<a href="{% url 'report_post' post.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Report post</a>
-								<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Edit post</a>
-						
-								<!-- Report submenu (hidden by default) -->
+								<form id="reportForm{{ post.id }}" method="post" action="/report-post/{{ post.id }}/">
+									{% csrf_token %}
+									<input type="hidden" name="reason" id="reasonInput{{ post.id }}">
+									<button type="button" onclick="showReasonPrompt('{{ post.id }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Report post</button>
+								</form>
+								<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Delete post</a>
+
 								<div id="reportSubMenu{{ post.id }}" class="report-submenu" style="display: none;">
-									<!-- You can include a reason prompt here if needed -->
 									<button onclick="reportPost('{{ post.id }}')">Report</button>
 								</div>
 							</div>
 						</div>
+						
 					</div>
 					<div class="whitespace-pre-wrap mt-7">{{post.caption}}</div>
 					<div class="mt-2 flex gap-2	 justify-center border-b pb-4 flex-wrap	">
@@ -454,44 +459,65 @@
 </script>
 
 <script>
-function reportPost(postId) {
-    var form = document.createElement('form');
-    form.method = 'POST';
-    form.action = '/report_post/';
+    function reportPost(postId) {
+        const reason = prompt('Please provide a reason for reporting this post:');
 
-    var input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'post_id';
-    input.value = postId;
+        if (reason !== null && reason !== '') {
+            // Create a form element dynamically
+            const form = document.createElement('form');
+            form.method = 'post';
+            form.action = `/report-post/${postId}/`;
 
-    // Include CSRF token
-    var csrfToken = document.createElement('input');
-    csrfToken.type = 'hidden';
-    csrfToken.name = 'csrfmiddlewaretoken';
-    csrfToken.value = getCookie('csrftoken');  // Assuming you have a function getCookie to retrieve the CSRF token
+            // Create a CSRF token input field
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = 'csrfmiddlewaretoken';
+            csrfInput.value = getCookie('csrftoken');
 
-    form.appendChild(input);
-    form.appendChild(csrfToken);
+            // Create a reason input field
+            const reasonInput = document.createElement('input');
+            reasonInput.type = 'hidden';
+            reasonInput.name = 'reason';
+            reasonInput.value = reason;
 
-    document.body.appendChild(form);
+            // Append inputs to the form
+            form.appendChild(csrfInput);
+            form.appendChild(reasonInput);
 
-    form.submit();
-}
-
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
+            // Append the form to the body and submit it
+            document.body.appendChild(form);
+            form.submit();
         }
     }
-    return cookieValue;
-}
+
+    // Function to get CSRF token from cookies
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Search for a name/value pair with the given name
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+
+<script>
+    function showReasonPrompt(postId) {
+        const reason = prompt('Please provide a reason for reporting this post:');
+        if (reason !== null && reason !== '') {
+            // Set the reason in the hidden input field
+            document.getElementById(`reasonInput${postId}`).value = reason;
+            // Submit the form
+            document.getElementById(`reportForm${postId}`).submit();
+        }
+    }
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
