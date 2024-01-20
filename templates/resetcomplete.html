@@ -1,0 +1,275 @@
+{% comment %} <!-- Add the user_id input field -->
+<form method="post" action="{% url 'reset_password' %}" class="space-y-4">
+  {% csrf_token %}
+
+  <!-- Add the hidden input field for user_id -->
+  <input type="hidden" name="user_id" value="{{ user_id }}" />
+
+  <!-- Display error message if any -->
+  {% if error_message %}
+  <p class="text-red-500 text-sm">{{ error_message }}</p>
+  {% endif %}
+
+  <!-- Display success message if any -->
+  {% if messages %} {% for message in messages %}
+  <div class="mt-4 p-3 bg-green-200 text-green-800 text-center rounded-md">
+    {{ message }}
+  </div>
+  {% endfor %} {% endif %}
+
+  <!-- New Password Input -->
+  <div class="flex flex-col space-y-2 relative">
+    <label
+      for="id_new_password"
+      class="text-sm font-semibold flex items-center"
+    >
+      New Password:
+      <div class="relative">
+        <input
+          type="password"
+          id="id_new_password"
+          name="new_password"
+          class="border rounded-md py-2 px-3 pl-10 focus:outline-none focus:border-blue-500"
+          required
+        />
+        <button
+          type="button"
+          class="absolute inset-y-0 right-0 pr-3 flex items-center focus:outline-none"
+          onclick="togglePassword('id_new_password', 'eyeIcon1')"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 text-gray-500"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            id="eyeIcon1"
+          >
+            <path fill-rule="evenodd" d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+            <path
+              fill-rule="evenodd"
+              d="M19.95 9.48C18.342 5.37 14.268 2.62 10 2.62c-4.269 0-8.342 2.75-9.95 6.86-.152.386-.152.802 0 1.188C1.658 14.63 5.732 17.38 10 17.38c4.269 0 8.342-2.75 9.95-6.86c.152-.386.152-.802 0-1.188zm-2.607.472C16.2 13.33 13.066 16 10 16c-3.066 0-6.2-2.67-7.343-5.05-.18-.454-.18-.946 0-1.4C3.8 6.67 6.934 4 10 4c3.066 0 6.2 2.67 7.343 5.05.18.454.18.946 0 1.4zM10 6a4 4 0 100 8 4 4 0 000-8z"
+            />
+          </svg>
+        </button>
+      </div>
+    </label>
+  </div>
+
+  <!-- Confirm New Password Input -->
+  <div class="flex flex-col space-y-2 relative">
+    <label
+      for="id_confirm_new_password"
+      class="text-sm font-semibold flex items-center"
+    >
+      Confirm New Password:
+      <div class="relative">
+        <input
+          type="password"
+          id="id_confirm_new_password"
+          name="confirm_new_password"
+          class="border rounded-md py-2 px-3 pl-10 focus:outline-none focus:border-blue-500"
+          required
+        />
+        <button
+          type="button"
+          class="absolute inset-y-0 right-0 pr-3 flex items-center focus:outline-none"
+          onclick="togglePassword('id_confirm_new_password', 'eyeIcon2')"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 text-gray-500"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            id="eyeIcon2"
+          >
+            <path fill-rule="evenodd" d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+            <path
+              fill-rule="evenodd"
+              d="M19.95 9.48C18.342 5.37 14.268 2.62 10 2.62c-4.269 0-8.342 2.75-9.95 6.86-.152.386-.152.802 0 1.188C1.658 14.63 5.732 17.38 10 17.38c4.269 0 8.342-2.75 9.95-6.86c.152-.386.152-.802 0-1.188zm-2.607.472C16.2 13.33 13.066 16 10 16c-3.066 0-6.2-2.67-7.343-5.05-.18-.454-.18-.946 0-1.4C3.8 6.67 6.934 4 10 4c3.066 0 6.2 2.67 7.343 5.05.18.454.18.946 0 1.4zM10 6a4 4 0 100 8 4 4 0 000-8z"
+            />
+          </svg>
+        </button>
+      </div>
+    </label>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="flex justify-center">
+    <button
+      type="submit"
+      class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+    >
+      Reset Password
+    </button>
+  </div>
+</form> {% endcomment %}
+
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/newpassword.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            background-image: url('/static/Images/home.jpg');
+            background-size: 220vh;
+        }
+    </style> {% endcomment %}
+
+    <!-- <style>
+        .card {
+            border: 0;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            /* Box shadow */
+            border-radius: 15px;
+            /* Rounded corners */
+        }
+
+        .card-body {
+            text-align: center;
+            /* Center the content */
+        }
+    </style> -->
+{% comment %} </head>
+
+<body>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="header bg-primary text-white text-center p-2 mb-4">
+                            <img src="/static/Images/Logo.png" alt="Header Image" style="height: 70px;" class="mr-2">
+                            <span style="font-size: larger; font-weight: bold;">VITAL FLOW BIO-LAB
+                        </div>
+                        <h2 class="text-center mb-2">Change Password</h2>
+
+
+                        <form method="post">
+                            {% csrf_token %}
+
+                            {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for error in form.non_field_errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                            {% for field in form %}
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.errors %}
+                            <div class="alert alert-danger">
+                                {{ field.errors|striptags }}
+                            </div>
+                            {% endif %}
+                            <br>
+                            {% endfor %}
+
+                            <button type="submit">Submit</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html> {% endcomment %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/adminlogin.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            background-image: url('/static/Images/home.jpg');
+            background-size: 220vh;
+        }
+
+        .card {
+            border: 0;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            /* Box shadow */
+            border-radius: 15px;
+            /* Rounded corners */
+        }
+
+        .card-body {
+            text-align: center;
+            /* Center the content */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="modal fade" id="emailSentModal" tabindex="-1" role="dialog" aria-labelledby="emailSentModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="emailSentModalLabel">Password changed</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body adminlogin-background text-center"> <!-- Add adminlogin-background class here -->
+                    <p>Your password is changed successfully</p>
+                    <a href="/signin" target="_blank" class="btn btn-primary">Go to signin page</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('#emailSentModal').modal('show');
+
+            $('#emailSentModal').on('hidden.bs.modal', function () {
+                window.location.href = "/signin"; // Redirect to adminlogin.html on modal close
+            });
+        });
+    </script>
+
+</body>
+
+</html>
