@@ -31,9 +31,9 @@
 		<a href="#">  <img style="width:17rem;" src="static\assets\LogoWhite.png" alt="..."></a>
 		</div>
 		<div class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
-			<ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
-				<li>
-					<a class="" href="#">
+		<ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
+		<li>
+		<a class="" href="#">
 						<div class="text-xl bg-red-800 text-white w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800">
 							<i class="fa-solid fa-house"></i>
 						</div>
@@ -51,13 +51,13 @@
 						<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
 							<i class="fa fa-building-o"></i>
 						</div>
-					</a>                   
-				 </li>
+					</a>
+				</li>
 				<li>
 					<a class="" href="/map/">
 						<div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
 							<i class="fa-solid fa-map-location-dot"></i>                            </div>
-					</a>                   
+					</a>
 				</li>
 				<li>
 					<form class="flex items-center">
@@ -122,7 +122,7 @@
 					</form>
 				</li>
 			</ul>
-		</div>  
+		</div>
 		<div class="flex items-center gap-6">
 			{% comment %} <button class="bg-[#043172] text-white px-5 py-2 rounded-full hover:bg-[#10223B]">Sign in</button> {% endcomment %}
 			
@@ -136,10 +136,12 @@
 			 <!-- Dropdown menu -->
 			{% comment %} Profile Secion {% endcomment %}
 			<div id="profileContainer" class="flex items-center gap-3 cursor-pointer mx-2 rounded-full focus:ring-2 hover:ring-2 hover:ring-gray-600 focus:ring-gray-800 ">
-				<img class="w-10 h-10 rounded-full" src="{{ user_profile.image.url }}" alt="{{auth_user.username}}'s Profile Picture">			</div>
+				<img class="w-10 h-10 rounded-full" src="{{ user_profile.image.url }}" alt="{{auth_user.username}}'s Profile Picture">
+			</div>
 			<div id="profileDropdown"
 				class="hidden origin-top-right absolute right-2 top-14 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
 				<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="profileContainer">
+					<a href="{% url 'profile' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 					<a href="{% url 'profile' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Profile Settings</a>
 					<a href="{% url 'feedback' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
