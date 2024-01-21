@@ -4,7 +4,6 @@ function getCookie(name) {
         var cookies = document.cookie.split(';');
         for (var i = 0; i < cookies.length; i++) {
             var cookie = cookies[i].trim();
-            // Search for the CSRF token cookie
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -14,36 +13,10 @@ function getCookie(name) {
     return cookieValue;
 }
 
-
-// // Function to handle liking a post
-// function likePost(postId) {
-//     // Retrieve CSRF token
-//     var csrfToken = getCookie('csrftoken');
-
-//     // Use CSRF token in fetch request
-//     fetch(`/post/${postId}/like/`, {
-//         method: 'POST',
-//         headers: {
-//             'X-CSRFToken': csrfToken,
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({ 'post_id': postId })
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         if (data.message === 'Post liked successfully') {
-//             let likeCountElement = document.getElementById('like-count-' + postId);
-//             likeCountElement.innerText = parseInt(likeCountElement.innerText) + 1;
-//         } else if (data.is_liked !== undefined) {
-//             // Toggle 'liked' class based on the server response
-//             let likeButton = $('.like-button[data-post-id="' + postId + '"]');
-//             likeButton.toggleClass('liked', data.is_liked);
-//         } else {
-//             alert(data.message); // Handle other messages
-//         }
-//     })
-//     .catch(error => console.error('Error:', error));
-// }
+function updateLikeButtonState(likeButton, isLiked, isCurrentUser) {
+    likeButton.classList.toggle('liked', isLiked);
+    likeButton.classList.toggle('not-liked', !isLiked);
+}
 
 function likePost(postId) {
     var csrfToken = getCookie('csrftoken');
@@ -59,15 +32,12 @@ function likePost(postId) {
     .then(response => response.json())
     .then(data => {
         let likeButton = document.querySelector('.like-button[data-post-id="' + postId + '"]');
+        let likeCountElement = document.getElementById('like-count-' + postId);
 
-        if (data.message === 'Post liked successfully') {
-            let likeCountElement = document.getElementById('like-count-' + postId);
-            likeCountElement.innerText = parseInt(likeCountElement.innerText) + 1;
-            likeButton.classList.add('liked');
-            likeButton.classList.remove('not-liked');
-        } else if (data.is_liked !== undefined) {
-            likeButton.classList.toggle('liked', data.is_liked);
-            likeButton.classList.toggle('not-liked', !data.is_liked);
+        if (data.message === 'Post liked successfully' || data.message === 'Post unliked successfully') {
+            // Toggle liked state and update like count
+            likeCountElement.innerText = data.like_count;
+            updateLikeButtonState(likeButton, data.is_liked, data.is_current_user_like);
         } else {
             alert(data.message); // Handle other messages
         }
@@ -75,14 +45,13 @@ function likePost(postId) {
     .catch(error => console.error('Error:', error));
 }
 
-
-
-// Event listener after DOM content is loaded
+// Event listener for DOM content loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Attach event listener to like buttons
     document.querySelectorAll('.like-button').forEach(button => {
         button.addEventListener('click', function() {
-            likePost(this.getAttribute('data-post-id'));
+            let postId = this.getAttribute('data-post-id');
+            likePost(postId);
         });
     });
 });
