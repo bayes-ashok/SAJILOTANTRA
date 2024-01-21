@@ -52,5 +52,5 @@ cocomo method?
 --> measure complexity of software system
 --> used for price estimation
 
-
+Solid Principles and Design Pattern IMp
 
