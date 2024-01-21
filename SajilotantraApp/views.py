@@ -29,11 +29,7 @@ from .utils import *
 
 
 def index(request):
-    return render(request, 'government.html')
-
-def government_profiles_details(request, profile_id):
-    profile = get_object_or_404(GovernmentProfile, profile_id=profile_id)
-    return render(request, 'government.html', {'profile': profile})
+    return render(request, 'index.html')
 
 def signup(request):
     if request.method=="POST":
@@ -215,6 +211,12 @@ def guide_blog(request,pk):
    }
    return render(request,'guide_steps.html',blog)
 
+def government_profiles(request):
+    profiles=GovernmentProfile.objects.all().order_by('-pk')
+    data={
+        'profiles':profiles
+    }
+    return render(request, 'government_profiles.html', data)
 
 def map(request):
     profiles=GovernmentProfile.objects.all().order_by("-pk")
@@ -224,102 +226,9 @@ def map(request):
     return render(request,'map.html',data)
 
 
-
-
-from django.http import Http404
-
-
-# @login_required
-def profile(request, username):
-    auth_user = request.user
-    print(auth_user)
-
-    try:
-        # Retrieve the user based on the provided username
-        user = User.objects.get(username=username)
-
-        if auth_user != user:
-            # If they don't match, redirect to the login page
-            return redirect('signin')
-
-        if user is None:
-            return render(request, "user_does_not_exist.html")
-
-        # Retrieve or create UserProfile based on user_id
-        profile, created = UserProfile.objects.get_or_create(user=user)
-
-        # Handle profile update
-        if request.method == 'POST':
-            # Preserve the existing bio if the new bio is empty
-            new_bio = request.POST.get('bio', '')
-            if new_bio != '':
-                profile.bio = new_bio
-
-            # Update profile picture
-            if 'picture' in request.FILES:
-                profile.image = request.FILES['picture']
-
-            # Update cover photo
-            if 'cover' in request.FILES:
-                profile.cover = request.FILES['cover']
-
-            #drag and drop profile
-            if 'drop-area-profile' in request.FILES:
-                profile.image= request.FILES['drop-area-profile']
-
-            #drag and drop cover
-            if 'drop-area-cover' in request.FILES:
-                profile.cover= request.FILES['drop-area-cover']
-
-            profile.save()
-            messages.success(request,"Your profile has been updated successfully")
-
-
-        context = {
-            'user': user,
-            'auth_user': auth_user,
-        }
-
-    except User.DoesNotExist:
-        raise Http404("User does not exist")
-
-    return render(request, 'profileupdate.html', context)
-
-
-
-def view_profile(request, username):
-    user = get_object_or_404(User, username=username)
-    
-    try:
-        profile = UserProfile.objects.get(user=user)
-    except UserProfile.DoesNotExist:
-        return render(request, 'user_does_not_exist.html')
-
-    # if user is None:
-    #     return render(request, 'user_does_not_exist.html')
-    
-    profile = UserProfile.objects.get(user=user)
-
-    context = {
-        'user': user,
-        'profile': profile,
-    }
-
-    return render(request, 'frontprofile.html', context)
-
-
-def government_profiles(request):
-    profiles=GovernmentProfile.objects.all().order_by('-pk')
-    data={
-        'profiles':profiles
-    }
-    return render(request, 'government_profiles.html', data)
-
-
-
-
-
-
+def government_profiles_details(request,pk):
+    profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
+    return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
 
 from django.http import Http404
 
