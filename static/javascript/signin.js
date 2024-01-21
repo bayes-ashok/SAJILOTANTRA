@@ -53,3 +53,72 @@ function togglePassword() {
     eyeIcon.classList.add("fa-eye");
   }
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function validateEmail() {
+      const emailInput = document.getElementById('email');
+      const emailWarning = document.getElementById('emailWarningSignUp');
+
+      if (!emailPattern.test(emailInput.value)) {
+          emailWarning.textContent = 'Please enter a valid email address.';
+          return false;
+      } else {
+          emailWarning.textContent = '';
+          return true;
+      }
+  }
+
+  function validatePassword() {
+      const pass1 = document.getElementById('pass1').value;
+      const pass2 = document.getElementById('pass2').value;
+      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+      const passwordWarning = document.getElementById('passwordWarningSignUp');
+      const confirmPasswordWarning = document.getElementById('confirmPasswordWarningSignUp');
+
+      if (pass1.length < 8 || !passwordRegex.test(pass1)) {
+          passwordWarning.textContent = 'Password must be at least 8 characters and contain at least one uppercase, one lowercase, one digit, and one special character.';
+          return false;
+      } else {
+          passwordWarning.textContent = '';
+      }
+
+      if (pass1 !== pass2) {
+          confirmPasswordWarning.textContent = 'Passwords do not match.';
+          return false;
+      } else {
+          confirmPasswordWarning.textContent = '';
+      }
+
+      return true;
+  }
+
+  function clearEmailWarning() {
+      const emailWarning = document.getElementById('emailWarningSignUp');
+      emailWarning.textContent = '';
+  }
+
+  function togglePassword() {
+      const pass1 = document.getElementById('pass1');
+      const pass2 = document.getElementById('pass2');
+      const eyeIcon = document.getElementById('eyeIcon');
+
+      if (pass1.type === "password") {
+          pass1.type = "text";
+          pass2.type = "text";
+          eyeIcon.classList.add('opacity-0');
+      } else {
+          pass1.type = "password";
+          pass2.type = "password";
+          eyeIcon.classList.remove('opacity-0');
+      }
+  }
+
+  document.getElementById('signup').addEventListener('submit', function(event) {
+      if (!validatePassword()) {
+          event.preventDefault();
+      }
+  });
+});
+

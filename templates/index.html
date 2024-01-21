@@ -2,10 +2,13 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
+	{% block title %}{% endblock title %}
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/c30dadd52a.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"  rel="stylesheet" />
 
     <!-- FONTS -->
@@ -46,7 +49,8 @@
 <header class="">
 	<nav class="fixed bg-white shadow flex justify-between items-center w-full mx-auto px-4 md:px-8 lg:px-12">
 		<div>
-		<a href="#">  <img style="width:17rem;" src="static\assets\LogoWhite.png" alt="..."></a>
+		<a href="#"> <img style="width:17rem;" src="https://i.postimg.cc/DSZHZHfK/69685418.png" alt="...">
+		</a>
 		</div>
 		<div id="nav-links" class="hidden md:flex flex-col md:flex-row items-center gap-4 md:gap-8 lg:gap-12 mobile-menu-container">
 				<a class="" href="#">
@@ -158,7 +162,12 @@
 				class="hidden origin-top-right absolute right-2 top-14 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
 				<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="profileContainer">
 					<a href="{% url 'profile' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+					<a href="{% url 'profile' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Profile Settings</a>
+					<a href="{% url 'feedback' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+						role="menuitem">Feedback</a>
+					<a href="{% url 'change_password' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+						role="menuitem">Change Password</a>
 					<a href="{% url 'feedback' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Feedback</a>
 					<a href="{% url 'change_password' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -284,6 +293,12 @@
 					<div class="text-xs text-primary-500">{{notification.posted_by}}
 					 </div>
 				</div>
+				<div class="flex gap-5">
+					<div class="text-xs font-medium text-primary-700">{{notification.date_posted}}
+					 </div>
+					<div class="text-xs text-primary-500">{{notification.posted_by}}
+					 </div>
+				</div>
 			</div>
 		</a>
 		{% endfor %}
@@ -338,6 +353,13 @@
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script src="static/javascript/dashboard.js"></script>
+    <script src="static/javascript/fileUpload.js"></script>
+    <script src="static/javascript/likePost.js"></script>
+	
+
 </body>
 
 </html>
