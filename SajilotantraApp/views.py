@@ -28,7 +28,11 @@ from .utils import *
 
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'government.html')
+
+def government_profiles_details(request, profile_id):
+    profile = get_object_or_404(GovernmentProfile, profile_id=profile_id)
+    return render(request, 'government.html', {'profile': profile})
 
 def signup(request):
     if request.method=="POST":
@@ -207,12 +211,6 @@ def guide_blog(request,pk):
    }
    return render(request,'guide_steps.html',blog)
 
-def government_profiles(request):
-    profiles=GovernmentProfile.objects.all().order_by('-pk')
-    data={
-        'profiles':profiles
-    }
-    return render(request, 'government_profiles.html', data)
 
 def map(request):
     profiles=GovernmentProfile.objects.all().order_by("-pk")
@@ -222,9 +220,7 @@ def map(request):
     return render(request,'map.html',data)
 
 
-def government_profiles_details(request,pk):
-    profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
-    return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
+
 
 from django.http import Http404
 
@@ -315,17 +311,11 @@ def government_profiles(request):
     }
     return render(request, 'government_profiles.html', data)
 
-def map(request):
-    profiles=GovernmentProfile.objects.all().order_by("-pk")
-    data={
-        'profiles':profiles
-    }
-    return render(request,'map.html',data)
 
 
-def government_profiles_details(request,pk):
-    profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
-    return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
+
+
+
 
 from django.http import Http404
 

@@ -2,11 +2,13 @@
 <html>
 
 <head>
+	{% block title %}{% endblock title %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/c30dadd52a.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 	<script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"  rel="stylesheet" />
 
     <!-- FONTS -->
@@ -34,7 +36,8 @@
 <header class="">
 	<nav class="fixed bg-white shadow flex justify-between items-center w-[100%]  mx-auto">
 		<div>
-		<a href="#">  <img style="width:17rem;" src="static\assets\LogoWhite.png" alt="..."></a>
+		<a href="#"> <img style="width:17rem;" src="https://i.postimg.cc/DSZHZHfK/69685418.png" alt="...">
+		</a>
 		</div>
 		<div class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
 			<ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
