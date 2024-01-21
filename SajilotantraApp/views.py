@@ -323,10 +323,6 @@ def view_profile(request, username):
     }
     return render(request, 'frontprofile.html', context)
 
-        'posts': posts,
-        'auth_profile': auth_profile
-    }
-    return render(request, 'frontprofile.html', context)
 
 
 def government_profiles(request):
