@@ -47,3 +47,14 @@ document.addEventListener('DOMContentLoaded', function () {
         return cookieValue;
     }
 });
+
+
+function showReasonPrompt(postId) {
+    const reason = prompt('Please provide a reason for reporting this post:');
+    if (reason !== null && reason !== '') {
+        // Set the reason in the hidden input field
+        document.getElementById(`reasonInput${postId}`).value = reason;
+        // Submit the form
+        document.getElementById(`reportForm${postId}`).submit();
+    }
+}
