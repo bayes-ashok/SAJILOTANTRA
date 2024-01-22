@@ -128,10 +128,7 @@ def activate(request,uidb64,token):#activate user account if the confirmation li
     else:
         return render(request,'activation_failed.html')
     
-
-
-
-     
+ 
 def events(request):
     all_events = Event.objects.all()
     context = {
@@ -172,6 +169,11 @@ def dashboard(request):
     guidance = Guidance.objects.all().order_by('-pk')
     events = Event.objects.all().order_by('-pk')
     posts= Post.objects.all().order_by('-pk')
+    auth_user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
+    
+
+    # fetiching comments for each post
     post_comments={}
     for post in posts:
         comments=PostComment.objects.filter(post=post)
@@ -189,6 +191,8 @@ def dashboard(request):
         'events': events[:3],
         'post_comments':post_comments,
         'posts':posts,
+        'post_comments':post_comments,
+        'user_profile':user_profile
     }
 
     return render(request, 'dashboard.html', context)
@@ -454,6 +458,24 @@ def create_post(request):
         except Exception as e:
             print(f"Error creating post: {e}")
     return redirect('dashboard.html')
+
+@login_required(login_url="/signin")
+def add_comment(request, post_id):
+    if request.method =='POST':
+        post=get_object_or_404(Post, pk=post_id)
+        comment_user=request.user.userprofile
+        text = request.POST.get('commentInput')
+
+        if text:
+            comment = PostComment.objects.create(post=post, user=comment_user, text=text)
+            messages.success(request, 'Comment added successfully!')
+            return redirect("dashboard")
+        else:
+            messages.error(request, 'Invalid comment input.')
+            return redirect("map")
+
+    return redirect("dashboard")
+    
 
 @login_required(login_url="/signin")
 def add_comment(request, post_id):
