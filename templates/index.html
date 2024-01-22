@@ -162,12 +162,7 @@
 				class="hidden origin-top-right absolute right-2 top-14 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
 				<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="profileContainer">
 					<a href="{% url 'profile' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-					<a href="{% url 'profile' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Profile Settings</a>
-					<a href="{% url 'feedback' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-						role="menuitem">Feedback</a>
-					<a href="{% url 'change_password' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-						role="menuitem">Change Password</a>
 					<a href="{% url 'feedback' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Feedback</a>
 					<a href="{% url 'change_password' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
