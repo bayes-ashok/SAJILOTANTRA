@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User  # default user model
@@ -159,6 +159,7 @@ def all_events(request):
 # def map(request):
 #     return render(request, 'map.html')
 
+@login_required(login_url='signin')
 def dashboard(request):
     notifications = Notification.objects.all()
     guidance = Guidance.objects.all().order_by('-pk')
@@ -276,13 +277,13 @@ def profile(request, username):
             'posts':posts,
         }
 
-    except User.DoesNotExist:
+    except:
         return render(request,"user_does_not_exist.html")
 
     return render(request, 'profileupdate.html', context)
 
 
-
+@login_required(login_url='signin')
 def view_profile(request, username):
     auth_user=request.user
     try:
@@ -371,3 +372,8 @@ def create_post(request):
 
     # return render(request, 'dashboard.html', {'form': form})
     return redirect('map.html')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('signin')  # Redirect to your desired page after logout

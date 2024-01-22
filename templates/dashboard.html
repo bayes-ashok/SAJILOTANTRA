@@ -91,7 +91,7 @@
 						role="menuitem">Feedback</a>
 					{% comment %} <a href="{% url 'change_password' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Change Password</a> {% endcomment %}
-					<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+					<a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Logout</a>
 				</div>
 			</div>
