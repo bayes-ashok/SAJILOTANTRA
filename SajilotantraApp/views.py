@@ -28,12 +28,15 @@ from .utils import *
 
 
 def index(request):
-    return render(request, 'government.html')
+    return render(request, 'index.html')
 
 def government_profiles_details(request, profile_id):
     profile = get_object_or_404(GovernmentProfile, profile_id=profile_id)
     return render(request, 'government.html', {'profile': profile})
 
+
+def e(request):
+    return render(request,'event.html')
 def signup(request):
     if request.method=="POST":
         username=request.POST.get("username")
@@ -154,19 +157,6 @@ def all_events(request):
             'end': event.end.isoformat(),      # Use isoformat() here
         })
     return JsonResponse(out, safe=False)
-
-    all_events = Event.objects.all()
-    out = []
-    for event in all_events:
-        out.append({
-            'title': event.name,
-            'id': event.id,
-            'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),
-            'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),
-        })
-    return JsonResponse(out, safe=False)
-    return render(request,'events.html')
-
 # def map(request):
 #     return render(request, 'map.html')
 
