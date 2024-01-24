@@ -25,6 +25,7 @@ urlpatterns = [
     path('view_profile/<str:username>/', views.view_profile, name='view_profile'),
     path('feedback', views.feedback, name='feedback'),
     path('create_post/', views.create_post, name='create_post'),
+<<<<<<< HEAD
     path('post/<int:post_id>/like/', views.like_post, name='like_post'),
     path('get-names/', views.get_names, name='get_names'),
     path('change_password/<str:username>/', views.change_password, name='change_password'),
@@ -34,4 +35,7 @@ path('password_reset/', auth_views.PasswordResetView.as_view(template_name='pass
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='resetdone.html'), name='password_reset_done'),
     path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="password_reset_confirm.html"), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='resetcomplete.html'), name='password_reset_complete'),
+=======
+    path('logout/', views.logout_view, name='logout'),
+>>>>>>> f83c4ef4d29e7db47d027d9a7d170f30778dd83f
 ]

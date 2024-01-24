@@ -5,7 +5,7 @@ from collections import defaultdict
 
 from bitarray import bitarray
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User  # default user model
@@ -158,6 +158,7 @@ def all_events(request):
 # def map(request):
 #     return render(request, 'map.html')
 
+@login_required(login_url='signin')
 def dashboard(request):
     notifications = Notification.objects.all()
     guidance = Guidance.objects.all().order_by('-pk')
