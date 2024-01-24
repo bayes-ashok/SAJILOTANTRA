@@ -13,9 +13,17 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function updateLikeButtonState(likeButton, isLiked, isCurrentUser) {
-    likeButton.classList.toggle('liked', isLiked);
-    likeButton.classList.toggle('not-liked', !isLiked);
+// function updateLikeButtonState(likeButton, isLiked) {
+//     likeButton.classList.toggle('liked', isLiked);
+//     likeButton.classList.toggle('not-liked', !isLiked);
+// }
+function updateLikeButtonState(likeButton, isLiked) {
+    const likeIcon = likeButton.querySelector('.like-icon');
+    if (isLiked) {
+        likeIcon.style.fill = "red"; // Directly setting SVG fill color for liked
+    } else {
+        likeIcon.style.fill = "green"; // Directly setting SVG fill color for not liked
+    }
 }
 
 function likePost(postId) {
@@ -37,7 +45,7 @@ function likePost(postId) {
         if (data.message === 'Post liked successfully' || data.message === 'Post unliked successfully') {
             // Toggle liked state and update like count
             likeCountElement.innerText = data.like_count;
-            updateLikeButtonState(likeButton, data.is_liked, data.is_current_user_like);
+            updateLikeButtonState(likeButton, data.is_liked);
         } else {
             alert(data.message); // Handle other messages
         }

@@ -16,12 +16,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="static\css\dashboard.css">
-	<link rel="stylesheet" href="static\css\like.css">
-	<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-
-			
 	
+	<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 </head>
+
+
 
 
 <body class="bg-blue-50">
@@ -141,7 +140,6 @@
 			<div id="profileDropdown"
 				class="hidden origin-top-right absolute right-2 top-14 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
 				<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="profileContainer">
-					<a href="{% url 'profile' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 					<a href="{% url 'profile' request.user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 						role="menuitem">Profile Settings</a>
 					<a href="{% url 'feedback' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -333,8 +331,10 @@
 				<div class="border max-w-screen-md lg:w-full bg-white mt-6 rounded-2xl p-4">
 					<div class="flex items-center	justify-between">
 						<div class="gap-3.5	flex items-center ">
-							<img class="object-cover w-12 h-12 rounded-full" src="{{post.user.image}}" alt="Profile Picture">
+						 
+							<img href="{% url 'profile' request.user.username %}" class="object-cover w-12 h-12 rounded-full" src="{{post.user.image}}" alt="Profile Picture">
 							{% comment %} {% if request.user.is_authenticated %} {% endcomment %}
+						
     
 
 							<div class="flex flex-col">
@@ -347,13 +347,13 @@
 								</p>
 							</div>
 						</div>
-						{% comment %} <div class="bg-gray-100	rounded-full h-3.5 flex	items-center justify-center">
+						<div class="bg-gray-100	rounded-full h-3.5 flex	items-center justify-center">
 							<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="34px" fill="#92929D">
 								<path d="M0 0h24v24H0V0z" fill="none" />
 								<path
 									d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
 							</svg>
-						</div> {% endcomment %}
+						</div>
 						<!-- Ellipsis menu -->
 						<div class="ellipsis-menu">
 							<button onclick="reportPost('{{ post.id }}')">...</button>
@@ -393,8 +393,8 @@
 							<div class="flex items-center gap-3">
 								
 								<button class="like-button {% if post.id in liked_posts %}liked{% else %}not-liked{% endif %}" data-post-id="{{ post.id }}">
-									<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" viewBox="0 0 20 20" fill="currentColor">
-									<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+									<svg xmlns="http://www.w3.org/2000/svg" class="like-icon h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+										<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
 								  </svg>
 								</button>
 								{% if post.id in liked_posts %}

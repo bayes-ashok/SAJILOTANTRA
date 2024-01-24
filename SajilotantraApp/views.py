@@ -344,9 +344,11 @@ def profile(request, username):
     print(auth_user)
 
     try:
+        auth_user = request.user
         # Retrieve the user based on the provided username
         user = User.objects.get(username=username)
-
+        profile = UserProfile.objects.get(user=user)
+        posts= Post.objects.filter(user=profile).order_by("-pk")
         if auth_user != user:
             # If they don't match, redirect to the login page
             return redirect('signin')
@@ -359,10 +361,17 @@ def profile(request, username):
 
         # Handle profile update
         if request.method == 'POST':
-            # Preserve the existing bio if the new bio is empty
             new_bio = request.POST.get('bio', '')
             if new_bio != '':
                 profile.bio = new_bio
+
+            new_f_name=request.POST.get('fname','')
+            if new_f_name != '':
+                user.last_name = new_f_name
+
+            new_l_name=request.POST.get('lname','')
+            if new_l_name != '':
+                user.first_name = new_l_name
 
             # Update profile picture
             if 'picture' in request.FILES:
@@ -379,41 +388,43 @@ def profile(request, username):
             #drag and drop cover
             if 'drop-area-cover' in request.FILES:
                 profile.cover= request.FILES['drop-area-cover']
-
+            user.save()
             profile.save()
             messages.success(request,"Your profile has been updated successfully")
-
+            
 
         context = {
             'user': user,
             'auth_user': auth_user,
+            'profile': profile,
+            'posts':posts,
         }
 
-    except User.DoesNotExist:
-        raise Http404("User does not exist")
+    except:
+        return render(request,"user_does_not_exist.html")
 
     return render(request, 'profileupdate.html', context)
 
+
+@login_required(login_url='signin')
 def view_profile(request, username):
-    user = get_object_or_404(User, username=username)
-    
+    auth_user=request.user
     try:
-        profile = UserProfile.objects.get(user=user)
-    except UserProfile.DoesNotExist:
+        auth_user=request.user
+        auth_profile = get_object_or_404(UserProfile, user=auth_user)
+        user = get_object_or_404(User, username=username)
+        profile = get_object_or_404(UserProfile, user=user)
+        posts = Post.objects.filter(user=profile).order_by("-pk")
+    except Http404:
         return render(request, 'user_does_not_exist.html')
 
-    # if user is None:
-    #     return render(request, 'user_does_not_exist.html')
-    
-    profile = UserProfile.objects.get(user=user)
-    posts= Post.objects.filter(user=profile).order_by("-pk")
     context = {
         'user': user,
         'profile': profile,
-        'posts':posts,
+        'posts': posts,
+        'auth_profile': auth_profile
     }
     return render(request, 'frontprofile.html', context)
-
 def feedback(request):
     if request.method == 'POST':
         category = request.POST.get('category')
@@ -534,8 +545,9 @@ def like_post(request, post_id):
             # Like the post
             post.like_count = PostLike.objects.filter(post=post).count()
             post.save()
+            
             return JsonResponse({'-message': 'Post liked successfully', 'is_liked': True, 'like_count': post.like_count})
-
+    
     # Handle cases for GET requests or other HTTP methods
     return JsonResponse({'message': 'Method not allowed'}, status=405)
 from django.contrib import messages
