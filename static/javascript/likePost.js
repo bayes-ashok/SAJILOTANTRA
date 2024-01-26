@@ -18,6 +18,7 @@ function updateLikeButtonState(likeButton, isLiked, isCurrentUser) {
     likeButton.classList.toggle('not-liked', !isLiked);
 }
 
+
 function likePost(postId) {
     var csrfToken = getCookie('csrftoken');
 
@@ -29,27 +30,27 @@ function likePost(postId) {
         },
         body: JSON.stringify({ 'post_id': postId })
     })
-    .then(response => response.json())
-    .then(data => {
-        let likeButton = document.querySelector('.like-button[data-post-id="' + postId + '"]');
-        let likeCountElement = document.getElementById('like-count-' + postId);
+        .then(response => response.json())
+        .then(data => {
+            let likeButton = document.querySelector('.like-button[data-post-id="' + postId + '"]');
+            let likeCountElement = document.getElementById('like-count-' + postId);
 
-        if (data.message === 'Post liked successfully' || data.message === 'Post unliked successfully') {
-            // Toggle liked state and update like count
-            likeCountElement.innerText = data.like_count;
-            updateLikeButtonState(likeButton, data.is_liked, data.is_current_user_like);
-        } else {
-            alert(data.message); // Handle other messages
-        }
-    })
-    .catch(error => console.error('Error:', error));
+            if (data.message === 'Post liked successfully' || data.message === 'Post unliked successfully') {
+                // Toggle liked state and update like count
+                likeCountElement.innerText = data.like_count;
+                updateLikeButtonState(likeButton, data.is_liked, data.is_current_user_like);
+            } else {
+                alert(data.message); // Handle other messages
+            }
+        })
+        .catch(error => console.error('Error:', error));
 }
 
 // Event listener for DOM content loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Attach event listener to like buttons
     document.querySelectorAll('.like-button').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             let postId = this.getAttribute('data-post-id');
             likePost(postId);
         });

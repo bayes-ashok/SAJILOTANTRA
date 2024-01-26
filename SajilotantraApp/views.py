@@ -591,7 +591,7 @@ def report_post(request, post_id):
         report = ReportedPost.objects.create(post_id=post_id, reason=reason)
         print(f"Reported post saved: {report}")
 
-        # Redirect the user to a different page or the same page
+        # Redirect the user to the same page
         return redirect('dashboard')
     return render(request, 'dashboard.html')
 

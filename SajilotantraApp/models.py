@@ -116,6 +116,11 @@ class Post(models.Model):
         if self.encoding_dict is None:
             self.encoding_dict = json.dumps({})  # Provide an empty dictionary as a default
         super().save(*args, **kwargs)
+
+    def delete_post(self):
+
+        # delete the post
+        self.delete()
     
 class PostLike(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -144,3 +149,15 @@ class ReportedPost(models.Model):
     
     def __str__(self):
         return f"Report for Post ID: {self.post_id}"
+    
+# models.py
+
+# from django.db import models
+# from django.contrib.auth.models import User
+
+# class deletedPost(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     content = models.TextField()
+
+#     def delete_post(self):
+#         self.delete()

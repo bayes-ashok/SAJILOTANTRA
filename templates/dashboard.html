@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<style>
+	{% comment %} <style>
 
         /* Default state - grey color */
         .like-button {
@@ -17,7 +17,7 @@
             color: red;
            
         }
-    </style>
+    </style> {% endcomment %}
     <script src="https://kit.fontawesome.com/c30dadd52a.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 	<script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
@@ -31,11 +31,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="static\css\dashboard.css">
 	<link rel="stylesheet" href="static/css/like.css">
+	<link rel="stylesheet" href="static/css/ellipsis.css">
 
 	<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-
-
-			
 	
 </head>
 
@@ -372,17 +370,16 @@
 						</div> {% endcomment %}
 
 						<!-- Ellipsis menu -->
-						<!-- Ellipsis menu -->
 						<div class="ellipsis-menu">
 							<button onclick="toggleMenu('{{ post.id }}')">...</button>
 						
 							<div id="menuOptions{{ post.id }}" class="menu-options" style="display: none;">
-								<form id="deleteForm{{ post.id }}" method="post" action="/delete-post/{{ post.id }}/"> <!-- Adjust the action URL accordingly -->
+								<form id="deleteForm{{ post.id }}" method="post" action="/delete-post/{{ post.id }}/">
 									{% csrf_token %}
 									<button type="button" onclick="deletePost('{{ post.id }}')" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100" role="menuitem">Delete post</button>
 								</form>
 						
-								<button onclick="reportPost('{{ post.id }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Report post</button>
+								<button onclick="reportPost('{{ post.id }}')" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100" role="menuitem">Report post</button>
 						
 								<div id="reportSubMenu{{ post.id }}" class="report-submenu" style="display: none;">
 									<button onclick="reportPost('{{ post.id }}')">Report</button>
@@ -403,7 +400,6 @@
 			xhr.onload = function () {
 				if (xhr.status === 200) {
 					alert('Post deleted successfully!');
-					// Optionally, you can update the UI or take further actions here
 				} else if (xhr.status === 403) {
 					alert('Permission denied. You cannot delete this post.');
 				} else {
@@ -411,8 +407,7 @@
 				}
 			};
 
-			// You might need to adjust the payload based on your server's requirements
-			var payload = "";  // Add any additional data if needed
+			var payload = "";
 			xhr.send(payload);
 		}
 	}
