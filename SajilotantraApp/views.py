@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User  # default user model
@@ -371,3 +371,10 @@ def create_post(request):
 
     # return render(request, 'dashboard.html', {'form': form})
     return redirect('map.html')
+
+from django.shortcuts import redirect
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('signin')  # Redirect to your desired page after logout

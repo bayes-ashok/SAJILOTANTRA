@@ -21,4 +21,5 @@ urlpatterns = [
     path('view_profile/<str:username>/', views.view_profile, name='view_profile'),
     path('feedback', views.feedback, name='feedback'),
     path('create_post/', views.create_post, name='create_post'),
+    path('logout/', views.logout_view, name='logout'),
 ]
