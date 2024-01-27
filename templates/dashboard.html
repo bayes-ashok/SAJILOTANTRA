@@ -15,6 +15,12 @@
         rel="stylesheet">
 		<link rel="stylesheet" href="static\css\dashboard.css">
 		<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+
+		<style> 
+			.no-scrollbar::-webkit-scrollbar { 
+				display: none; 
+			} 
+		</style> 
 </head>
 <body class="bg-blue-50">
 <header class="">
@@ -299,13 +305,10 @@
 								</p>
 							</div>
 						</div>
-						<div class="bg-gray-100	rounded-full h-3.5 flex	items-center justify-center">
-							<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="34px" fill="#92929D">
-								<path d="M0 0h24v24H0V0z" fill="none" />
-								<path
-									d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-							</svg>
-						</div>
+						
+{% comment %} DELETE Toggle {% endcomment %}
+
+{% comment %} End DELETE TOGGLE {% endcomment %}
 					</div>
 					<div class="whitespace-pre-wrap mt-7">{{post.decoded_caption}}</div>
 					<p class="font-bold text-blue-800">#{{post.category}}</p>
@@ -435,7 +438,7 @@
 						</div> {% endcomment %}
 						{% comment %} <div class="container px-0 mx-auto sm:px-5"> {% endcomment %}
 							{% if post.postcomment_set.all %}
-							<div class="overflow-y-scroll h-40" >
+							<div class="no-scrollbar overflow-y-scroll h-40" >
 							{% for comment in post.postcomment_set.all %}
 							<div
 								class=" flex-col w-full py-4  mt-3 bg-blue-50 border-b-2 mb-5 border-gray-200 sm:px-4 sm:py-4 md:px-4 sm:rounded-lg sm:shadow-sm">
@@ -470,10 +473,11 @@
 										
 <form method="post" action="{% url 'comment_post' post_id=post.id %}">
 	{% csrf_token %}
+	   
     <label for="chat" class="sr-only">Add a Comment</label>
     <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50">
 		<img src="{{user_profile.image.url}}"  class="bg-yellow-500 rounded-full w-10 h-10 object-cover border">
-        <textarea name="commentInput" id="commentInput" rows="1" class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Add a Comment..."></textarea>
+        <textarea name="commentInput" id="commentInput" rows="1" class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Add a Comment..." style="resize:none;" required oninvalid="this.setCustomValidity('Write some comments please')"></textarea>
             <button type="submit" class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100">
             <svg class="w-5 h-5 rotate-90 rtl:-rotate-90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
        

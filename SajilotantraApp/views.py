@@ -221,6 +221,10 @@ def government_profiles(request):
     }
     return render(request, 'government_profiles.html', data)
 
+
+def landing(request):
+    return render(request,'landing.html')
+
 def map(request):
     profiles=GovernmentProfile.objects.all().order_by("-pk")
     data={

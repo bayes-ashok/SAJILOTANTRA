@@ -23,5 +23,6 @@ urlpatterns = [
     path('create_post/', views.create_post, name='create_post'),
     path('post/<int:post_id>/like/', views.like_post, name='like_post'),
     path('post/<int:post_id>/comment/', views.add_comment, name='comment_post'),
+    path('newland', views.landing, name='landing'),
 
 ]
