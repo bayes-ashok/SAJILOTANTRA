@@ -7,3 +7,12 @@ header{
     background-color: #fff; /* Set your desired background color */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for a visual effect */
 }
+
+.liked .like-icon {
+    fill: red; /* SVG fill color when liked */
+}
+
+.not-liked .like-icon {
+    fill: green; /* SVG fill color when not liked */
+}
+

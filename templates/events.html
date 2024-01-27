@@ -1,162 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "index.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <script src="https://kit.fontawesome.com/c30dadd52a.js" crossorigin="anonymous"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="static\css\style.css">
-    <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
-
-    <!-- Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
+{% block style %}
     <style>
         .calendar-container {
-            margin-top: 20px;
+            margin-top:75px;
+            border: 1px solid lightgreen;
+            border-radius: 1%;
             display: flex;
+            padding: 10px;
             align-items: center;
             justify-content: center;
+            background-color: white;
+            height: auto;
+            width: auto;
         }
 
         #calendar {
             max-width: 1000px; /* Adjust the maximum width as needed */
         }
 
-        .breadcrumbs .page-header {
-            padding: 60px 0 60px 0;
-            min-height: 20vh;
-            position: relative;
-            background-color: #B6F5FF;
-        }
-
-        .breadcrumbs .page-header h2 {
-            font-size: 56px;
-            font-weight: 500;
-            color: #fff;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .breadcrumbs .page-header p {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .breadcrumbs nav {
-            background-color: #EEEEE8;
-            padding: 20px 0;
-        }
-
-        .breadcrumbs nav ol {
-            display: flex;
-            flex-wrap: wrap;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            font-size: 16px;
-            font-weight: 600;
-            color: #333; /* Change color as needed */
-        }
-
-        .breadcrumbs nav ol a {
-            color: #1a202c; /* Change color as needed */
-            transition: 0.3s;
-        }
-
-        .breadcrumbs nav ol a:hover {
-            text-decoration: underline;
-            color: #3F3F3F;
-        }
-
-        .breadcrumbs nav ol li+li {
-            padding-left: 10px;
-        }
-
-        .breadcrumbs nav ol li+li::before {
-            display: inline-block;
-            padding-right: 10px;
-            color: #6b7280; /* Change color as needed */
-            content: "/";
-        }
     </style>
-</head>
+    
+{% endblock style %}
+   
 
-<body class="font-[Poppins] bg-[#EAF1F8]">
-    <div class="breadcrumbs">
-        <nav>
-            <div class="container mx-auto px-4">
-                <ol>
-                    <li>
-                        <a href="/dashboard" class="text-primary">Home</a>
-                    </li>
-                    <li>Blog</li>
-                </ol>
-            </div>
-        </nav>
-    </div>
-    <div class="container mx-auto px-4" style="margin-top: 10px; margin-bottom: 30px;">
-        <div class="row">
-            <div class="calendar-container">
-                <div id="calendar"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal to display event details -->
-    <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="eventModalLabel">Event Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+{% block events %}
+<div class="flex flex-col md:flex-row">
+    <div class="w-full md:w-3/5 p-4">
+        <div class="container mx-auto my-10">
+            <div class="row">
+                <div class="calendar-container">
+                    <div id="calendar"></div>
                 </div>
-                <div class="modal-body" id="eventModalBody"></div>
             </div>
         </div>
     </div>
 
-    <script>
-        $(document).ready(function () {
-            var calendar = $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                },
-                events: '/all_events/',
-                eventClick: function (calEvent, jsEvent, view) {
-                    // Handle event click
-                    displayEventDetails(calEvent);
-                }
-            });
+    <div class="w-full md:w-2/5 p-4">
+        <div class="rounded-lg shadow-xl w-11/12 mx-auto bg-white pt-10 pb-2 px-6" style="margin-top: 100px; margin-bottom: 70px;">
+            <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="eventModalLabel">Event Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="eventModalBody"></div>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
 
-            function displayEventDetails(event) {
-                // Display event details in the modal
-                var modalBody = $('#eventModalBody');
-                modalBody.empty();
+  
 
-                modalBody.append('<p><strong>Title:</strong> ' + event.title + '</p>');
-                modalBody.append('<p><strong>Start:</strong> ' + moment(event.start).format('MMMM DD, YYYY HH:mm:ss') + '</p>');
-                modalBody.append('<p><strong>Description:</strong> ' + event.description + '</p>');
-                modalBody.append('<p><strong>End:</strong> ' + moment(event.end).format('MMMM DD, YYYY HH:mm:ss') + '</p>');
 
-                // Manually trigger modal opening
-                $('#eventModal').modal('show');
+
+
+
+
+
+{% comment %}     
+<div class="container mx-auto my-10">
+    <div class="row">
+        <div class="calendar-container">
+            <div id="calendar"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal to display event details -->
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventModalLabel">Event Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="eventModalBody"></div>
+        </div>
+    </div>
+</div> {% endcomment %}
+
+<script>
+    $(document).ready(function () {
+        var calendar = $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            events: '/all_events/',
+            eventClick: function (calEvent, jsEvent, view) {
+                // Handle event click
+                displayEventDetails(calEvent);
             }
         });
-    </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
-</body>
+        function displayEventDetails(event) {
+            // Display event details in the modal
+            var modalBody = $('#eventModalBody');
+            modalBody.empty();
 
-</html>
+            modalBody.append('<p><strong>Title:</strong> ' + event.title + '</p>');
+            modalBody.append('<p><strong>Start:</strong> ' + moment(event.start).format('MMMM DD, YYYY HH:mm:ss') + '</p>');
+            modalBody.append('<p><strong>Description:</strong> ' + event.description + '</p>');
+            modalBody.append('<p><strong>End:</strong> ' + moment(event.end).format('MMMM DD, YYYY HH:mm:ss') + '</p>');
+
+            // Manually trigger modal opening
+            $('#eventModal').modal('show');
+        }
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+<!-- <script src="static/javascript/dashboard.js"></script> -->{% endblock events %}

@@ -5,7 +5,7 @@ from collections import defaultdict
 
 from bitarray import bitarray
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User  # default user model
@@ -31,6 +31,13 @@ from .utils import *
 def index(request):
     return render(request, 'index.html')
 
+def government_profiles_details(request, profile_id):
+    profile = get_object_or_404(GovernmentProfile, profile_id=profile_id)
+    return render(request, 'government.html', {'profile': profile})
+
+
+def e(request):
+    return render(request,'event.html')
 def signup(request):
     if request.method=="POST":
         username=request.POST.get("username")
@@ -148,22 +155,10 @@ def all_events(request):
             'end': event.end.isoformat(),      # Use isoformat() here
         })
     return JsonResponse(out, safe=False)
-
-    all_events = Event.objects.all()
-    out = []
-    for event in all_events:
-        out.append({
-            'title': event.name,
-            'id': event.id,
-            'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),
-            'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),
-        })
-    return JsonResponse(out, safe=False)
-    return render(request,'events.html')
-
 # def map(request):
 #     return render(request, 'map.html')
 
+@login_required(login_url='signin')
 def dashboard(request):
     notifications = Notification.objects.all()
     guidance = Guidance.objects.all().order_by('-pk')
@@ -598,3 +593,133 @@ def like_post(request, post_id):
     
     # Handle cases for GET requests or other HTTP methods
     return JsonResponse({'message': 'Method not allowed'}, status=405)
+
+@login_required(login_url="/signin")
+def add_comment(request, post_id):
+    if request.method =='POST':
+        post=get_object_or_404(Post, pk=post_id)
+        comment_user=request.user.userprofile
+        text = request.POST.get('commentInput')
+
+        if text:
+            comment = PostComment.objects.create(post=post, user=comment_user, text=text)
+            messages.success(request, 'Comment added successfully!')
+            return redirect("dashboard")
+        else:
+            messages.error(request, 'Invalid comment input.')
+            return redirect("map")
+
+    return redirect("dashboard")
+    
+
+@login_required(login_url="/signin")
+def add_comment(request, post_id):
+    if request.method =='POST':
+        post=get_object_or_404(Post, pk=post_id)
+        comment_user=request.user.userprofile
+        text = request.POST.get('commentInput')
+
+        if text:
+            comment = PostComment.objects.create(post=post, user=comment_user, text=text)
+            messages.success(request, 'Comment added successfully!')
+            return redirect("dashboard")
+        else:
+            messages.error(request, 'Invalid comment input.')
+            return redirect("map")
+
+    return redirect("dashboard")
+
+def get_names(request):
+    search = request.GET.get('search')
+    payload = []
+
+    if search:
+        objs = UserProfile.objects.filter(user__username__startswith=search)
+
+        for obj in objs:
+            payload.append({
+                'user': obj.user.username
+            })
+
+    return JsonResponse(
+        {
+            'status': True,
+            'payload': payload,
+        }
+    )
+from django.http import JsonResponse
+
+
+@login_required(login_url='/signin')
+def like_post(request, post_id):
+    if request.method == 'POST':
+        post = get_object_or_404(Post, pk=post_id)
+        user_profile = request.user.userprofile
+
+        # Check if the user has already liked the post
+        like, created = PostLike.objects.get_or_create(post=post, user=user_profile)
+
+        if not created:
+            # Unlike the post
+            like.delete()
+            post.like_count = PostLike.objects.filter(post=post).count()
+            post.save()
+            return JsonResponse({'message': 'Post unliked successfully', 'is_liked': False, 'like_count': post.like_count})
+        else:
+            # Like the post
+            post.like_count = PostLike.objects.filter(post=post).count()
+            post.save()
+            
+            return JsonResponse({'-message': 'Post liked successfully', 'is_liked': True, 'like_count': post.like_count})
+    
+    # Handle cases for GET requests or other HTTP methods
+    return JsonResponse({'message': 'Method not allowed'}, status=405)
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import redirect, render
+
+
+# @login_required
+def change_password(request, username):
+    auth_user = request.user
+    print(auth_user)
+    user = User.objects.get(username=username)
+
+
+    error_message = None
+    password_changed = False  # Assuming this variable is used to display a success message
+    
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            new_password = form.cleaned_data['new_password1']
+            
+            # Change the user's password and update the session
+            request.user.set_password(new_password)
+            request.user.save()
+            update_session_auth_hash(request, request.user)
+            
+            messages.success(request, 'Password changed successfully.')
+            password_changed = True
+        else:
+            error_message = 'Please correct the errors below.'
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")  # Add form errors to messages
+    else:
+        form = PasswordChangeForm(user=request.user)
+    
+    return render(request, 'change_password.html', {'form': form, 'error_message': error_message, 'password_changed': password_changed})
+
+def report_post(request, post_id):
+    if request.method == 'POST':
+        reason = request.POST.get('reason', '')
+        report = ReportedPost.objects.create(post_id=post_id, reason=reason)
+        print(f"Reported post saved: {report}")
+
+        # Redirect the user to a different page or the same page
+        return redirect('dashboard')
+    return render(request, 'dashboard.html')
+

@@ -1,7 +1,7 @@
-.like-button.liked {
-    color: red; /* or any red shade you prefer */
+.liked .like-icon {
+    fill: red; /* SVG fill color when liked */
 }
 
-.like-button.not-liked {
-    color: grey; /* or any grey shade you prefer */
+.not-liked .like-icon {
+    fill: grey; /* SVG fill color when not liked */
 }
