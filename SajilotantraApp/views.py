@@ -159,6 +159,7 @@ def all_events(request):
 # def map(request):
 #     return render(request, 'map.html')
 
+@login_required(login_url='signin')
 def dashboard(request):
     notifications = Notification.objects.all()
     guidance = Guidance.objects.all().order_by('-pk')
@@ -276,13 +277,13 @@ def profile(request, username):
             'posts':posts,
         }
 
-    except User.DoesNotExist:
+    except:
         return render(request,"user_does_not_exist.html")
 
     return render(request, 'profileupdate.html', context)
 
 
-
+@login_required(login_url='signin')
 def view_profile(request, username):
     auth_user=request.user
     try:
