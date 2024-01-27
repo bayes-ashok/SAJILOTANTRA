@@ -5,7 +5,7 @@ Author: validtheme
 Version: 1.2
 Last change: 15.9.2019
 Main Font : Poppins
-Main Color : #2568ef
+Main Color : rgba(0, 61, 147, 1)
 
 -------------------------------------
 
@@ -217,7 +217,7 @@ Main Color : #2568ef
   .btn-animation i {
     height: 50px;
     width: 50px;
-    background: #2568ef;
+    background: rgba(0, 61, 147, 1);
     line-height: 50px;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -229,7 +229,7 @@ Main Color : #2568ef
   
   .btn-animation.light i {
     background: #ffffff;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   a.btn-animation {
@@ -275,7 +275,7 @@ Main Color : #2568ef
   }
   
   .bg-theme {
-    background-color: #2568ef;
+    background-color: #800c36;
   }
   
   .text-light h1, 
@@ -331,7 +331,7 @@ Main Color : #2568ef
   }
   
   .shadow.theme::after {
-    background: #2568ef none repeat scroll 0 0;
+    background: #43021a none repeat scroll 0 0;
     content: "";
     height: 100%;
     left: 0;
@@ -343,11 +343,11 @@ Main Color : #2568ef
   }
   
   .shadow.theme-hard::after {
-    background: #2568ef none repeat scroll 0 0;
+    background: #840218 none repeat scroll 0 0;
     content: "";
     height: 100%;
     left: 0;
-    opacity: 0.7;
+    opacity: 0.9;
     position: absolute;
     top: 0;
     width: 100%;
@@ -459,9 +459,9 @@ Main Color : #2568ef
   
   .btn.btn-light.effect:hover, 
    .btn.btn-light.effect:focus {
-    background-color: #2568ef;
+    background-color: rgba(0, 61, 147, 1);
     color: #ffffff !important;
-    border: 2px solid #2568ef;
+    border: 2px solid rgba(0, 61, 147, 1);
   }
   
   .btn.btn-light.border {
@@ -487,27 +487,27 @@ Main Color : #2568ef
   }
   
   .btn-theme {
-    background-color: #2568ef;
+    background-color: rgba(0, 61, 147, 1);
     color: #ffffff !important;
-    border: 2px solid #2568ef;
+    border: 2px solid rgba(0, 61, 147, 1);
   }
   
   .btn-theme.border {
     background-color: transparent;
-    color: #2568ef !important;
+    color: rgba(0, 61, 147, 1) !important;
     border: 2px solid #e1e1e1;
   }
   
   .btn-theme.border:hover {
-    background-color: #2568ef;
+    background-color: rgba(0, 61, 147, 1);
     color: #ffffff !important;
-    border: 2px solid #2568ef;
+    border: 2px solid rgba(0, 61, 147, 1);
   }
   
   .btn-theme.effect:hover, 
    .btn-theme.effect:focus {
-    background: #2568ef none repeat scroll 0 0;
-    border: 2px solid #2568ef;
+    background: rgba(0, 61, 147, 1) none repeat scroll 0 0;
+    border: 2px solid rgba(0, 61, 147, 1);
     color: #ffffff;
   }
   
@@ -540,7 +540,7 @@ Main Color : #2568ef
   }
   
   .btn.border.btn-light.standard::before {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     content: "\f061";
     font-family: "Font Awesome 5 Free";
     height: 100%;
@@ -647,8 +647,8 @@ Main Color : #2568ef
   .attr-nav > a.btn-theme.effect:hover, 
   .attr-nav > a.btn-theme.effect, 
   .attr-nav > a.btn-theme.effect:focus {
-    background: #2568ef none repeat scroll 0 0;
-    border: 2px solid #2568ef;
+    background: rgba(0, 61, 147, 1) none repeat scroll 0 0;
+    border: 2px solid rgba(0, 61, 147, 1);
     color: #ffffff !important;
   }
   
@@ -672,7 +672,7 @@ Main Color : #2568ef
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     display: inline-block;
     font-size: 14px;
     height: 40px;
@@ -701,11 +701,11 @@ Main Color : #2568ef
   }
   
   .site-heading.clean h2 span {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .site-heading h2 span {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .site-heading.barber h2 span {
@@ -722,7 +722,7 @@ Main Color : #2568ef
   }
   
   .site-heading h2::before {
-    background: #2568ef none repeat scroll 0 0;
+    background: rgba(0, 61, 147, 1) none repeat scroll 0 0;
     bottom: 0;
     content: "";
     height: 2px;
@@ -754,7 +754,7 @@ Main Color : #2568ef
   }
   
   .site-heading h2 span {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .site-heading {
@@ -817,7 +817,7 @@ Main Color : #2568ef
   }
   
   .breadcrumb-area .breadcrumb li.active {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   
@@ -870,7 +870,7 @@ Main Color : #2568ef
   }
   
   .banner-area .wavesshape.highlight {
-    z-index: 9;
+    z-index: -1;
   }
   
   .banner-area .wavesshape.shape {
@@ -910,7 +910,7 @@ Main Color : #2568ef
     top: 50%;
     width: 50px;
     margin-top: -25px;
-    background: transparent;
+    background: red;
     opacity: 1;
     z-index: 1;
   }
@@ -1148,7 +1148,7 @@ Main Color : #2568ef
   }
   
   .banner-area .content span {
-    color: #2568ef;
+    color: #1d032e;
   }
   
   .banner-area .content span.element {
@@ -1201,7 +1201,7 @@ Main Color : #2568ef
   }
   
   .banner-area .banner-carousel.owl-carousel .owl-dots .owl-dot.active span {
-    background: #2568ef;
+    background: #051941;
     width: 40px;
   }
   
@@ -1211,7 +1211,7 @@ Main Color : #2568ef
   
   .banner-area .content-carousel.owl-carousel .owl-dots .owl-dot span {
     height: 8px;
-    background: #232323;
+    background: #650053;
     width: 10px;
     margin: 0 5px;
     opacity: 1;
@@ -1221,7 +1221,7 @@ Main Color : #2568ef
   }
   
   .banner-area .content-carousel.owl-carousel .owl-dots .owl-dot.active span {
-    background: #2568ef;
+    background: #440808;
     width: 40px;
   }
   
@@ -1235,7 +1235,7 @@ Main Color : #2568ef
   .banner-area .form-info h4 {
     text-transform: uppercase;
     font-weight: 600;
-    color: #2568ef;
+    color: #000c24;
   }
   
   .banner-area.inc-form {
@@ -1275,7 +1275,7 @@ Main Color : #2568ef
   .banner-area .form-info button {
     width: 100%;
     background: transparent;
-    border: 2px solid #2568ef;
+    border: 2px solid rgba(0, 61, 147, 1);
     color: #232323;
     padding: 11px;
     text-transform: uppercase;
@@ -1422,7 +1422,7 @@ Main Color : #2568ef
   }
   
   .text-dark .video-play-button {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .video-play-button:before {
@@ -1436,7 +1436,7 @@ Main Color : #2568ef
     display: block;
     width: 80px;
     height: 80px;
-    background: #2568ef repeat scroll 0 0;
+    background: #23050f repeat scroll 0 0;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
@@ -1463,7 +1463,7 @@ Main Color : #2568ef
     display: block;
     width: 80px;
     height: 80px;
-    background: #2568ef repeat scroll 0 0;
+    background: rgba(0, 61, 147, 1) repeat scroll 0 0;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
@@ -1479,7 +1479,7 @@ Main Color : #2568ef
   }
   
   .video-play-button.light i {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .text-dark .video-play-button:after {
@@ -1493,7 +1493,7 @@ Main Color : #2568ef
   
   .text-dark .video-play-button:hover,
   .text-dark .video-play-button:focus {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     background-color: #ffffff;
   }
   
@@ -1560,7 +1560,7 @@ Main Color : #2568ef
   .about-area .info h4 {
     text-transform: uppercase;
     font-weight: 600;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .about-area .info h2 {
@@ -1642,7 +1642,7 @@ Main Color : #2568ef
   
   .about-area .features .item i {
     font-size: 45px;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     display: inline-block;
     height: 100px;
     width: 100px;
@@ -1662,7 +1662,7 @@ Main Color : #2568ef
   
   .about-area .features .item:hover i {
     color: #ffffff;
-    background: #2568ef;
+    background: rgba(0, 61, 147, 1);
   }
   
   .about-area .features .item span {
@@ -1689,7 +1689,7 @@ Main Color : #2568ef
     font-size: 40px;
     line-height: 1;
     font-weight: 600;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     position: relative;
     z-index: 1;
     display: inline-block;
@@ -1744,7 +1744,7 @@ Main Color : #2568ef
     content: "\f00c";
     font-family: "Font Awesome 5 Free";
     font-weight: 600;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .about-area .info ul li:last-child {
@@ -1801,7 +1801,7 @@ Main Color : #2568ef
     font-weight: 800;
     letter-spacing: 0.6px;
     margin-top: -5px;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     border: 1px solid #eaedf2;
   }
   
@@ -1822,7 +1822,7 @@ Main Color : #2568ef
   }
   
   .work-process-area .process-items .info li:nth-child(2n) {
-    background: #2568ef;
+    background: rgba(0, 61, 147, 1);
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -1874,7 +1874,7 @@ Main Color : #2568ef
   .work-step-items .info .title strong {
     font-size: 40px;
     text-align: center;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     margin-right: 15px;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -1906,7 +1906,7 @@ Main Color : #2568ef
   }
   
   .work-step-items h4 span {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     font-weight: 700;
   }
   
@@ -1935,7 +1935,7 @@ Main Color : #2568ef
     top: 0;
     content: "\f058";
     font-family: "Font Awesome 5 Free";
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .work-step-items .info a {
@@ -1968,7 +1968,7 @@ Main Color : #2568ef
     -moz-transition: all 0.35s ease-in-out;
     -ms-transition: all 0.35s ease-in-out;
     -o-transition: all 0.35s ease-in-out;
-    border-bottom: 2px solid #2568ef;
+    border-bottom: 2px solid rgba(0, 61, 147, 1);
   }
   
   .features-area.bg-gray .features-items .item {
@@ -1989,7 +1989,7 @@ Main Color : #2568ef
   }
   
   .features-area.icon-link .features-items .item a {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     height: 45px;
     width: 45px;
     line-height: 45px;
@@ -2036,7 +2036,7 @@ Main Color : #2568ef
   .features-area .features-items .item .icon i {
     display: inline-block;
     font-size: 60px;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     transition: all 0.5s ease-in-out;
     -webkit-transition: all 0.5s ease-in-out;
     -moz-transition: all 0.5s ease-in-out;
@@ -2068,7 +2068,7 @@ Main Color : #2568ef
   }
   
   .features-area .features-items .item:hover a {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .features-area .features-items.features-carousel .owl-dots {
@@ -2088,7 +2088,7 @@ Main Color : #2568ef
   }
   
   .features-area .features-items.features-carousel .owl-dots .owl-dot.active span {
-    background: #2568ef;
+    background: rgba(0, 61, 147, 1);
     width: 40px;
   }
   
@@ -2195,7 +2195,7 @@ Main Color : #2568ef
   
   .services-area .services-items .item i {
     display: inline-block;
-    background: #2568ef;
+    background:rgba(0, 61, 147, 1);
     color: #ffffff;
     font-size: 40px;
     margin-bottom: 30px;
@@ -2220,7 +2220,7 @@ Main Color : #2568ef
   
   .services-area .services-items .item:hover i {
     display: inline-block;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     background: #ffffff;
   }
   
@@ -2252,7 +2252,7 @@ Main Color : #2568ef
   .services-area.bg-theme .services-items .item i {
     box-shadow: inherit;
     background: #ffffff;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .services-area.bg-theme .services-items .item i::after {
@@ -2276,7 +2276,7 @@ Main Color : #2568ef
   }
   
   .services-area .services-items.services-carousel .owl-dots .owl-dot.active span {
-    background: #2568ef;
+    background: rgba(0, 61, 147, 1);
     width: 40px;
   }
   
@@ -2482,7 +2482,7 @@ Main Color : #2568ef
   }
   
   .pricing-navs .nav-pills li.active a {
-    background: #2568ef;
+    background: rgba(0, 61, 147, 1);
   }
   
   .pricing-area .pricing-item {
@@ -2528,7 +2528,7 @@ Main Color : #2568ef
   
   .pricing-area .pricing-item li i {
     margin-right: 5px;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .pricing-area .pricing-item li i.fa-times {
@@ -2543,7 +2543,7 @@ Main Color : #2568ef
   }
   
   .pricing-area .pricing-item.active .pricing-header h4 {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .pricing-area .pricing-item .pricing-header h2 {
@@ -2588,7 +2588,7 @@ Main Color : #2568ef
   
   .team-area .team-items .item .info span {
     text-transform: uppercase;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     display: block;
     margin-bottom: 15px;
     font-family: 'Poppins', sans-serif;
@@ -2605,7 +2605,7 @@ Main Color : #2568ef
   .team-area .team-items .item .info h5 i {
     margin-right: 5px;
     font-weight: 500;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .team-area .team-items .item .thumb {
@@ -2795,7 +2795,7 @@ Main Color : #2568ef
     font-family: "Font Awesome 5 Free";
     font-weight: 600;
     background: #ffffff;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     padding: 3px 15px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
@@ -2819,7 +2819,7 @@ Main Color : #2568ef
   }
   
   .testimonial-items .item .info span {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .testimonials-area .testimonial-items.testimonial-carousel .owl-nav {
@@ -2885,7 +2885,7 @@ Main Color : #2568ef
   }
   
   .overview-area .tab-content h4 {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     margin-top: 25px;
     text-transform: uppercase;
     font-weight: 600;
@@ -2979,7 +2979,7 @@ Main Color : #2568ef
   
   .blog-area .info .meta ul li i {
     margin-right: 5px;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .blog-area .blog-items .info h4 {
@@ -2989,12 +2989,12 @@ Main Color : #2568ef
   }
   
   .blog-area .blog-items .info a:hover {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .blog-area .blog-items .info .content > a {
     text-transform: uppercase;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     font-weight: 600;
     letter-spacing: 1px;
     text-decoration: underline;
@@ -3017,7 +3017,7 @@ Main Color : #2568ef
     top: -60px;
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
-    background: #2568ef;
+    background: rgba(0, 61, 147, 1);
     color: #ffffff;
     padding: 0 15px;
     height: 40px;
@@ -3058,13 +3058,13 @@ Main Color : #2568ef
     border-radius: 5px !important;
     text-transform: capitalize;
     font-weight: 600;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .blog-area .pagination li.active a, .blog-area .pagination li a:hover {
     border-color: transparent;
     color: #ffffff;
-    background: #2568ef;
+    background: rgba(0, 61, 147, 1);
   }
   
   /* Blog Single */
@@ -3091,7 +3091,7 @@ Main Color : #2568ef
   }
   
   .blog-area.single .item .content-box span {
-    background: #2568ef none repeat scroll 0 0;
+    background: rgba(0, 61, 147, 1) none repeat scroll 0 0;
     color: #ffffff;
     display: inline-block;
     font-family: "Poppins",sans-serif;
@@ -3215,7 +3215,7 @@ Main Color : #2568ef
   }
   
   .blog-area.single .post-pagi-area a:hover {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .blog-area.single .post-pagi-area a:last-child {
@@ -3262,7 +3262,7 @@ Main Color : #2568ef
   }
   
   .blog-area.single .post-tags a:hover {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .blog-area.single.color-yellow .post-tags a:hover {
@@ -3348,7 +3348,7 @@ Main Color : #2568ef
   }
   
   .comments-info a:hover {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .color-yellow .comments-info a:hover {
@@ -3383,7 +3383,7 @@ Main Color : #2568ef
   }
   
   .comments-form button {
-    border: 2px solid #2568ef;
+    border: 2px solid rgba(0, 61, 147, 1);
     background: transparent;
     color: #232323;
     display: inline-block;
@@ -3403,7 +3403,7 @@ Main Color : #2568ef
   
   .comments-form button:hover {
     color: #ffffff;
-    background-color: #2568ef;
+    background-color: rgba(0, 61, 147, 1);
     border: 2px solid transparent;
   }
   
@@ -3450,7 +3450,7 @@ Main Color : #2568ef
   }
   
   .error-page-area .content h1 span {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .error-page-area .content h2 {
@@ -3491,7 +3491,7 @@ Main Color : #2568ef
   
   .contact-area .contact-form button {
     background-color: transparent;
-    color: #2568ef !important;
+    color: rgba(0, 61, 147, 1) !important;
     border: 2px solid #e1e1e1;
     padding: 8px 35px;
     font-size: 12px;
@@ -3499,7 +3499,7 @@ Main Color : #2568ef
   
   .contact-area .contact-form button {
     background-color: transparent;
-    color: #2568ef !important;
+    color: rgba(0, 61, 147, 1) !important;
     border: 2px solid #e1e1e1;
     padding: 12px 40px;
     font-size: 12px;
@@ -3522,7 +3522,7 @@ Main Color : #2568ef
   }
   
   .contact-area .contact-form h3 span {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .contact-form .loader {
@@ -3566,7 +3566,7 @@ Main Color : #2568ef
   .address-list .item i {
     font-size: 60px;
     display: inline-block;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     margin-bottom: 30px;
   }
   
@@ -3638,7 +3638,7 @@ Main Color : #2568ef
   }
   
   .companies-area .info h3 span {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     text-transform: capitalize;
     font-weight: 800;
     font-size: 30px;
@@ -3818,7 +3818,7 @@ Main Color : #2568ef
     z-index: 9;
     min-height: 40px;
     min-width: 80px;
-    background: #2568ef;
+    background: rgba(0, 61, 147, 1);
     -webkit-border-radius: 30px;
     -moz-border-radius: 30px;
     border-radius: 30px;
@@ -3841,7 +3841,7 @@ Main Color : #2568ef
   }
   
   footer .f-item.link li a:hover {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   footer .f-item.link li:first-child {
@@ -3870,7 +3870,7 @@ Main Color : #2568ef
   
   footer .address li .icon i {
     font-size: 20px;
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     background: #f1f1f1;
     min-height: 45px;
     line-height: 45px;
@@ -3885,7 +3885,7 @@ Main Color : #2568ef
   }
   
   .footer-bottom p a {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     text-decoration: underline;
     font-weight: 600;
   }
@@ -3926,7 +3926,7 @@ Main Color : #2568ef
   }
   
   .footer-bottom ul li a:hover {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
   }
   
   .footer-bottom.default-padding-top {
@@ -3991,7 +3991,7 @@ Main Color : #2568ef
       font-family: 'Poppins', sans-serif;
       text-transform: uppercase;
       font-weight: 600;
-      color: #2568ef;
+      color: rgba(0, 61, 147, 1);
   }
   
   .login-items .content .sign-up {
@@ -4002,7 +4002,7 @@ Main Color : #2568ef
   }
   
   .login-items .content .sign-up a {
-    color: #2568ef;
+    color: rgba(0, 61, 147, 1);
     text-decoration: underline;
     font-weight: 600;
   }
