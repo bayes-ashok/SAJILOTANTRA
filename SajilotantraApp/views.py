@@ -5,7 +5,7 @@ from collections import defaultdict
 
 from bitarray import bitarray
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User  # default user model
@@ -163,7 +163,7 @@ def all_events(request):
 
 # def map(request):
 #     return render(request, 'map.html')
-
+@login_required(login_url='signin')
 def dashboard(request):
     notifications = Notification.objects.all()
     guidance = Guidance.objects.all().order_by('-pk')
@@ -237,85 +237,6 @@ def government_profiles_details(request,pk):
 from django.http import Http404
 
 
-# @login_required
-def profile(request, username):
-    auth_user = request.user
-    print(auth_user)
-
-    try:
-        # Retrieve the user based on the provided username
-        user = User.objects.get(username=username)
-
-        if auth_user != user:
-            # If they don't match, redirect to the login page
-            return redirect('signin')
-
-        if user is None:
-            return render(request, "user_does_not_exist.html")
-
-        # Retrieve or create UserProfile based on user_id
-        profile, created = UserProfile.objects.get_or_create(user=user)
-
-        # Handle profile update
-        if request.method == 'POST':
-            # Preserve the existing bio if the new bio is empty
-            new_bio = request.POST.get('bio', '')
-            if new_bio != '':
-                profile.bio = new_bio
-
-            # Update profile picture
-            if 'picture' in request.FILES:
-                profile.image = request.FILES['picture']
-
-            # Update cover photo
-            if 'cover' in request.FILES:
-                profile.cover = request.FILES['cover']
-
-            #drag and drop profile
-            if 'drop-area-profile' in request.FILES:
-                profile.image= request.FILES['drop-area-profile']
-
-            #drag and drop cover
-            if 'drop-area-cover' in request.FILES:
-                profile.cover= request.FILES['drop-area-cover']
-
-            profile.save()
-            messages.success(request,"Your profile has been updated successfully")
-
-
-        context = {
-            'user': user,
-            'auth_user': auth_user,
-        }
-
-    except User.DoesNotExist:
-        raise Http404("User does not exist")
-
-    return render(request, 'profileupdate.html', context)
-
-
-
-def view_profile(request, username):
-    user = get_object_or_404(User, username=username)
-    
-    try:
-        profile = UserProfile.objects.get(user=user)
-    except UserProfile.DoesNotExist:
-        return render(request, 'user_does_not_exist.html')
-
-    # if user is None:
-    #     return render(request, 'user_does_not_exist.html')
-    
-    profile = UserProfile.objects.get(user=user)
-
-    context = {
-        'user': user,
-        'profile': profile,
-    }
-
-    return render(request, 'frontprofile.html', context)
-
-
 def government_profiles(request):
     profiles=GovernmentProfile.objects.all().order_by('-pk')
     data={
@@ -337,6 +258,7 @@ def government_profiles_details(request,pk):
 
 from django.http import Http404
 
+
 # @login_required
 def profile(request, username):
     auth_user = request.user
@@ -348,6 +270,14 @@ def profile(request, username):
         user = User.objects.get(username=username)
         profile = UserProfile.objects.get(user=user)
         posts= Post.objects.filter(user=profile).order_by("-pk")
+        # fetiching comments for each post
+        posts_comments={}
+        for post in posts:
+            comments=PostComment.objects.filter(post=post)
+            posts_comments[post.id]=comments
+            posts.decoded_caption = post.decode_caption()
+            print(f"(dashboard) Decoded Caption: {posts.decoded_caption}")
+
         if auth_user != user:
             # If they don't match, redirect to the login page
             return redirect('signin')
@@ -397,6 +327,8 @@ def profile(request, username):
             'auth_user': auth_user,
             'profile': profile,
             'posts':posts,
+            'posts.decoded_caption':posts.decoded_caption,
+            'posts_comments':posts_comments,
         }
 
     except:
@@ -414,14 +346,24 @@ def view_profile(request, username):
         user = get_object_or_404(User, username=username)
         profile = get_object_or_404(UserProfile, user=user)
         posts = Post.objects.filter(user=profile).order_by("-pk")
+        # fetiching comments for each post
+        posts_comments={}
+        for post in posts:
+            comments=PostComment.objects.filter(post=post)
+            posts_comments[post.id]=comments
+            posts.decoded_caption = post.decode_caption()
+            print(f"(dashboard) Decoded Caption: {posts.decoded_caption}")
     except Http404:
         return render(request, 'user_does_not_exist.html')
-
     context = {
         'user': user,
         'profile': profile,
         'posts': posts,
-        'auth_profile': auth_profile
+        'auth_profile': auth_profile,
+        'posts.decoded_caption':posts.decoded_caption,
+        'posts_comments':posts_comments,
+        'posts':posts,
+        'posts_comments':posts_comments,
     }
     return render(request, 'frontprofile.html', context)
 
@@ -489,6 +431,7 @@ def add_comment(request, post_id):
 
     return redirect("dashboard")
 
+
 def get_names(request):
     search = request.GET.get('search')
     payload = []
@@ -507,14 +450,14 @@ def get_names(request):
             'payload': payload,
         }
     )
-from django.http import JsonResponse
-
-
 import json
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponse
+
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404
+
 from .models import Post, PostLike
+
 
 @login_required(login_url='/signin')
 def like_post(request, post_id):
@@ -595,9 +538,10 @@ def report_post(request, post_id):
         return redirect('dashboard')
     return render(request, 'dashboard.html')
 
-from django.views.decorators.http import require_POST
-from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_POST
+
 
 @require_POST
 def delete_post(request, post_id):
@@ -612,3 +556,9 @@ def delete_post(request, post_id):
 
     return HttpResponse(status=200)
 
+from django.shortcuts import redirect
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('signin')  # Redirect to your desired page after logout
