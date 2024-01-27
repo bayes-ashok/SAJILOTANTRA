@@ -128,10 +128,7 @@ def activate(request,uidb64,token):#activate user account if the confirmation li
     else:
         return render(request,'activation_failed.html')
     
-
-
-
-     
+ 
 def events(request):
     all_events = Event.objects.all()
     context = {
@@ -172,6 +169,11 @@ def dashboard(request):
     guidance = Guidance.objects.all().order_by('-pk')
     events = Event.objects.all().order_by('-pk')
     posts= Post.objects.all().order_by('-pk')
+    auth_user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
+    
+
+    # fetiching comments for each post
     post_comments={}
     for post in posts:
         comments=PostComment.objects.filter(post=post)
@@ -189,6 +191,8 @@ def dashboard(request):
         'events': events[:3],
         'post_comments':post_comments,
         'posts':posts,
+        'post_comments':post_comments,
+        'user_profile':user_profile
     }
 
     return render(request, 'dashboard.html', context)
@@ -210,6 +214,107 @@ def guide_blog(request,pk):
     'guideBlog':guideBlog
    }
    return render(request,'guide_steps.html',blog)
+
+def government_profiles(request):
+    profiles=GovernmentProfile.objects.all().order_by('-pk')
+    data={
+        'profiles':profiles
+    }
+    return render(request, 'government_profiles.html', data)
+
+def map(request):
+    profiles=GovernmentProfile.objects.all().order_by("-pk")
+    data={
+        'profiles':profiles
+    }
+    return render(request,'map.html',data)
+
+
+def government_profiles_details(request,pk):
+    profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
+    return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
+
+from django.http import Http404
+
+
+# @login_required
+def profile(request, username):
+    auth_user = request.user
+    print(auth_user)
+
+    try:
+        # Retrieve the user based on the provided username
+        user = User.objects.get(username=username)
+
+        if auth_user != user:
+            # If they don't match, redirect to the login page
+            return redirect('signin')
+
+        if user is None:
+            return render(request, "user_does_not_exist.html")
+
+        # Retrieve or create UserProfile based on user_id
+        profile, created = UserProfile.objects.get_or_create(user=user)
+
+        # Handle profile update
+        if request.method == 'POST':
+            # Preserve the existing bio if the new bio is empty
+            new_bio = request.POST.get('bio', '')
+            if new_bio != '':
+                profile.bio = new_bio
+
+            # Update profile picture
+            if 'picture' in request.FILES:
+                profile.image = request.FILES['picture']
+
+            # Update cover photo
+            if 'cover' in request.FILES:
+                profile.cover = request.FILES['cover']
+
+            #drag and drop profile
+            if 'drop-area-profile' in request.FILES:
+                profile.image= request.FILES['drop-area-profile']
+
+            #drag and drop cover
+            if 'drop-area-cover' in request.FILES:
+                profile.cover= request.FILES['drop-area-cover']
+
+            profile.save()
+            messages.success(request,"Your profile has been updated successfully")
+
+
+        context = {
+            'user': user,
+            'auth_user': auth_user,
+        }
+
+    except User.DoesNotExist:
+        raise Http404("User does not exist")
+
+    return render(request, 'profileupdate.html', context)
+
+
+
+def view_profile(request, username):
+    user = get_object_or_404(User, username=username)
+    
+    try:
+        profile = UserProfile.objects.get(user=user)
+    except UserProfile.DoesNotExist:
+        return render(request, 'user_does_not_exist.html')
+
+    # if user is None:
+    #     return render(request, 'user_does_not_exist.html')
+    
+    profile = UserProfile.objects.get(user=user)
+
+    context = {
+        'user': user,
+        'profile': profile,
+    }
+
+    return render(request, 'frontprofile.html', context)
+
 
 def government_profiles(request):
     profiles=GovernmentProfile.objects.all().order_by('-pk')
@@ -295,11 +400,13 @@ def profile(request, username):
             'posts':posts,
         }
 
-    except User.DoesNotExist:
+    except:
         return render(request,"user_does_not_exist.html")
 
     return render(request, 'profileupdate.html', context)
 
+
+@login_required(login_url='signin')
 def view_profile(request, username):
     auth_user=request.user
     try:
@@ -311,42 +418,13 @@ def view_profile(request, username):
     except Http404:
         return render(request, 'user_does_not_exist.html')
 
-    # if user is None:
-    #     return render(request, 'user_does_not_exist.html')
-    
-    profile = UserProfile.objects.get(user=user)
-    posts= Post.objects.filter(user=profile).order_by("-pk")
     context = {
         'user': user,
         'profile': profile,
-        'posts':posts,
+        'posts': posts,
+        'auth_profile': auth_profile
     }
     return render(request, 'frontprofile.html', context)
-
-
-
-def government_profiles(request):
-    profiles=GovernmentProfile.objects.all().order_by('-pk')
-    data={
-        'profiles':profiles
-    }
-    return render(request, 'government_profiles.html', data)
-
-def map(request):
-    profiles=GovernmentProfile.objects.all().order_by("-pk")
-    data={
-        'profiles':profiles
-    }
-    return render(request,'map.html',data)
-
-
-def government_profiles_details(request,pk):
-    profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
-    return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
-
-from django.http import Http404
-
-
 def feedback(request):
     if request.method == 'POST':
         category = request.POST.get('category')
@@ -374,22 +452,149 @@ def create_post(request):
         caption = request.POST.get('postCaption')
         category = request.POST.get('category')
         image = request.FILES.get('file_input')
-
         auth_user = request.user
         user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
-
         try:
+            # Calling the Huffman Coding:
+            encoded_caption, encoding_dict = huffman_encode(caption)
+            # encoded_caption, _ = huffman_encode(caption)
             post = Post.objects.create(
                 user=user_profile,
-                caption=caption,
+                encoded_caption=encoded_caption,
                 category=category,
-                image=image
+                image=image,
+                encoding_dict=json.dumps(encoding_dict)
             )
             return redirect('dashboard')
         except Exception as e:
             print(f"Error creating post: {e}")
-    return redirect('map.html')
-   
+    return redirect('dashboard.html')
 
-    # return render(request, 'dashboard.html', {'form': form})
-    return redirect('map.html')
+@login_required(login_url="/signin")
+def add_comment(request, post_id):
+    if request.method =='POST':
+        post=get_object_or_404(Post, pk=post_id)
+        comment_user=request.user.userprofile
+        text = request.POST.get('commentInput')
+
+        if text:
+            comment = PostComment.objects.create(post=post, user=comment_user, text=text)
+            messages.success(request, 'Comment added successfully!')
+            return redirect("dashboard")
+        else:
+            messages.error(request, 'Invalid comment input.')
+            return redirect("map")
+
+    return redirect("dashboard")
+    
+
+@login_required(login_url="/signin")
+def add_comment(request, post_id):
+    if request.method =='POST':
+        post=get_object_or_404(Post, pk=post_id)
+        comment_user=request.user.userprofile
+        text = request.POST.get('commentInput')
+
+        if text:
+            comment = PostComment.objects.create(post=post, user=comment_user, text=text)
+            messages.success(request, 'Comment added successfully!')
+            return redirect("dashboard")
+        else:
+            messages.error(request, 'Invalid comment input.')
+            return redirect("map")
+
+    return redirect("dashboard")
+
+def get_names(request):
+    search = request.GET.get('search')
+    payload = []
+
+    if search:
+        objs = UserProfile.objects.filter(user__username__startswith=search)
+
+        for obj in objs:
+            payload.append({
+                'user': obj.user.username
+            })
+
+    return JsonResponse(
+        {
+            'status': True,
+            'payload': payload,
+        }
+    )
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
+from django.http import JsonResponse
+from django.shortcuts import redirect, render
+
+
+# @login_required
+def change_password(request, username):
+    auth_user = request.user
+    print(auth_user)
+    user = User.objects.get(username=username)
+
+
+    error_message = None
+    password_changed = False  # Assuming this variable is used to display a success message
+    
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            new_password = form.cleaned_data['new_password1']
+            
+            # Change the user's password and update the session
+            request.user.set_password(new_password)
+            request.user.save()
+            update_session_auth_hash(request, request.user)
+            
+            messages.success(request, 'Password changed successfully.')
+            password_changed = True
+        else:
+            error_message = 'Please correct the errors below.'
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")  # Add form errors to messages
+    else:
+        form = PasswordChangeForm(user=request.user)
+    
+    return render(request, 'change_password.html', {'form': form, 'error_message': error_message, 'password_changed': password_changed})
+
+def report_post(request, post_id):
+    if request.method == 'POST':
+        reason = request.POST.get('reason', '')
+        report = ReportedPost.objects.create(post_id=post_id, reason=reason)
+        print(f"Reported post saved: {report}")
+
+        # Redirect the user to a different page or the same page
+        return redirect('dashboard')
+    return render(request, 'dashboard.html')
+
+
+@login_required(login_url='/signin')
+def like_post(request, post_id):
+    if request.method == 'POST':
+        post = get_object_or_404(Post, pk=post_id)
+        user_profile = request.user.userprofile
+
+        # Check if the user has already liked the post
+        like, created = PostLike.objects.get_or_create(post=post, user=user_profile)
+
+        if not created:
+            # Unlike the post
+            like.delete()
+            post.like_count = PostLike.objects.filter(post=post).count()
+            post.save()
+            return JsonResponse({'message': 'Post unliked successfully', 'is_liked': False, 'like_count': post.like_count})
+        else:
+            # Like the post
+            post.like_count = PostLike.objects.filter(post=post).count()
+            post.save()
+            
+            return JsonResponse({'-message': 'Post liked successfully', 'is_liked': True, 'like_count': post.like_count})
+    
+    # Handle cases for GET requests or other HTTP methods
+    return JsonResponse({'message': 'Method not allowed'}, status=405)
