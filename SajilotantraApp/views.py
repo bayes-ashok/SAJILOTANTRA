@@ -232,85 +232,6 @@ def government_profiles_details(request,pk):
 from django.http import Http404
 
 
-# @login_required
-def profile(request, username):
-    auth_user = request.user
-    print(auth_user)
-
-    try:
-        # Retrieve the user based on the provided username
-        user = User.objects.get(username=username)
-
-        if auth_user != user:
-            # If they don't match, redirect to the login page
-            return redirect('signin')
-
-        if user is None:
-            return render(request, "user_does_not_exist.html")
-
-        # Retrieve or create UserProfile based on user_id
-        profile, created = UserProfile.objects.get_or_create(user=user)
-
-        # Handle profile update
-        if request.method == 'POST':
-            # Preserve the existing bio if the new bio is empty
-            new_bio = request.POST.get('bio', '')
-            if new_bio != '':
-                profile.bio = new_bio
-
-            # Update profile picture
-            if 'picture' in request.FILES:
-                profile.image = request.FILES['picture']
-
-            # Update cover photo
-            if 'cover' in request.FILES:
-                profile.cover = request.FILES['cover']
-
-            #drag and drop profile
-            if 'drop-area-profile' in request.FILES:
-                profile.image= request.FILES['drop-area-profile']
-
-            #drag and drop cover
-            if 'drop-area-cover' in request.FILES:
-                profile.cover= request.FILES['drop-area-cover']
-
-            profile.save()
-            messages.success(request,"Your profile has been updated successfully")
-
-
-        context = {
-            'user': user,
-            'auth_user': auth_user,
-        }
-
-    except User.DoesNotExist:
-        raise Http404("User does not exist")
-
-    return render(request, 'profileupdate.html', context)
-
-
-
-def view_profile(request, username):
-    user = get_object_or_404(User, username=username)
-    
-    try:
-        profile = UserProfile.objects.get(user=user)
-    except UserProfile.DoesNotExist:
-        return render(request, 'user_does_not_exist.html')
-
-    # if user is None:
-    #     return render(request, 'user_does_not_exist.html')
-    
-    profile = UserProfile.objects.get(user=user)
-
-    context = {
-        'user': user,
-        'profile': profile,
-    }
-
-    return render(request, 'frontprofile.html', context)
-
-
 def government_profiles(request):
     profiles=GovernmentProfile.objects.all().order_by('-pk')
     data={
@@ -340,10 +261,21 @@ def profile(request, username):
 
     try:
         auth_user = request.user
+        auth_user = request.user
         # Retrieve the user based on the provided username
         user = User.objects.get(username=username)
         profile = UserProfile.objects.get(user=user)
         posts= Post.objects.filter(user=profile).order_by("-pk")
+        profile = UserProfile.objects.get(user=user)
+        posts= Post.objects.filter(user=profile).order_by("-pk")
+        # fetiching comments for each post
+        posts_comments={}
+        for post in posts:
+            comments=PostComment.objects.filter(post=post)
+            posts_comments[post.id]=comments
+            posts.decoded_caption = post.decode_caption()
+            print(f"(dashboard) Decoded Caption: {posts.decoded_caption}")
+
         if auth_user != user:
             # If they don't match, redirect to the login page
             return redirect('signin')
@@ -393,6 +325,8 @@ def profile(request, username):
             'auth_user': auth_user,
             'profile': profile,
             'posts':posts,
+            'posts.decoded_caption':posts.decoded_caption,
+            'posts_comments':posts_comments,
         }
 
     except:
@@ -410,14 +344,24 @@ def view_profile(request, username):
         user = get_object_or_404(User, username=username)
         profile = get_object_or_404(UserProfile, user=user)
         posts = Post.objects.filter(user=profile).order_by("-pk")
+        # fetiching comments for each post
+        posts_comments={}
+        for post in posts:
+            comments=PostComment.objects.filter(post=post)
+            posts_comments[post.id]=comments
+            posts.decoded_caption = post.decode_caption()
+            print(f"(dashboard) Decoded Caption: {posts.decoded_caption}")
     except Http404:
         return render(request, 'user_does_not_exist.html')
-
     context = {
         'user': user,
         'profile': profile,
         'posts': posts,
-        'auth_profile': auth_profile
+        'auth_profile': auth_profile,
+        'posts.decoded_caption':posts.decoded_caption,
+        'posts_comments':posts_comments,
+        'posts':posts,
+        'posts_comments':posts_comments,
     }
     return render(request, 'frontprofile.html', context)
 def feedback(request):
@@ -629,6 +573,7 @@ def add_comment(request, post_id):
 
     return redirect("dashboard")
 
+
 def get_names(request):
     search = request.GET.get('search')
     payload = []
@@ -647,7 +592,13 @@ def get_names(request):
             'payload': payload,
         }
     )
-from django.http import JsonResponse
+import json
+
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404
+
+from .models import Post, PostLike
 
 
 @login_required(login_url='/signin')
@@ -662,18 +613,25 @@ def like_post(request, post_id):
         if not created:
             # Unlike the post
             like.delete()
-            post.like_count = PostLike.objects.filter(post=post).count()
-            post.save()
-            return JsonResponse({'message': 'Post unliked successfully', 'is_liked': False, 'like_count': post.like_count})
         else:
             # Like the post
-            post.like_count = PostLike.objects.filter(post=post).count()
-            post.save()
-            
-            return JsonResponse({'-message': 'Post liked successfully', 'is_liked': True, 'like_count': post.like_count})
-    
-    # Handle cases for GET requests or other HTTP methods
-    return JsonResponse({'message': 'Method not allowed'}, status=405)
+            pass  
+
+        # Update the like count
+        post.like_count = PostLike.objects.filter(post=post).count()
+        post.save()
+
+        response_data = {
+            'message': 'Post liked successfully' if created else 'Post unliked successfully',
+            'is_liked': not created,
+            'like_count': post.like_count
+        }
+
+        return HttpResponse(json.dumps(response_data), content_type='application/json')
+
+    return HttpResponse(json.dumps({'message': 'Invalid request method'}), content_type='application/json')
+
+
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -687,9 +645,8 @@ def change_password(request, username):
     print(auth_user)
     user = User.objects.get(username=username)
 
-
     error_message = None
-    password_changed = False  # Assuming this variable is used to display a success message
+    password_changed = False
     
     if request.method == 'POST':
         form = PasswordChangeForm(user=request.user, data=request.POST)
@@ -701,17 +658,17 @@ def change_password(request, username):
             request.user.save()
             update_session_auth_hash(request, request.user)
             
-            messages.success(request, 'Password changed successfully.')
+            # messages.success(request, 'Password changed successfully.')
             password_changed = True
         else:
             error_message = 'Please correct the errors below.'
-            for field, errors in form.errors.items():
-                for error in errors:
-                    messages.error(request, f"{field}: {error}")  # Add form errors to messages
+            # Get the first error message, you can customize this part as needed
+            first_error = list(form.errors.values())[0][0]
+            # messages.error(request, f"Error: {first_error}")  # Add form errors to messages
     else:
         form = PasswordChangeForm(user=request.user)
     
-    return render(request, 'change_password.html', {'form': form, 'error_message': error_message, 'password_changed': password_changed})
+    return render(request, 'change_password.html', {'form': form, 'password_changed': password_changed})
 
 def report_post(request, post_id):
     if request.method == 'POST':
@@ -719,7 +676,31 @@ def report_post(request, post_id):
         report = ReportedPost.objects.create(post_id=post_id, reason=reason)
         print(f"Reported post saved: {report}")
 
-        # Redirect the user to a different page or the same page
+        # Redirect the user to the same page
         return redirect('dashboard')
     return render(request, 'dashboard.html')
 
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_POST
+
+
+@require_POST
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    # Check if the user making the request is the owner of the post
+    if post.user.user != request.user:
+        return HttpResponse(status=403)
+
+    # Delete the post
+    post.delete_post()
+
+    return HttpResponse(status=200)
+
+from django.shortcuts import redirect
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('signin')  # Redirect to your desired page after logout

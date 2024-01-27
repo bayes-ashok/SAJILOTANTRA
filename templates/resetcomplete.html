@@ -1,74 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Password Reset</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/adminlogin.css">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/static/adminlogin.css" />
     <style>
-        body {
-            background-color: #f8f9fa;
-            background-image: url('/static/Images/home.jpg');
-            background-size: 220vh;
-        }
+      body {
+        background-color: #f8f9fa;
+        background-image: url("/static/Images/home.jpg");
+        background-size: 220vh;
+      }
 
-        .card {
-            border: 0;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            /* Box shadow */
-            border-radius: 15px;
-            /* Rounded corners */
-        }
+      .card {
+        border: 0;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        /* Box shadow */
+        border-radius: 15px;
+        /* Rounded corners */
+      }
 
-        .card-body {
-            text-align: center;
-            /* Center the content */
-        }
+      .card-body {
+        text-align: center;
+        /* Center the content */
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
-    <div class="modal fade" id="emailSentModal" tabindex="-1" role="dialog" aria-labelledby="emailSentModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="emailSentModalLabel">Password changed</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body adminlogin-background text-center"> <!-- Add adminlogin-background class here -->
-                    <p>Your password is changed successfully</p>
-                    <a href="/signin" target="_blank" class="btn btn-primary">Go to signin page</a>
-                </div>
-            </div>
+  <body>
+    <div
+      class="modal fade"
+      id="emailSentModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="emailSentModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="emailSentModalLabel">
+              Password changed
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body adminlogin-background text-center">
+            <!-- Add adminlogin-background class here -->
+            <p>Your password is changed successfully</p>
+            <a href="/signin" target="_blank" class="btn btn-primary"
+              >Go to signin page</a
+            >
+          </div>
         </div>
+      </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
     <script>
-        $(document).ready(function () {
-            $('#emailSentModal').modal('show');
+      $(document).ready(function () {
+        $("#emailSentModal").modal("show");
 
-            $('#emailSentModal').on('hidden.bs.modal', function () {
-                window.location.href = "/signin"; // Redirect to adminlogin.html on modal close
-            });
+        $("#emailSentModal").on("hidden.bs.modal", function () {
+          window.location.href = "/signin"; // Redirect to adminlogin.html on modal close
         });
+      });
     </script>
+    <script>
+      function togglePassword(inputId, eyeIconId) {
+        const passField = document.getElementById(inputId);
+        const eyeIcon = document.getElementById(eyeIconId);
 
-</body>
-
+        if (passField.type === "password") {
+          passField.type = "text";
+          eyeIcon.classList.remove("hi-eye");
+          eyeIcon.classList.add("hi-eye-off");
+        } else {
+          passField.type = "password";
+          eyeIcon.classList.remove("hi-eye-off");
+          eyeIcon.classList.add("hi-eye");
+        }
+      }
+    </script>
+  </body>
 </html>
