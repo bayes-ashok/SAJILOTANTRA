@@ -1,4 +1,8 @@
 {% extends "index.html" %}
+{% load static %}
+{% block heading %}
+
+{% endblock heading %}
 {% block content %}
 {% comment %} Cards {% endcomment %}
 <section id="blog" class="blog min-h-screen mt-12 items-center justify-center" style="padding-top: 30px;">
@@ -8,16 +12,17 @@
           
           {% for p in profiles %}
           <div class="max-w-sm bg-white hover:shadow-indigo-500/60 border border-gray-200 rounded-lg shadow">
-            <a href="{% url 'government_profiles_details' profile_id=p.profile_id %}">
-
+            <a href="/government_profile/{{p.profile_id}}">
               <img class="rounded-t-lg w-full h-40 object-cover" src="{{ p.thumbnail.url }}" alt="" />
-            </a>  
+            </a>
             <div class="p-5">
-              <a href="{% url 'government_profiles_details' profile_id=p.profile_id %}">
-
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{ p.name }}</h5>
+              <a href="/government_profile/{{p.profile_id}}">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{p.name}}</h5>
               </a>
-              <p class="mb-3 font-normal text-gray-700 ">{{ p.description|truncatewords:10|safe }}</p>  
+              <p class="mb-3 font-normal text-gray-700">{{ p.description|truncatewords:10|safe }}</p>
+              <a href="/government_profile/{{p.profile_id}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                View Profile
+              </a>
             </div>
           </div>
         {% endfor %}

@@ -199,15 +199,18 @@
         safe
     </div>
     <section>
-        <div class="rounded-lg shadow-xl w-11/12 mx-auto bg-white pt-10 pb-2 px-6" style="margin-top: 70px; margin-bottom: 70px;">
-            <div style="font-size: 20px; font-weight: bold; margin-bottom: 10px; text-align: center;">
-            {{ GovernmentProfile.name }}
-          </div>
-          <div class="py-4 px-6">
-            {{GovernmentProfile.description | safe}}
-          </div>
-          
-        </div>     
+		<div class="rounded-lg shadow-xl w-11/12 mx-auto bg-white pt-8 pb-2 px-5" style="margin-top: 70px; margin-bottom: 70px; display: flex; align-items: center;">
+
+			<img class="h-auto max-w-md rounded-lg" src="{{GovernmentProfile.thumbnail.url}}" alt="image description">
+			<div>
+				<div style="font-size: 30px; font-weight: bold; margin-bottom: 10px; margin-left: 20px; text-align: center;">
+					{{ GovernmentProfile.name }}
+				</div>
+				<div class="py-4 px-6">
+					{{GovernmentProfile.description | safe}}
+				</div>
+			</div>
+		</div>   
     
         </section>
 
