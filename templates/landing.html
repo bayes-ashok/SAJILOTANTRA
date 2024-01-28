@@ -65,9 +65,9 @@
                         <li>
                             <a href="/signin">login</a>
                         </li>
-                        <li>
+                        {% comment %} <li>
                             <a href="/signup">signup</a>
-                        </li>
+                        </li> {% endcomment %}
                     </ul>
                 </div>
                 <!-- End Atribute Navigation -->
@@ -94,13 +94,11 @@
                         <li>
                             <a class="smooth-menu" href="#about">About</a>
                         </li>
-                       
-                      
                         <li>
                             <a class="smooth-menu" href="#process">Features</a>
                         </li>
                         <li>
-                            <a class="smooth-menu" href="#" style="color:orange; font-weight:bold;">Doc Guides</a>
+                            <a class="smooth-menu" href="/allguides" style="color:orange; font-weight:bold;">Doc Guides</a>
                         </li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
@@ -128,9 +126,10 @@
                     </div>
                     <div class="col-md-8 col-md-offset-2">
                         <div class="banner banner-carousel owl-carousel owl-theme">
-                            <img style="border-radius:20px;" alt="Thumb" src="static/assets/LandImg/govProfile.jpg">
-                            <img style="border-radius:20px;" alt="Thumb" src="static/assets/LandImg/docGuide.jpg">
-                            <img style="border-radius:20px;" alt="Thumb" src="static/assets/LandImg/800x600.png">
+                            <img style="border-radius:20px;" alt="Thumb" src="static/assets/LandImg/forumFeat.png">
+                            <img style="border-radius:20px;" alt="Thumb" src="static/assets/LandImg/govProfileFeat.jpg">
+                            <img style="border-radius:20px;" alt="Thumb" src="static/assets/LandImg/guideFeat.png">
+                            <img style="border-radius:20px;" alt="Thumb" src="static/assets/LandImg/mapfeature.png">
                         </div>
                     </div>
                 </div>
@@ -183,7 +182,7 @@
     </div>  {% endcomment %}
     
     <!-- End About -->
-    <div class="banner-area content-double box-nav background-move" style="background-image: url(assets/img/bg-2.png);">
+    <div id="about" class="banner-area content-double box-nav background-move" style="background-image: url(assets/img/bg-2.png);">
         <div class="container">
             <div class="row">
                 <div class="double-items">
@@ -202,7 +201,7 @@
                     </div>
                     <div class="col-md-6 right-info">
                         <div class="thumb animated">
-                            <img src="static/assets/LandImg/heropic.png" alt="Thumb">
+                            <img src="static/assets/LandImg/heropic3.png" alt="Thumb">
                         </div>
                     </div>
                 </div>
@@ -330,7 +329,7 @@
                             <div class="item">
                                 <div class="row">
                                     <div class="col-md-6 thumb">
-                                        <img src="static/assets/LandImg/800x600.png" alt="Thumb">
+                                        <img src="static/assets/LandImg/forumFeat.png" alt="Thumb">
                                     </div>
                                     <div class="col-md-6 info">
                                         <div class="title">
@@ -360,7 +359,7 @@
                             <div class="item">
                                 <div class="row">
                                     <div class="col-md-6 thumb">
-                                        <img src="static/assets/LandImg/800x600.png" alt="Thumb">
+                                        <img src="static/assets/LandImg/guideFeat.png" alt="Thumb">
                                     </div>
                                     <div class="col-md-6 info">
                                         <div class="title">
@@ -388,25 +387,21 @@
                             <div class="item">
                                 <div class="row">
                                     <div class="col-md-6 thumb">
-                                        <img src="static/assets/LandImg/800x600.png" alt="Thumb">
+                                        <img src="static/assets/LandImg/mapfeature.png" alt="Thumb">
                                     </div>
                                     <div class="col-md-6 info">
                                         <div class="title">
                                             <strong>03</strong> <h2>Government Offices Geolocator</h2>
                                         </div>
                                         <p>
-                                            Finished my an likewise cheerful packages we. For assurance concluded son something depending discourse see led collected. Packages oh no denoting my advanced humoured. Pressed be so thought natural. 
-                                        </p>
+                                            Our platform empowers users by enabling them to seamlessly search for and locate nearby government offices, agencies, and services. We provide comprehensive details, including operating hours, contact information, and the required documents for each facility. To enhance the user experience, an interactive live map is integrated, allowing users to visually explore and navigate the geographic distribution of government services.                                         </p>
                                         <p>
-                                            Sweetness principle discourse shameless bed one excellent. Sentiments of surrounded friendship dispatched connection is he. Produce besides hastily up as pleased. 
-                                        </p>
+                                            This feature ensures that users can easily access the information they need to engage with local government entities efficiently.                                        </p>
                                         <ul>
-                                            <li>Promotion an ourselves</li>
-                                            <li>Conveying has concealed</li>
-                                            <li>Discretion the dispatched</li>
-                                            <li>Middleton principle</li>
+                                            <li>Interactive Live Map</li>
+                                            <li>Government Offices Location</li>
                                         </ul>
-                                        <a class="btn btn-theme border btn-md" href="#">Get Started</a>
+                                        <a class="btn btn-theme border btn-md" href="/map/">Go to Map</a>
                                     </div>
                                 </div>
                             </div>
@@ -955,23 +950,23 @@
         <div class="container">
             <div class="row">
                 <div class="f-items">
-                    SAJILOTANTRA\static\assets\LandImg\logo.png
+    
                     <div class="col-md-4 col-sm-6 equal-height item">
                         <div class="f-item">
                             <img src="static/assets/LandImg/logo.png" alt="Logo">
                             <p>
-                                Excellence decisively nay man yet impression for contrasted remarkably. There spoke happy for you are out. Fertile how old address.
-                            </p>
+                                One Stop Solution for your next Bureaucratic work.
+                                                        </p>
                             <p>
-                                <i>Please write your email and get our amazing updates, news and support</i>
+                                {% comment %} <i>Please write your email and get our amazing updates, news and support</i> {% endcomment %}
                             </p>
                             <div class="newsletter">
-                                <form action="#">
+                                {% comment %} <form action="#">
                                     <div class="input-group stylish-input-group">
                                         <input type="email" name="email" class="form-control" placeholder="Enter your e-mail here">
                                         <button type="submit">
                                             <i class="fa fa-paper-plane"></i>
-                                        </button>  
+                                        </button>   {% endcomment %}
                                     </div>
                                 </form>
                             </div>
@@ -985,26 +980,21 @@
                                     <a href="#">Home</a>
                                 </li>
                                 <li>
-                                    <a href="#">About us</a>
+                                    <a href="/allguides">Document Guides</a>
                                 </li>
                                 <li>
-                                    <a href="#">Compnay History</a>
+                                    <a href="/map">Geolocator</a>
                                 </li>
                                 <li>
-                                    <a href="#">Management </a>
+                                    <a href="/government_profiles">Government Profiles </a>
                                 </li>
-                                <li>
-                                    <a href="#">Features</a>
-                                </li>
-                                <li>
-                                    <a href="#">Blog Page</a>
-                                </li>
+            
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-2 col-sm-6 equal-height item">
                         <div class="f-item link">
-                            <h4>Community</h4>
+                            {% comment %} <h4>Community</h4>
                             <ul>
                                 <li>
                                     <a href="#">Career</a>
@@ -1024,15 +1014,14 @@
                                 <li>
                                     <a href="#">Jobs</a>
                                 </li>
-                            </ul>
+                            </ul> {% endcomment %}
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-6 equal-height item">
                         <div class="f-item twitter-widget">
-                            <h4>Contact Info</h4>
+                            <h4>User Support</h4>
                             <p>
-                                Queenslad Victoria Building. 60 california street california USA, 20, floor
-                            </p>
+Have a Query or Need support? Contact us.                            </p>
                             <div class="address">
                                 <ul>
                                     <li>
@@ -1041,7 +1030,7 @@
                                         </div>
                                         <div class="info">
                                             <h5>Website:</h5>
-                                            <span>www.validtheme.com</span>
+                                            <span>www.sajilotantra.com</span>
                                         </div>
                                     </li>
                                     <li>
@@ -1050,7 +1039,7 @@
                                         </div>
                                         <div class="info">
                                             <h5>Email:</h5>
-                                            <span>support@validtheme.com</span>
+                                            <span>support@sajilotantra.com</span>
                                         </div>
                                     </li>
                                     <li>
@@ -1059,7 +1048,7 @@
                                         </div>
                                         <div class="info">
                                             <h5>Phone:</h5>
-                                            <span>+44-20-7328-4499</span>
+                                            <span>+977 9869118472</span>
                                         </div>
                                     </li>
                                 </ul>
