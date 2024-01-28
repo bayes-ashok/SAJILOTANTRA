@@ -6,7 +6,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index,name='index'),
+    path('', views.landing,name='index'),
     path('signup', views.signup,name='signup'),
     path('signin', views.signin,name='signin'),
     # path('admin', views.admin,name='admin'),
@@ -36,5 +36,6 @@ path('password_reset/', auth_views.PasswordResetView.as_view(template_name='pass
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='resetcomplete.html'), name='password_reset_complete'),
     path('logout/', views.logout_view, name='logout'),
     path('delete-post/<int:post_id>/', views.delete_post, name='delete_post'),
+    path('newland', views.landing, name='landing'),
 
 ]

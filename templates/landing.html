@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- ========== Meta Tags ========== -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sajilotantra">
+
+    <!-- ========== Page Title ========== -->
+    <title>Sajilotantra</title>
+
+    <!-- ========== Favicon Icon ========== -->
+    <link rel="shortcut icon" href="static/assets/LandImg/fav3.png" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/c30dadd52a.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+
+
+    <!-- ========== Start Stylesheet ========== -->
+    <link href="static\css\bootstrap.min.css" rel="stylesheet" />
+    <link href="static\css\font-awesome.min.css" rel="stylesheet" />
+    <link href="static\css\flaticon-set.css" rel="stylesheet" />
+    <link href="static\css\magnific-popup.css" rel="stylesheet" />
+    <link href="static\css\owl.carousel.min.css" rel="stylesheet" />
+    <link href="static\css\owl.theme.default.min.css" rel="stylesheet" />
+    <link href="static\css\animate.css" rel="stylesheet" />
+    <link href="static\css\bootsnav.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet">
+		<link rel="stylesheet" href="static\css\landing.css">
+    <link href="static\css\responsive.css" rel="stylesheet" />
+    <!-- ========== End Stylesheet ========== -->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5/html5shiv.min.js"></script>
+      <script src="assets/js/html5/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ========== Google Fonts ========== -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Preloader Start -->
+    {% comment %} <div class="se-pre-con"></div> {% endcomment %}
+    <!-- Preloader Ends -->
+
+    <!-- Header 
+    ============================================= -->
+    <header id="home">
+
+        <!-- Start Navigation -->
+        <nav class="navbar active-border navbar-default navbar-fixed navbar-transparent white bootsnav">
+
+            <div class="container">
+
+                <!-- Start Atribute Navigation -->
+                <div class="attr-nav button-light">
+                    <ul>
+                        <li>
+                            <a href="/signin">login</a>
+                        </li>
+                        {% comment %} <li>
+                            <a href="/signup">signup</a>
+                        </li> {% endcomment %}
+                    </ul>
+                </div>
+                <!-- End Atribute Navigation -->
+
+                <!-- Start Header Navigation -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" href="index.html">
+                        <img src="static/assets/LandImg/logo-light.png" class="logo logo-display" alt="Logo">
+                        <img src="static/assets/LandImg/logo.png" class="logo logo-scrolled" alt="Logo">
+                    </a>
+                </div>
+                <!-- End Header Navigation -->
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav navbar-right" data-in="#" data-out="#">
+                        
+                        <li>
+                            <a class="smooth-menu" href="#">Home</a>
+                        </li>
+                        <li>
+                            <a class="smooth-menu" href="#about">About</a>
+                        </li>
+                        <li>
+                            <a class="smooth-menu" href="#process">Features</a>
+                        </li>
+                        <li>
+                            <a class="smooth-menu" href="/allguides" style="color:orange; font-weight:bold;">Doc Guides</a>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div>
+
+        </nav>
+        <!-- End Navigation -->
+
+    </header>
+    <!-- End Header -->
+    
+
+    <!-- Start Banner 
+    ============================================= -->
+    <div class="banner-area auto-height content-less shadow text-light text-center bg-fixed" style="background-image: url(static/assets/LandImg/herobg2.png);">
+        <div class="container">
+            <div class="row">
+                <div class="content">
+                    <div class="col-md-10 col-md-offset-1">
+                        <h3>Public Forum | Document Guides | Office Locater</h3>
+                        <h1>One Stop for your next Bureaucratic work.</h1>
+                        <a class="btn-animation border light popup-youtube" href="https://www.youtube.com/watch?v=WZ_U7Qo93Qg">
+                            <i class="fa fa-play"></i> Watch Video
+                        </a>
+                    </div>
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="banner banner-carousel owl-carousel owl-theme">
+                            <img style="border-radius:20px;" alt="Thumb" src="static/assets/LandImg/forumFeat.png">
+                            <img style="border-radius:20px;" alt="Thumb" src="static/assets/LandImg/govProfileFeat.jpg">
+                            <img style="border-radius:20px;" alt="Thumb" src="static/assets/LandImg/guideFeat.png">
+                            <img style="border-radius:20px;" alt="Thumb" src="static/assets/LandImg/mapfeature.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wavesshape highlight shape">
+            <img src="static/assets/LandImg/waves-shape-2.svg" alt="Shape">
+        </div>
+    </div>
+    <!-- End Banner -->
+
+    <!-- Start About 
+    ============================================= -->
+    {% comment %} <div id="about" class="about-area text-center default-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 info">
+                    <h2>What exactly is <br> SAJILOTANTRA?</h2>
+            <img src="static/assets/LandImg/heropic.png" alt="Shape">
+                    
+                    <p>
+                        We are a web-based forum that provides users with comprehensive, step by step guidance to navigate government processes seamlessly.​
+                    </p>
+                    {% comment %} <div class="fun-facts">
+                        <h3>Stats so far</h3>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 item">
+                                <div class="fun-fact clients">
+                                    <div class="timer" data-to="75" data-speed="5000">75</div>
+                                    <span class="medium">Clients</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 item">
+                                <div class="fun-fact invest">
+                                    <div class="timer" data-to="100" data-speed="5000">100</div>
+                                    <span class="medium">Invested</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 item">
+                                <div class="fun-fact">
+                                    <div class="timer" data-to="98" data-speed="5000">98</div>
+                                    <span class="medium">Success Rate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> {% endcomment %}
+                {% comment %} </div>
+            </div>
+        </div>
+    </div>  {% endcomment %}
+    
+    <!-- End About -->
+    <div id="about" class="banner-area content-double box-nav background-move" style="background-image: url(assets/img/bg-2.png);">
+        <div class="container">
+            <div class="row">
+                <div class="double-items">
+                    <div class="col-md-6 left-info simple-video">
+                        <div class="content" data-animation="animated fadeInUpBig">
+                            <h1>
+                                What exactly is <span style="color:#DB133C;">SAJILO</span><span style="color:#003D93">TANTRA</span>?
+                            </h1>
+                            <p>
+                                SAJILOTANTRA is conceived to address the challenges citizens face in dealing with essential services, community involvement, and government procedures. It aims to simplify complex bureaucratic processes, provide a virtual space for community interaction, and assist users in locating government offices. Citizens often struggle with bureaucratic complexities, social isolation, and difficulties in accessing government services. SAJILOTANTRA intends to mitigate these challenges, encouraging a more connected, informed, and compassionate society.                            </p>
+                            {% comment %} <a class="btn btn-theme border btn-md" href="#">Get Started</a> {% endcomment %}
+                            {% comment %} <a class="btn-animation popup-youtube" href="https://www.youtube.com/watch?v=owhuBrGIOsE"> {% endcomment %}
+                                {% comment %} <i class="fa fa-play"></i> Watch Video {% endcomment %}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 right-info">
+                        <div class="thumb animated">
+                            <img src="static/assets/LandImg/heropic3.png" alt="Thumb">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Start Services Area 
+    ============================================= -->
+    <div id="services" class="services-area default-padding bottom-less bg-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-lg-offset-2 col-md-offset-2">
+                    <div class="site-heading text-center">
+                        <h2>Our Objectives</h2>
+                        <p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="services-items text-center">
+                    <!-- Single Item -->
+                    <div class="col-md-4 col-sm-6 equal-height">
+                        <div class="item">
+                            <div class="info">
+                                <i class="flaticon-project"></i>
+                                <p>
+                                    Providing step-by-step guidance to simplify administrative procedures.                     </p>
+                                </p>
+                                <h4>Simplify Paperworks</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Item -->
+                    <!-- Single Item -->
+                    <div class="col-md-4 col-sm-6 equal-height">
+                        <div class="item">
+                            <div class="info">
+                                {% comment %} <i class="flaticon-concept"></i> {% endcomment %}
+                               <i class="fa-solid fa-map-location"></i>
+                                <p>
+                                    Providing a map feature that helps users easily locate government offices.
+                                </p>
+                                <h4>Streamline Bureaucracy</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Item -->
+                    <!-- Single Item -->
+                    <div class="col-md-4 col-sm-6 equal-height">
+                        <div class="item">
+                            <div class="info">
+                                <i class="flaticon-talk"></i>
+                                <p>
+                                    Creating an interactive forum to share information, and engage in discussions.                                 </p>
+                                <h4>Build Community</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Item -->
+                    <!-- Single Item -->
+                    {% comment %} <div class="col-md-4 col-sm-6 equal-height">
+                        <div class="item">
+                            <div class="info">
+                                <i class="flaticon-updated"></i>
+                                <p>
+                                </p>
+                                <h4></h4>
+                            </div>
+                        </div>
+                    </div> {% endcomment %}
+                    <!-- End Single Item -->
+                    <!-- Single Item -->
+                    {% comment %} <div class="col-md-4 col-sm-6 equal-height">
+                        <div class="item">
+                            <div class="info">
+                                <i class="flaticon-insurance"></i>
+                                <p>
+                                    Situation perpetual allowance offending as principle.
+                                </p>
+                                <h4>Easy Documentation</h4>
+                            </div>
+                        </div>
+                    </div> {% endcomment %}
+                    <!-- End Single Item -->
+                    <!-- Single Item -->
+                    {% comment %} <div class="col-md-4 col-sm-6 equal-height">
+                        <div class="item">
+                            <div class="info">
+                                <i class="flaticon-help"></i>
+                                <p>
+                                    Situation perpetual allowance offending as principle.
+                                </p>
+                                <h4>24/7 Support</h4>
+                            </div>
+                        </div>
+                    </div> {% endcomment %}
+                    <!-- End Single Item -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Services Area -->
+
+    <!-- Start Work Step 
+    ============================================= -->
+    <div id="process" class="work-step-area default-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-lg-offset-2 col-md-offset-2">
+                    <div class="site-heading text-center">
+                        <h2>Our Key Features</h2>
+                        <p>
+                            These are the features that makes us unique from any other sites out there!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="work-step-items">
+                    <!-- Single Item -->
+                    <div class="single-item">
+                        <div class="col-md-12">
+                            <div class="item">
+                                <div class="row">
+                                    <div class="col-md-6 thumb">
+                                        <img src="static/assets/LandImg/forumFeat.png" alt="Thumb">
+                                    </div>
+                                    <div class="col-md-6 info">
+                                        <div class="title">
+                                            <strong>01</strong> <h2>Public Forum</h2>
+                                        </div>
+                                        <p>
+                                            We have a Community forum where users can share experiences, seek advice, and find solutions to common problems, fostering a sense of community and support for each others. Users can also like the posts to show their appreciation. Similarly, they can comment on the posts to share their opinion on any particular topic.                                       </p>
+                                        <p>
+                                            The posts made by any users is also collected in their profile page so they can check their activity on our application. We also have a delete feature if they want to delete any of their posts.
+                                        </p>
+                                        <ul>
+                                            <li>Community Support</li>
+                                            <li>Engagement Features</li>
+                                            <li>User Controls</li>
+                                            <li>Personalized Experience</li>
+                                        </ul>
+                                        <a class="btn btn-theme border btn-md" href="/signin">Get Started</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Item -->
+                    <!-- Single Item -->
+                    <div class="single-item reverse">
+                        <div class="col-md-12">
+                            <div class="item">
+                                <div class="row">
+                                    <div class="col-md-6 thumb">
+                                        <img src="static/assets/LandImg/guideFeat.png" alt="Thumb">
+                                    </div>
+                                    <div class="col-md-6 info">
+                                        <div class="title">
+                                            <strong>02</strong> <h2>Document Guides</h2>
+                                        </div>
+                                        <p>
+
+                                            Our platform provides a valuable Document Assistance feature, offering users comprehensive guidance through the process of obtaining essential documents like identification cards, passports, or permits. Users benefit from step-by-step instructions that simplify the often complex procedures, ensuring a smooth and efficient experience. Additionally, we equip users with relevant resources, streamlining the document acquisition journey and enhancing the overall user experience on our platform.                                        </p>
+                                        <ul>
+                                            <li>Step-by-Step Instructions</li>
+                                            <li>Relevant Resources</li>
+                                            <li>Simplified Bureaucracy</li>
+                                            
+                                        </ul>
+                                        <a class="btn btn-theme border btn-md" href="/allguides">View Guides</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Item -->
+                    <!-- Single Item -->
+                    <div class="single-item">
+                        <div class="col-md-12">
+                            <div class="item">
+                                <div class="row">
+                                    <div class="col-md-6 thumb">
+                                        <img src="static/assets/LandImg/mapfeature.png" alt="Thumb">
+                                    </div>
+                                    <div class="col-md-6 info">
+                                        <div class="title">
+                                            <strong>03</strong> <h2>Government Offices Geolocator</h2>
+                                        </div>
+                                        <p>
+                                            Our platform empowers users by enabling them to seamlessly search for and locate nearby government offices, agencies, and services. We provide comprehensive details, including operating hours, contact information, and the required documents for each facility. To enhance the user experience, an interactive live map is integrated, allowing users to visually explore and navigate the geographic distribution of government services.                                         </p>
+                                        <p>
+                                            This feature ensures that users can easily access the information they need to engage with local government entities efficiently.                                        </p>
+                                        <ul>
+                                            <li>Interactive Live Map</li>
+                                            <li>Government Offices Location</li>
+                                        </ul>
+                                        <a class="btn btn-theme border btn-md" href="/map/">Go to Map</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Item -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Work Step Area -->
+
+    <!-- Start Pricing Area
+    ============================================= -->
+    {% comment %} <div id="pricing" class="pricing-area default-padding bg-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-lg-offset-2 col-md-offset-2">
+                    <div class="site-heading text-center">
+                        <h2>Our Packages</h2>
+                        <p>
+                            Learning day desirous informed expenses material returned six the. She enabled invited exposed him another. Reasonably conviction solicitude me mr at discretion reasonable. Age out full gate bed day lose. 
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="pricing-navs col-md-12">
+                    <!-- Tab Nav -->
+                    <ul class="nav nav-pills">
+                        <li class="active">
+                            <a data-toggle="tab" href="#monthly" aria-expanded="true">
+                                Monthly
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#annual" aria-expanded="false">
+                                Annual
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- End Tab Nav -->
+                </div>
+
+                <div class="pricing-content col-md-12">
+                    <div class="row">
+                        <!-- Start Tab Content -->
+                        <div class="tab-content">
+                            <!-- Tab Single Item -->
+                            <div id="monthly" class="tab-pane fade active in">
+                                <div class="col-md-12">
+                                    <div class="pricing-items">
+                                        <div class="col-lg-4 col-md-4 single-item">
+                                            <div class="pricing-item">
+                                                <ul>
+                                                    <li class="pricing-header">
+                                                        <h4>Free</h4>
+                                                        <h2><sup>$</sup>0.00</h2>
+                                                        <span>1 user</span>
+                                                    </li>
+                                                    <li><i class="fas fa-times"></i> Update</li>
+                                                    <li><i class="fas fa-check"></i> Personal use</li>
+                                                    <li><i class="fas fa-times"></i> Support</li>
+                                                    <li><i class="fas fa-times"></i> 2 database</li>
+                                                    <li><i class="fas fa-check"></i> Documetation</li>
+                                                    <li class="footer">
+                                                        <a class="btn circle btn-theme border btn-sm" href="#">Buy This Plan</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 single-item">
+                                            <div class="pricing-item active">
+                                                <ul>
+                                                    <li class="pricing-header">
+                                                        <h4>Regular</h4>
+                                                        <h2><sup>$</sup>15.23</h2>
+                                                        <span>5 user</span>
+                                                    </li>
+                                                    <li><i class="fas fa-check"></i> Update</li>
+                                                    <li><i class="fas fa-check"></i> Official use</li>
+                                                    <li><i class="fas fa-check"></i> Support</li>
+                                                    <li><i class="fas fa-times"></i> 5 database</li>
+                                                    <li><i class="fas fa-check"></i> Documetation</li>
+                                                    <li class="footer">
+                                                        <a class="btn circle btn-theme effect btn-sm" href="#">Buy This Plan</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 single-item">
+                                            <div class="pricing-item">
+                                                <ul>
+                                                    <li class="pricing-header">
+                                                        <h4>Extended</h4>
+                                                        <h2><sup>$</sup>29.12</h2>
+                                                        <span>Unlimited user</span>
+                                                    </li>
+                                                    <li><i class="fas fa-times"></i> File compressed</li>
+                                                    <li><i class="fas fa-check"></i> Commercial use</li>
+                                                    <li><i class="fas fa-check"></i> Support</li>
+                                                    <li><i class="fas fa-check"></i> 8 database</li>
+                                                    <li><i class="fas fa-check"></i> Documetation</li>
+                                                    <li class="footer">
+                                                        <a class="btn circle btn-theme border btn-sm" href="#">Buy This Plan</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Tab Single Item -->
+
+                            <!-- Tab Single Item -->
+                            <div id="annual" class="tab-pane fade">
+                                <div class="col-md-12">
+                                    <div class="pricing-items">
+                                        <div class="col-lg-4 col-md-4 single-item">
+                                            <div class="pricing-item">
+                                                <ul>
+                                                    <li class="pricing-header">
+                                                        <h4>Free</h4>
+                                                        <h2><sup>$</sup>0.00</h2>
+                                                        <span>1 user</span>
+                                                    </li>
+                                                    <li><i class="fas fa-times"></i> Update</li>
+                                                    <li><i class="fas fa-check"></i> Personal use</li>
+                                                    <li><i class="fas fa-times"></i> Support</li>
+                                                    <li><i class="fas fa-times"></i> 2 database</li>
+                                                    <li><i class="fas fa-check"></i> Documetation</li>
+                                                    <li class="footer">
+                                                        <a class="btn circle btn-theme border btn-sm" href="#">Buy This Plan</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 single-item">
+                                            <div class="pricing-item active">
+                                                <ul>
+                                                    <li class="pricing-header">
+                                                        <h4>Regular</h4>
+                                                        <h2><sup>$</sup>38.12</h2>
+                                                        <span>5 user</span>
+                                                    </li>
+                                                    <li><i class="fas fa-check"></i> Update</li>
+                                                    <li><i class="fas fa-check"></i> Official use</li>
+                                                    <li><i class="fas fa-check"></i> Support</li>
+                                                    <li><i class="fas fa-times"></i> 5 database</li>
+                                                    <li><i class="fas fa-check"></i> Documetation</li>
+                                                    <li class="footer">
+                                                        <a class="btn circle btn-theme effect btn-sm" href="#">Buy This Plan</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 single-item">
+                                            <div class="pricing-item">
+                                                <ul>
+                                                    <li class="pricing-header">
+                                                        <h4>Extended</h4>
+                                                        <h2><sup>$</sup>69.18</h2>
+                                                        <span>Unlimited user</span>
+                                                    </li>
+                                                    <li><i class="fas fa-times"></i> File compressed</li>
+                                                    <li><i class="fas fa-check"></i> Commercial use</li>
+                                                    <li><i class="fas fa-check"></i> Support</li>
+                                                    <li><i class="fas fa-check"></i> 8 database</li>
+                                                    <li><i class="fas fa-check"></i> Documetation</li>
+                                                    <li class="footer">
+                                                        <a class="btn circle btn-theme border btn-sm" href="#">Buy This Plan</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Tab Single Item -->
+
+                        </div>
+                        <!-- End Tab Content -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> {% endcomment %}
+    <!-- End Pricing Area -->
+
+    <!-- Start Team Area
+    ============================================= -->
+    {% comment %} <div id="team" class="team-area default-padding bottom-less">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-lg-offset-2 col-md-offset-2">
+                    <div class="site-heading text-center">
+                        <h2>Innovative Team</h2>
+                        <p>
+                            Learning day desirous informed expenses material returned six the. She enabled invited exposed him another. Reasonably conviction solicitude me mr at discretion reasonable. Age out full gate bed day lose. 
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="team-items text-center">
+                    <!-- Single Item -->
+                    <div class="col-md-4 single-item">
+                        <div class="item">
+                            <div class="thumb">
+                                <img src="static/assets/LandImg/800x800.png" alt="Thumb">
+                                <ul>
+                                    <li class="facebook">
+                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                    </li>
+                                    <li class="twitter">
+                                        <a href="#"><i class="fab fa-twitter"></i></a>
+                                    </li>
+                                    <li class="instagram">
+                                        <a href="#"><i class="fab fa-instagram"></i></a>
+                                    </li>
+                                    <li class="linkedin">
+                                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="info">
+                                <h4>Ahmed Kamal</h4>
+                                <span>Co-Founder</span>
+                                <h5><i class="fas fa-envelope"></i> kamal@admin.com</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Item -->
+                    <!-- Single Item -->
+                    <div class="col-md-4 single-item">
+                        <div class="item">
+                            <div class="thumb">
+                                <img src="static/assets/LandImg/800x800.png" alt="Thumb">
+                                <ul>
+                                    <li class="facebook">
+                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                    </li>
+                                    <li class="twitter">
+                                        <a href="#"><i class="fab fa-twitter"></i></a>
+                                    </li>
+                                    <li class="instagram">
+                                        <a href="#"><i class="fab fa-instagram"></i></a>
+                                    </li>
+                                    <li class="linkedin">
+                                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="info">
+                                <h4>Munia Ankor</h4>
+                                <span>Project Manager</span>
+                                <h5><i class="fas fa-envelope"></i> munia@admin.com</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Item -->
+                    <!-- Single Item -->
+                    <div class="col-md-4 single-item">
+                        <div class="item">
+                            <div class="thumb">
+                                <img src="static/assets/LandImg/800x800.png" alt="Thumb">
+                                <ul>
+                                    <li class="facebook">
+                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                    </li>
+                                    <li class="twitter">
+                                        <a href="#"><i class="fab fa-twitter"></i></a>
+                                    </li>
+                                    <li class="instagram">
+                                        <a href="#"><i class="fab fa-instagram"></i></a>
+                                    </li>
+                                    <li class="linkedin">
+                                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="info">
+                                <h4>Ahel Natasha</h4>
+                                <span>Developer</span>
+                                <h5><i class="fas fa-envelope"></i> natasha@admin.com</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Item -->
+                </div>
+            </div>
+        </div>
+    </div> {% endcomment %}
+    <!-- End Team Area -->
+
+    <!-- Start Testimonials Area
+    ============================================= -->
+
+    <!-- End Testimonials Area -->
+
+    <!-- Start Blog Area
+    ============================================= -->
+    {% comment %} <div id="blog" class="blog-area default-padding bottom-less">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-lg-offset-2 col-md-offset-2">
+                    <div class="site-heading text-center">
+                        <h2>Recent News</h2>
+                        <p>
+                            Learning day desirous informed expenses material returned six the. She enabled invited exposed him another. Reasonably conviction solicitude me mr at discretion reasonable. Age out full gate bed day lose. 
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="blog-items">
+                    <!-- Single Item -->
+                    <div class="col-md-4 single-item">
+                        <div class="item">
+                            <div class="thumb">
+                                <a href="#"><img src="static/assets/LandImg/800x600.png" alt="Thumb"></a>
+                            </div>
+                            <div class="info">
+                                <div class="content">
+                                    <div class="date">
+                                        15 Aug, 2019
+                                    </div>
+                                    <h4>
+                                        <a href="#">Direct wicket little of talked lasted formed</a>
+                                    </h4>
+                                    <p>
+                                        Pronounce we attention admitting on assurance of suspicion conveying. That his west quit had met till. 
+                                    </p>
+                                    <a href="#">Read More <i class="fas fa-angle-right"></i></a>
+                                </div>
+                                <div class="meta">
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                <img src="static/assets/LandImg/100x100.png" alt="Author">
+                                                <span>Author</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fas fa-comments"></i>
+                                                <span>05</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fas fa-share-alt"></i>
+                                                <span>37</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single Item -->
+                    <!-- Single Item -->
+                    <div class="col-md-4 single-item">
+                        <div class="item">
+                            <div class="thumb">
+                                <a href="#"><img src="static/assets/LandImg/800x600.png" alt="Thumb"></a>
+                            </div>
+                            <div class="info">
+                                <div class="content">
+                                    <div class="date">
+                                        27 Nov, 2019
+                                    </div>
+                                    <h4>
+                                        <a href="#">Supported neglected met therefore unwilling</a>
+                                    </h4>
+                                    <p>
+                                        Pronounce we attention admitting on assurance of suspicion conveying. That his west quit had met till. 
+                                    </p>
+                                    <a href="#">Read More <i class="fas fa-angle-right"></i></a>
+                                </div>
+                                <div class="meta">
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                <img src="static/assets/LandImg/100x100.png" alt="Author">
+                                                <span>Author</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fas fa-comments"></i>
+                                                <span>17</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fas fa-share-alt"></i>
+                                                <span>22</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single Item -->
+                    <!-- Single Item -->
+                    <div class="col-md-4 single-item">
+                        <div class="item">
+                            <div class="thumb">
+                                <a href="#"><img src="static/assets/LandImg/800x600.png" alt="Thumb"></a>
+                            </div>
+                            <div class="info">
+                                <div class="content">
+                                    <div class="date">
+                                        18 Sep, 2019
+                                    </div>
+                                    <h4>
+                                        <a href="#">Concerns greatest margaret absolute entrance</a>
+                                    </h4>
+                                    <p>
+                                        Pronounce we attention admitting on assurance of suspicion conveying. That his west quit had met till. 
+                                    </p>
+                                    <a href="#">Read More <i class="fas fa-angle-right"></i></a>
+                                </div>
+                                <div class="meta">
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                <img src="static/assets/LandImg/100x100.png" alt="Author">
+                                                <span>Author</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fas fa-comments"></i>
+                                                <span>25</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fas fa-share-alt"></i>
+                                                <span>50</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single Item -->
+                </div>
+            </div>
+        </div>
+    </div> {% endcomment %}
+    <!-- End Blog Area -->
+
+    <!-- Start Contact
+    ============================================= -->
+    {% comment %} <div id="contact" class="contact-area bg-gray default-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-lg-offset-2 col-md-offset-2">
+                    <div class="site-heading text-center">
+                        <h2>Contact Us</h2>
+                        <p>
+                            Learning day desirous informed expenses material returned six the. She enabled invited exposed him another. Reasonably conviction solicitude me mr at discretion reasonable. Age out full gate bed day lose. 
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="contact-items">
+
+                    <!-- End Thumb -->
+                    <div class="col-md-4 thumb">
+                        <img src="static/assets/LandImg/illustrations/5.png" alt="Thumb">
+                    </div>
+                    <!-- End Thumb -->
+                    
+                    <!-- Contact Form -->
+                    <div class="col-md-7 col-md-offset-1 contact-form">
+                        <form action="assets/mail/contact.php" method="POST" class="contact-form">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <input class="form-control" id="name" name="name" placeholder="Name" type="text">
+                                        <span class="alert-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input class="form-control" id="email" name="email" placeholder="Email*" type="email">
+                                        <span class="alert-error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input class="form-control" id="phone" name="phone" placeholder="Phone" type="text">
+                                        <span class="alert-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="form-group comments">
+                                        <textarea class="form-control" id="comments" name="comments" placeholder="Tell Us About Project *"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <button type="submit" name="submit" id="submit">
+                                        Send Message <i class="fa fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Alert Message -->
+                            <div class="col-md-12 alert-notification">
+                                <div id="message" class="alert-msg"></div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- End Contact Form -->
+                </div>
+
+                <!-- Google Maps -->
+                <div class="maps-area col-md-12">
+                    <div class="google-maps">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d14767.262289338461!2d70.79414485000001!3d22.284975!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1424308883981"></iframe>
+                    </div>
+                </div>
+                <!-- End Google Maps -->
+
+            </div>
+        </div>
+    </div> {% endcomment %}
+    <!-- End Contact -->
+
+    <!-- Start Footer 
+    ============================================= -->
+    <footer class="default-padding-top bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="f-items">
+    
+                    <div class="col-md-4 col-sm-6 equal-height item">
+                        <div class="f-item">
+                            <img src="static/assets/LandImg/logo.png" alt="Logo">
+                            <p>
+                                One Stop Solution for your next Bureaucratic work.
+                                                        </p>
+                            <p>
+                                {% comment %} <i>Please write your email and get our amazing updates, news and support</i> {% endcomment %}
+                            </p>
+                            <div class="newsletter">
+                                {% comment %} <form action="#">
+                                    <div class="input-group stylish-input-group">
+                                        <input type="email" name="email" class="form-control" placeholder="Enter your e-mail here">
+                                        <button type="submit">
+                                            <i class="fa fa-paper-plane"></i>
+                                        </button>   {% endcomment %}
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-6 equal-height item">
+                        <div class="f-item link">
+                            <h4>Quick LInk</h4>
+                            <ul>
+                                <li>
+                                    <a href="#">Home</a>
+                                </li>
+                                <li>
+                                    <a href="/allguides">Document Guides</a>
+                                </li>
+                                <li>
+                                    <a href="/map">Geolocator</a>
+                                </li>
+                                <li>
+                                    <a href="/government_profiles">Government Profiles </a>
+                                </li>
+            
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-6 equal-height item">
+                        <div class="f-item link">
+                            {% comment %} <h4>Community</h4>
+                            <ul>
+                                <li>
+                                    <a href="#">Career</a>
+                                </li>
+                                <li>
+                                    <a href="#">Leadership</a>
+                                </li>
+                                <li>
+                                    <a href="#">Strategy</a>
+                                </li>
+                                <li>
+                                    <a href="#">Services</a>
+                                </li>
+                                <li>
+                                    <a href="#">History</a>
+                                </li>
+                                <li>
+                                    <a href="#">Jobs</a>
+                                </li>
+                            </ul> {% endcomment %}
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 equal-height item">
+                        <div class="f-item twitter-widget">
+                            <h4>User Support</h4>
+                            <p>
+Have a Query or Need support? Contact us.                            </p>
+                            <div class="address">
+                                <ul>
+                                    <li>
+                                        <div class="icon">
+                                            <i class="fas fa-home"></i> 
+                                        </div>
+                                        <div class="info">
+                                            <h5>Website:</h5>
+                                            <span>www.sajilotantra.com</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="icon">
+                                            <i class="fas fa-envelope"></i> 
+                                        </div>
+                                        <div class="info">
+                                            <h5>Email:</h5>
+                                            <span>support@sajilotantra.com</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="icon">
+                                            <i class="fas fa-phone"></i> 
+                                        </div>
+                                        <div class="info">
+                                            <h5>Phone:</h5>
+                                            <span>+977 9869118472</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Start Footer Bottom -->
+        <div class="footer-bottom bg-theme-small default-padding-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 text-center"> <!-- Add 'text-center' class to center the content -->
+                        <div class="col-lg-6 col-md-6 col-sm-7">
+                            <p>&copy; 2024 Sajilotantra</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- End Footer Bottom -->
+    </footer>
+    <!-- End Footer -->
+
+    <!-- jQuery Frameworks
+    ============================================= -->
+    <script src="static/js/jquery-1.12.4.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/equal-height.min.js"></script>
+    <script src="static/js/jquery.appear.js"></script>
+    <script src="static/js/jquery.easing.min.js"></script>
+    <script src="static/js/jquery.magnific-popup.min.js"></script>
+    <script src="static/js/modernizr.custom.13711.js"></script>
+    <script src="static/js/owl.carousel.min.js"></script>
+    <script src="static/js/count-to.js"></script>
+    <script src="static/js/wow.min.js"></script>
+    <script src="static/js/jquery.backgroundMove.js"></script>
+    <script src="static/js/typed.js"></script>
+    <script src="static/js/bootsnav.js"></script>
+    <script src="static/js/main.js"></script>
+
+</body>
+</html>

@@ -148,7 +148,6 @@ footer {
     position: relative;
     flex: 0 0 auto;
   }
-  
   .header .img-wrapper {
     display: inline-flex;
     align-items: flex-start;
@@ -159,13 +158,11 @@ footer {
     background-color: var(--secondary-colorsecondary-6);
     border-radius: 7px;
   }
-  
   .header .profile-image {
     position: relative;
     width: 41.92px;
     height: 41.05px;
   }
-  
   .header .rectangle {
     position: absolute;
     width: 40px;
