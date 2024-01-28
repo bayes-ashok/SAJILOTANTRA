@@ -153,6 +153,7 @@ def all_events(request):
             'description': event.description,
             'start': event.start.isoformat(),  # Use isoformat() here
             'end': event.end.isoformat(),      # Use isoformat() here
+            'Location':event.Location,
         })
     return JsonResponse(out, safe=False)
 # def map(request):
