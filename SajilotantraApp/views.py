@@ -708,4 +708,4 @@ from django.shortcuts import redirect
 
 def logout_view(request):
     logout(request)
-    return redirect('signin')  # Redirect to your desired page after logout
+    return redirect('index')  # Redirect to your desired page after logout
