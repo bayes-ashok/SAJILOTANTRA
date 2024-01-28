@@ -148,8 +148,7 @@ class ReportedPost(models.Model):
     reason = models.TextField()
     
     def __str__(self):
-        return f"Report for Post ID: {self.post_id}"
-    
+        return f"Report for Post ID: {self.post_id}"    
 # models.py
 
 # from django.db import models
