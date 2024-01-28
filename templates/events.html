@@ -37,16 +37,12 @@
     </div>
 
     <div class="w-full md:w-2/5 p-4">
-        <div class="rounded-lg shadow-xl w-11/12 mx-auto bg-white pt-10 pb-2 px-6" style="margin-top: 100px; margin-bottom: 70px;">
+        <div class="rounded-lg shadow-xl w-11/12 mx-auto bg-white py-6 px-6" style="margin-top: 75px; margin-bottom: 70px;">
             <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="eventModalLabel">Event Details</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="eventModalBody"></div>
+                    <div class="modal-body" id="eventModalBody">Click on the event to view details</div>
                 </div>
             </div>
         </div> 
@@ -104,10 +100,12 @@
             var modalBody = $('#eventModalBody');
             modalBody.empty();
 
-            modalBody.append('<p><strong>Title:</strong> ' + event.title + '</p>');
-            modalBody.append('<p><strong>Start:</strong> ' + moment(event.start).format('MMMM DD, YYYY HH:mm:ss') + '</p>');
-            modalBody.append('<p><strong>Description:</strong> ' + event.description + '</p>');
-            modalBody.append('<p><strong>End:</strong> ' + moment(event.end).format('MMMM DD, YYYY HH:mm:ss') + '</p>');
+            modalBody.append('<p style="text-align: center;margin-bottom: 12px;"><strong>' + event.title + '</strong> </p>');
+
+            modalBody.append('<p style="margin-bottom: 8px;"><strong>Start Date:</strong> ' + moment(event.start).format('MMMM DD, YYYY') + '</p>');
+            modalBody.append('<p style="margin-bottom: 8px;"><strong>Description:</strong> ' + event.description + '</p>');
+            modalBody.append('<p style="margin-bottom: 8px;"><strong>Location:</strong> ' + event.Location + '</p>');
+            modalBody.append('<p style="margin-bottom: 8px;"><strong>End Date:</strong> ' + moment(event.end).format('MMMM DD, YYYY') + '</p>');
 
             // Manually trigger modal opening
             $('#eventModal').modal('show');
