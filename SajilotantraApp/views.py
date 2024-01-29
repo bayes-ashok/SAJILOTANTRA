@@ -266,7 +266,6 @@ def profile(request, username):
 
     try:
         auth_user = request.user
-        auth_user = request.user
         # Retrieve the user based on the provided username
         user = User.objects.get(username=username)
         profile = UserProfile.objects.get(user=user)
@@ -279,6 +278,7 @@ def profile(request, username):
             comments=PostComment.objects.filter(post=post)
             posts_comments[post.id]=comments
             posts.decoded_caption = post.decode_caption()
+            post_category=post.category
             print(f"(dashboard) Decoded Caption: {posts.decoded_caption}")
 
         if auth_user != user:
@@ -332,6 +332,7 @@ def profile(request, username):
             'posts':posts,
             'posts.decoded_caption':posts.decoded_caption,
             'posts_comments':posts_comments,
+            'post_category':post_category,
         }
 
     except:
@@ -354,6 +355,7 @@ def view_profile(request, username):
         for post in posts:
             comments=PostComment.objects.filter(post=post)
             posts_comments[post.id]=comments
+            post_category=post.category
             posts.decoded_caption = post.decode_caption()
             print(f"(dashboard) Decoded Caption: {posts.decoded_caption}")
     except Http404:
@@ -366,6 +368,7 @@ def view_profile(request, username):
         'posts.decoded_caption':posts.decoded_caption,
         'posts_comments':posts_comments,
         'posts':posts,
+        'post_category':post_category,
         'posts_comments':posts_comments,
     }
     return render(request, 'frontprofile.html', context)
