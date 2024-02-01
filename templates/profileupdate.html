@@ -429,7 +429,7 @@ xhr.send(payload);
 
 		</div>
 		<div class="whitespace-pre-wrap mt-7">{{posts.decoded_caption}}</div>
-		<p class="font-bold text-blue-800">#{{posts.category}}</p>
+		<p class="font-bold text-blue-800">#{{post_category}}</p>
 		<div class="mt-2 flex gap-2	 justify-center border-b pb-4 flex-wrap	">
 			{% if post.image %}
 			{% if post.file_extension == 'mp4' or post.file_extension == 'mov' or post.file_extension == 'avi' %}
@@ -600,7 +600,7 @@ xhr.send(payload);
 			{% csrf_token %}
 			<label for="chat" class="sr-only">Add a Comment</label>
 			<div class="flex items-center px-3 py-2 rounded-lg bg-gray-50">
-				<img src="{{user_profile.image.url}}"  class="bg-yellow-500 rounded-full w-10 h-10 object-cover border">
+				<img src="{{profile.image.url}}"  class="bg-yellow-500 rounded-full w-10 h-10 object-cover border">
 				<textarea name="commentInput" id="commentInput" rows="1" class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Add a Comment..."></textarea>
 					<button type="submit" class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100">
 					<svg class="w-5 h-5 rotate-90 rtl:-rotate-90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
