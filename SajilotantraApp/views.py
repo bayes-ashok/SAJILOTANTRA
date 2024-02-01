@@ -205,7 +205,10 @@ def dashboard(request):
 
 def card(request):
     details=Guidance.objects.all().order_by('-pk')
+    auth_user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
     context={
+        'user_profile':user_profile,
         'details':details
     }
     return render(request, 'guidelines_details.html',context)

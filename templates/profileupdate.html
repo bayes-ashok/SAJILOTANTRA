@@ -10,7 +10,36 @@
 <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
 
 {% endblock heading %}
-
+{% block nav %}
+<li>
+  <a class="" href="/dashboard">
+      <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+          <i class="fa-solid fa-house"></i>
+      </div>
+  </a>
+</li>
+<li>
+  <a class="" href="/events">
+      <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+          <i class="fa-regular fa-calendar-days"></i>
+      </div>
+  </a>
+</li>
+<li>
+  <a class="" href="/government_profiles">
+      <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+          <i class="fa fa-building-o"></i>
+      </div>
+  </a>                   
+</li>
+<li>
+  <a class="" href="/map/">
+      <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+          <i class="fa-solid fa-map-location-dot"></i>                            
+      </div>
+  </a>                   
+</li>
+{% endblock nav %}
 {% block content %}
   <style>
     #alert-1 {

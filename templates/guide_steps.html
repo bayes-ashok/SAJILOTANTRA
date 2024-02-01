@@ -23,33 +23,34 @@
             </div>
             <div class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
             <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
-            <li>
-            <a class="" href="/dashboard#">
-                            <div class="text-xl bg-red-800 text-white w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800">
-                                <i class="fa-solid fa-house"></i>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="" href="#">
-                            <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
-                                <i class="fa-regular fa-calendar-days"></i>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="" href="#">
-                            <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
-                                <i class="fa-solid fa-people-group"></i>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="" href="#">
-                            <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
-                                <i class="fa-solid fa-map-location-dot"></i>                            </div>
-                        </a>
-                    </li>
+                <li>
+                  <a class="" href="/dashboard">
+                      <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+                          <i class="fa-solid fa-house"></i>
+                      </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="" href="/events">
+                      <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+                          <i class="fa-regular fa-calendar-days"></i>
+                      </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="" href="/government_profiles">
+                      <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+                          <i class="fa fa-building-o"></i>
+                      </div>
+                  </a>                   
+                </li>
+                <li>
+                  <a class="" href="/map/">
+                      <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+                          <i class="fa-solid fa-map-location-dot"></i>                            
+                      </div>
+                  </a>                   
+                </li>
                     <li>
                         <form class="flex items-center">
                             <label for="simple-search" class="sr-only">Search</label>
@@ -79,8 +80,8 @@
                  <!-- Dropdown menu -->
                 {% comment %} Profile Secion {% endcomment %}
                 <div id="profileContainer" class="flex items-center gap-3 cursor-pointer mx-2 rounded-full focus:ring-2 hover:ring-2 hover:ring-gray-600 focus:ring-gray-800 ">
-                    <img class="w-10 h-10 rounded-full" src="https://placekitten.com/40/40" alt="Profile Picture">
-                </div>
+					<img class="w-10 h-10 rounded-full" src="{{ user_profile.image.url }}" alt="{{auth_user.username}}'s Profile Picture">
+				</div>
                 <div id="profileDropdown"
                     class="hidden origin-top-right absolute right-2 top-14 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                     <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="profileContainer">
