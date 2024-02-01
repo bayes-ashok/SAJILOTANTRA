@@ -429,16 +429,15 @@
 							{% comment %} likes {% endcomment %}
 							{% csrf_token %}
 							
-							<div class="flex items-center gap-3">
+							<div class="flex items-center px-5 py-2  gap-3">
 
-								<button class="like-button {% if post.id in liked_posts %}liked{% else %}not-liked{% endif %}" data-post-id="{{ post.id }}">
-									<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" viewBox="0 0 20 20" fill="currentColor">
-										<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-									</svg>
+								<button class="like-button text-xl text-gray-500 {% if post.id in liked_posts %}liked{% else %}not-liked{% endif %}" data-post-id="{{ post.id }}">
+									<i class="fa-solid fa-heart"></i>
 								</button>
 								{% if post.id in liked_posts %}
 									{% comment %} {{ post.id }} {# Print the value for debugging #} {% endcomment %}
-								{% endif %}                    
+									liked
+								{% endif %}
 								<div class="text-sm" id="like-count-{{ post.id }}">{{ post.like_count }}</div>
 							</div>
 
@@ -448,7 +447,7 @@
 							  
 							{% comment %} comment {% endcomment %}
 							{% comment %} comment {% endcomment %}
-							<div class="flex items-center	gap-3">
+							<div class="flex items-center	gap-3 ">
 								<svg width="20px" height="19px" viewBox="0 0 20 19" version="1.1" xmlns="http://www.w3.org/2000/svg"
 									xmlns:xlink="http://www.w3.org/1999/xlink">
 									<g id="?-Social-Media" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -475,10 +474,10 @@
 										</g>
 									</g>
 								</svg>
-								<div class="text-sm	">10 Comments</div>
+								<div class="text-sm	">{{post.comment_count}} Comment(s)</div>
 							</div>
 							
-							<div class="flex items-center	gap-3">
+							{% comment %} <div class="flex items-center	gap-3">
 								<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg"
 									xmlns:xlink="http://www.w3.org/1999/xlink">
 									<g id="?-Social-Media" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -507,8 +506,8 @@
 									</g>
 								</svg>
 								<div class="text-sm">Share</div>
-							</div>
-							<div class="flex items-center	gap-3">
+							</div> {% endcomment %}
+							{% comment %} <div class="flex items-center	gap-3">
 								<svg width="17px" height="22px" viewBox="0 0 17 22" version="1.1" xmlns="http://www.w3.org/2000/svg"
 									xmlns:xlink="http://www.w3.org/1999/xlink">
 									<g id="?-Social-Media" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -536,7 +535,7 @@
 									</g>
 								</svg>
 								<div class="text-sm">Saved</div>
-							</div>
+							</div> {% endcomment %}
 						</div>
 						{% comment %} <div class="flex items-center justify-between mt-4">
 							<img src="{{user_profile.image.url}}"  class="bg-yellow-500 rounded-full w-10 h-10 object-cover border">
