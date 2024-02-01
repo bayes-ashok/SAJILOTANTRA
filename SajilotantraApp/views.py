@@ -29,11 +29,18 @@ from .utils import *
 
 
 def index(request):
-    return render(request, 'index.html')
+    auth_user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
+    
 
-def government_profiles_details(request, profile_id):
-    profile = get_object_or_404(GovernmentProfile, profile_id=profile_id)
-    return render(request, 'government.html', {'profile': profile})
+    
+    context = {
+        'user_profile':user_profile
+    }
+
+    return render(request, 'index.html', context)
+
+
 
 
 def e(request):
@@ -138,8 +145,11 @@ def activate(request,uidb64,token):#activate user account if the confirmation li
  
 def events(request):
     all_events = Event.objects.all()
+    auth_user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
     context = {
         "events":all_events,
+        'user_profile':user_profile
     }
     return render(request,'events.html',context)
 
@@ -205,15 +215,22 @@ def guide_blog(request,pk):
     # guidance = get_object_or_404(Guidance, id=pk, category=category)
     # print(f"Guidance object retrieved: {guidance}")
     # return render(request, 'guide_steps.html', {'guidance': guidance})
-   guideBlog=Guidance.objects.get(id=pk)
-   blog={
-    'guideBlog':guideBlog
-   }
-   return render(request,'guide_steps.html',blog)
+    guideBlog=Guidance.objects.get(id=pk)
+    auth_user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
+    blog={
+        'guideBlog':guideBlog,
+        'user_profile':user_profile
+    }
+    return render(request,'guide_steps.html',blog)
 
 def government_profiles(request):
     profiles=GovernmentProfile.objects.all().order_by('-pk')
+    auth_user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
+
     data={
+        'user_profile':user_profile,
         'profiles':profiles
     }
     return render(request, 'government_profiles.html', data)
@@ -224,7 +241,10 @@ def landing(request):
 
 def map(request):
     profiles=GovernmentProfile.objects.all().order_by("-pk")
+    auth_user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
     data={
+        'user_profile':user_profile,
         'profiles':profiles
     }
     return render(request,'map.html',data)
@@ -232,29 +252,34 @@ def map(request):
 
 def government_profiles_details(request,pk):
     profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
-    return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
+    auth_user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
+    return render(request,'government.html',{'GovernmentProfile':profiles, 'user_profile':user_profile})
 
 from django.http import Http404
 
 
 def government_profiles(request):
     profiles=GovernmentProfile.objects.all().order_by('-pk')
+    auth_user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=auth_user)    
     data={
+        'user_profile':user_profile,
         'profiles':profiles
     }
     return render(request, 'government_profiles.html', data)
 
 def map(request):
     profiles=GovernmentProfile.objects.all().order_by("-pk")
+    auth_user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=auth_user)    
     data={
+        'user_profile':user_profile,
         'profiles':profiles
     }
     return render(request,'map.html',data)
 
 
-def government_profiles_details(request,pk):
-    profiles = get_object_or_404(GovernmentProfile, profile_id=pk)
-    return render(request,'government_profiles_details.html',{'GovernmentProfile':profiles})
 
 from django.http import Http404
 
@@ -272,6 +297,8 @@ def profile(request, username):
         posts= Post.objects.filter(user=profile).order_by("-pk")
         profile = UserProfile.objects.get(user=user)
         posts= Post.objects.filter(user=profile).order_by("-pk")
+        auth_user = request.user
+        user_profile, created = UserProfile.objects.get_or_create(user=auth_user)    
         # fetiching comments for each post
         posts_comments={}
         for post in posts:
@@ -333,6 +360,7 @@ def profile(request, username):
             'posts.decoded_caption':posts.decoded_caption,
             'posts_comments':posts_comments,
             'post_category':post_category,
+            'user_profile':user_profile
         }
 
     except:
@@ -344,6 +372,8 @@ def profile(request, username):
 @login_required(login_url='signin')
 def view_profile(request, username):
     auth_user=request.user
+    auth_user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=auth_user)   
     try:
         auth_user=request.user
         auth_profile = get_object_or_404(UserProfile, user=auth_user)
@@ -370,9 +400,15 @@ def view_profile(request, username):
         'posts':posts,
         'post_category':post_category,
         'posts_comments':posts_comments,
+        'user_profile':user_profile
     }
     return render(request, 'frontprofile.html', context)
 def feedback(request):
+    auth_user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=auth_user)    
+    data={
+        'user_profile':user_profile,
+    }
     if request.method == 'POST':
         category = request.POST.get('category')
         suggestion = request.POST.get('Suggestion')
@@ -389,7 +425,7 @@ def feedback(request):
         # Redirect or render a thank you page
         return HttpResponseRedirect('feedback')  # Replace '/thank-you/' with your desired URL
 
-    return render(request, 'feedback.html') 
+    return render(request, 'feedback.html',data) 
 
 
 

@@ -3,10 +3,38 @@
 {% block heading %}
 
 {% endblock heading %}
+{% block nav %}
+<li>
+  <a class="/dashboard" href="#">
+      <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+          <i class="fa-solid fa-house"></i>
+      </div>
+  </a>
+</li>
+<li>
+  <a class="" href="/events">
+      <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+          <i class="fa-regular fa-calendar-days"></i>
+      </div>
+  </a>
+</li>
+<li>
+  <a class="" href="/government_profiles">
+      <div class="text-xl bg-red-800 text-white w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800">
+          <i class="fa fa-building-o"></i>
+      </div>
+  </a>                   
+</li>
+<li>
+  <a class="" href="/map/">
+      <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+          <i class="fa-solid fa-map-location-dot"></i>                            </div>
+  </a>                   
+</li>
+{% endblock nav %}
 {% block content %}
 {% comment %} Cards {% endcomment %}
 <section id="blog" class="blog min-h-screen mt-12 items-center justify-center" style="padding-top: 30px;">
-  <h1 class="text-4xl font-bold ml-10">Government Profiles</h1>
   <div class="container" data-aos="fade-up">
         <div class="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-10 items-center justify-center lg:p-10 ml-2 md:ml-20">
           
@@ -14,14 +42,11 @@
           <div class="max-w-sm bg-white hover:shadow-indigo-500/60 border border-gray-200 rounded-lg shadow">
             <a href="/government_profile/{{p.profile_id}}">
               <img class="rounded-t-lg w-full h-40 object-cover" src="{{ p.thumbnail.url }}" alt="" />
-            </a>
             <div class="p-5">
               <a href="/government_profile/{{p.profile_id}}">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{p.name}}</h5>
-              </a>
               <p class="mb-3 font-normal text-gray-700">{{ p.description|truncatewords:10|safe }}</p>
-              <a href="/government_profile/{{p.profile_id}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                View Profile
+              
               </a>
             </div>
           </div>

@@ -36,6 +36,6 @@ path('password_reset/', auth_views.PasswordResetView.as_view(template_name='pass
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='resetcomplete.html'), name='password_reset_complete'),
     path('logout/', views.logout_view, name='logout'),
     path('delete-post/<int:post_id>/', views.delete_post, name='delete_post'),
-    path('newland', views.landing, name='landing'),
+    path('i', views.index, name='landing'),
 
 ]

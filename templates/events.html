@@ -23,7 +23,35 @@
     
 {% endblock style %}
    
-
+{% block nav %}
+<li>
+    <a class="/dashboard" href="#">
+        <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+            <i class="fa-solid fa-house"></i>
+        </div>
+    </a>
+</li>
+<li>
+    <a class="" href="/events">
+        <div class="text-xl bg-red-800 text-white w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800">
+            <i class="fa-regular fa-calendar-days"></i>
+        </div>
+    </a>
+</li>
+<li>
+    <a class="" href="/government_profiles">
+        <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+            <i class="fa fa-building-o"></i>
+        </div>
+    </a>                   
+ </li>
+ <li>
+    <a class="" href="/map/">
+        <div class="text-xl bg-white text-gray-500 w-10 h-10 flex justify-center items-center rounded-lg mx-auto hover:bg-blue-800 hover:text-white">
+            <i class="fa-solid fa-map-location-dot"></i>                            </div>
+    </a>                   
+</li>
+{% endblock nav %}
 {% block events %}
 <div class="flex flex-col md:flex-row">
     <div class="w-full md:w-3/5 p-4">
