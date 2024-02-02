@@ -360,7 +360,7 @@
 							<div class="flex flex-col">
 								<div>
 								<b id="name" class="mb-2 capitalize">{{post.user.user.first_name}} {{post.user.user.last_name}}</b>
-								<p id="username" class="text-gray-700 text-xs">{{post.user.user}}</p>
+								<p id="username" class="text-gray-700 text-xs">@{{post.user.user}}</p>
 								</div>
 								{% load tz %}
 								<p class="text-gray-400 text-xs">{{post.created_at|timezone:"Asia/Kathmandu"}}
