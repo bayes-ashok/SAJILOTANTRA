@@ -58,7 +58,6 @@
             </button>
           </div>
           <div class="modal-body adminlogin-background text-center">
-            <!-- Add adminlogin-background class here -->
             <p>Your password is changed successfully</p>
             <a href="/signin" target="_blank" class="btn btn-primary"
               >Go to signin page</a
@@ -88,7 +87,7 @@
         $("#emailSentModal").modal("show");
 
         $("#emailSentModal").on("hidden.bs.modal", function () {
-          window.location.href = "/signin"; // Redirect to adminlogin.html on modal close
+          window.location.href = "/signin"; 
         });
       });
     </script>
