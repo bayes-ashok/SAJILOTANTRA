@@ -4,29 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	{% comment %} <style>
-
-        /* Default state - grey color */
-        .like-button {
-            color: grey;
-       
-        }
-
-        /* Liked state - red color */
-        .like-button.liked {
-            color: red;
-           
-        }
-    </style> {% endcomment %}
+	
     <script src="https://kit.fontawesome.com/c30dadd52a.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 	<script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"  rel="stylesheet" />
 	<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
-	<!-- Autocomplete-js -->
 	<script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
 
-    <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
@@ -125,7 +110,6 @@
 														// Redirect to the user profile page
 														window.location.href = response.url;
 													} else {
-														// Handle errors if needed
 														console.error('Failed to fetch user profile');
 													}
 												})
@@ -143,7 +127,6 @@
 			</ul>
 		</div>
 		<div class="flex items-center gap-6">
-			{% comment %} <button class="bg-[#043172] text-white px-5 py-2 rounded-full hover:bg-[#10223B]">Sign in</button> {% endcomment %}
 			
 			<button id="notificationButton" type="button" data-dropdown-toggle="notification-dropdown" class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-blue-800 hover:text-white dark:text-gray-400 dark:hover:text-white dark:hover:bg-blue-800 focus:ring-4 focus:ring-blue-800 dark:focus:ring-blue-800">
 				<span class="sr-only">View notifications</span>
@@ -185,10 +168,8 @@
 		{% for notification in notifications %}
 		<a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
 		<div class="flex-shrink-0">
-		{% comment %} <img class="w-11 h-11 rounded-full" src="https://scontent.fbir7-1.fna.fbcdn.net/v/t39.30808-6/401139858_1055566672306633_6984792515935984599_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=HLNDQ-IEXB8AX9-e7Sf&_nc_oc=AQlYEi_rCVJIymDr-PTbvSYhni0LOElcybukqRao40MEZqc-M5BWVnLS8IwQkMkVXJU&_nc_ht=scontent.fbir7-1.fna&oh=00_AfD3QFpClxZFCUALxrqZ8QPBomQf2lALwrfGv-7HQBbznA&oe=657654A9" alt="Nikesh"> {% endcomment %}
 		<i class="fa-solid fa-bell" style="color: #e00b0b;"></i>
 		<div class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-primary-700">
-			{% comment %} <svg class="w-2 h-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18"><path d="M15.977.783A1 1 0 0 0 15 0H3a1 1 0 0 0-.977.783L.2 9h4.239a2.99 2.99 0 0 1 2.742 1.8 1.977 1.977 0 0 0 3.638 0A2.99 2.99 0 0 1 13.561 9H17.8L15.977.783ZM6 2h6a1 1 0 1 1 0 2H6a1 1 0 0 1 0-2Zm7 5H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Z"/><path d="M1 18h16a1 1 0 0 0 1-1v-6h-4.439a.99.99 0 0 0-.908.6 3.978 3.978 0 0 1-7.306 0 .99.99 0 0 0-.908-.6H0v6a1 1 0 0 0 1 1Z"/></svg> {% endcomment %}
 		</div>
 		</div> 
 		<div class="pl-3 w-full">
@@ -324,9 +305,7 @@
 							</div>
 							<main class="container mx-auto max-w-screen-lg h-full">
 								<!-- file upload modal -->
-								{% comment %} <article aria-label="File Upload Modal" class="relative h-full flex flex-col" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);" ondragenter="dragEnterHandler(event);"> {% endcomment %}
 					
-							{% comment %} <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label> {% endcomment %}
 							<input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" name="file_input" type="file" accept="image/*, video/*">
 							<p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
 								<!-- sticky footer -->
@@ -358,7 +337,6 @@
 						<div class="gap-3.5	flex items-center ">
 							
 							<img href="{% url 'profile' request.user.username %}" class="object-cover w-12 h-12 rounded-full" src="{{post.user.image}}" alt="Profile Picture">
-							{% comment %} {% if request.user.is_authenticated %} {% endcomment %}
     
 
 							<div class="flex flex-col">
@@ -398,7 +376,6 @@
 			var xhr = new XMLHttpRequest();
 			xhr.open("POST", "/delete-post/" + postId + "/");
 			
-			// Include CSRF token in the request headers
 			var csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
 			xhr.setRequestHeader("X-CSRFToken", csrfToken);
 			
@@ -446,7 +423,6 @@
 									</svg>
 								</button>
 								{% if post.id in liked_posts %}
-									{% comment %} {{ post.id }} {# Print the value for debugging #} {% endcomment %}
 								{% endif %}                    
 								<div class="text-sm" id="like-count-{{ post.id }}">{{ post.like_count }}</div>
 							</div>
@@ -484,13 +460,7 @@
 								<div class="text-sm	">{{post.comment_count}} Comments</div>
 							</div>
 						</div>
-						{% comment %} <div class="flex items-center justify-between mt-4">
-							<img src="{{user_profile.image.url}}"  class="bg-yellow-500 rounded-full w-10 h-10 object-cover border">
-							<div class="flex items-center	justify-between h-11 w-11/12">
-								<input id="commentInput" type="text" class="flex items-center	justify-between bg-gray-50 h-11 w-full border rounded-2xl	 overflow-hidden px-4 " placeholder="Write your comment..." name="comment">
-							</div>
-						</div> {% endcomment %}
-						{% comment %} <div class="container px-0 mx-auto sm:px-5"> {% endcomment %}
+					
 							{% if post.postcomment_set.all %}
 							<div class="no-scrollbar overflow-y-scroll h-40 " >
 							{% for comment in post.postcomment_set.all %}
@@ -517,14 +487,7 @@
 						{%endif%}
 
 					
-						{% comment %} </div> {% endcomment %}
-						{% comment %} {% if messages %}
-						<ul class="messages">
-							{% for message in messages %}
-								<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-							{% endfor %}
-						</ul>
-					{% endif %} {% endcomment %}
+						
 										
 					<form method="post" action="{% url 'comment_post' post_id=post.id %}">
 						{% csrf_token %}
@@ -726,11 +689,15 @@ function toggleMenu(postId) {
     <script src="static/javascript/dashboard.js"></script>
     <script src="static/javascript/fileUpload.js"></script>
     <script src="static/javascript/likePost.js"></script>
-	{% comment %} <script src="static/javascript/search.js"></script> {% endcomment %}
 
 
 </body>
 
 </html>
+
+
+
+
+
 
 
