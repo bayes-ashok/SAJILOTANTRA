@@ -8,14 +8,24 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.models import User  # default user model
+from django.contrib.auth.models import User  
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage, send_mail
-from django.http import Http404, HttpResponseRedirect, JsonResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import redirect, render
 from django.utils.encoding import force_bytes, force_str
+from django.http import Http404
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.views.decorators.http import require_POST
+
+from .models import Post, PostLike
+
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 from Sajilotantra import settings
@@ -26,6 +36,7 @@ from .models import (Feedback, GovernmentProfile, Guidance, Notification, Post,
                      UserProfile)
 from .tokens import generate_token
 from .utils import *
+
 
 
 def index(request):
@@ -46,42 +57,39 @@ def index(request):
 def e(request):
     return render(request,'event.html')
 def signup(request):
-    if request.method=="POST":
-        username=request.POST.get("username")
-        pass1=request.POST.get("pass1")
-        fname=request.POST.get("fname")
-        lname=request.POST.get("lname")
-        pass2=request.POST.get("pass2")
-        email=request.POST.get("email")
-        print(username,pass1,pass2,fname,lname,email)
+    if request.method == "POST":
+        username = request.POST.get("username")
+        pass1 = request.POST.get("pass1")
+        fname = request.POST.get("fname")
+        lname = request.POST.get("lname")
+        pass2 = request.POST.get("pass2")
+        email = request.POST.get("email")
 
-        #authentication(to check if the username and email are already taken)
-
-        if User.objects.filter(username=username):
-            messages.error(request,"The username you entered is already taken, try another username")
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "The username you entered is already taken, try another username")
             return redirect("signup")
-        
-        if User.objects.filter(email=email):
-            messages.error(request,"The email you entered is already taken, try another email")
-            return redirect("signup")
-        
-        myuser=User.objects.create_user(username,email,pass1)#create user in the database with the details entered
-        myuser.first_name=fname
-        myuser.last_name=lname
-        myuser.is_active=False# before the user confirms their email address, the user's account(created) will not be active.
 
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "The email you entered is already taken, try another email")
+            return redirect("signup")
+
+        myuser = User.objects.create_user(username, email, pass1)
+        myuser.first_name = fname
+        myuser.last_name = lname
+        myuser.is_active = False  
         myuser.save()
+
+        new_user_profile = UserProfile.objects.create(user=myuser)
+        new_user_profile.save()
 
         messages.success(request,"Your account has been successfully Created.  We have sent you a confirmation email, please click on the activation link to activate your account.")
 
-        #Send Welcome Email
         subject="Welcome to Sajilotantra"
         message="Hello "+ str(myuser.first_name)+", \nWelcome to Sajilotantra. We have also sent you a confirmation email, please confirm your email address to activate your account.\n\n Thank You, \n Sajilotantra Team."
         from_email=settings.EMAIL_HOST_USER
         to_list=[myuser.email]
-        send_mail(subject,message,from_email,to_list,fail_silently=True)#even if the email is not sent, it will not crash the website
+        send_mail(subject,message,from_email,to_list,fail_silently=True)
 
-        #Send Confirmation Email with Activation Token
         current_site=get_current_site(request)
         email_subject="Confirm your email @Sajilotantra"
         email_message=render_to_string("email_confirmation.html",{
@@ -100,7 +108,7 @@ def signup(request):
         email.fail_silently=True
         email.send()
 
-        return redirect("signin")#after a successfull signup, redirect the user to sign in page
+        return redirect("signin")
 
     return render(request,"signup.html")
 
@@ -112,12 +120,10 @@ def signin(request):
         user = authenticate(request, username=username, password=pass1)
         print(username, pass1)
 
-        # Check if user exists
         if user is None:
             messages.info(request, "Incorrect login credentials. Try again")
             return redirect('signin')
 
-        # Login successful
         login(request, user)
         return redirect('dashboard')
 
@@ -125,7 +131,7 @@ def signin(request):
     return render(request, 'signin.html', {'form': form})
 
 
-def activate(request,uidb64,token):#activate user account if the confirmation link is clicked
+def activate(request,uidb64,token):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
         myuser = User.objects.get(pk=uid)
@@ -161,13 +167,12 @@ def all_events(request):
             'title': event.name,
             'id': event.id,
             'description': event.description,
-            'start': event.start.isoformat(),  # Use isoformat() here
-            'end': event.end.isoformat(),      # Use isoformat() here
+            'start': event.start.isoformat(),  
+            'end': event.end.isoformat(),      
             'Location':event.Location,
         })
     return JsonResponse(out, safe=False)
-# def map(request):
-#     return render(request, 'map.html')
+
 
 @login_required(login_url='signin')
 def dashboard(request):
@@ -179,13 +184,11 @@ def dashboard(request):
     user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
     
 
-    # fetiching comments for each post
     post_comments={}
     for post in posts:
         comments=PostComment.objects.filter(post=post)
         post_comments[post.id]=comments
-        if post.image:  # Check if the image field is not None
-            # Get the file extension
+        if post.image:  
             file_extension = os.path.splitext(post.image.url)[1][1:].lower()
             post.file_extension = file_extension
             
@@ -193,7 +196,7 @@ def dashboard(request):
         print(f"(dashboard) Decoded Caption: {post.decoded_caption}")
     context = {
         'notifications': notifications,
-        'guidance_items': guidance[:6],  # Fetching the first 6 guidance items
+        'guidance_items': guidance[:6], 
         'events': events[:3],
         'post_comments':post_comments,
         'posts':posts,
@@ -214,10 +217,7 @@ def card(request):
     return render(request, 'guidelines_details.html',context)
 
 def guide_blog(request,pk):
-    # print(f"Guide steps function called with pk={pk} and category={category}")
-    # guidance = get_object_or_404(Guidance, id=pk, category=category)
-    # print(f"Guidance object retrieved: {guidance}")
-    # return render(request, 'guide_steps.html', {'guidance': guidance})
+
     guideBlog=Guidance.objects.get(id=pk)
     auth_user = request.user
     user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
@@ -259,7 +259,6 @@ def government_profiles_details(request,pk):
     user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
     return render(request,'government.html',{'GovernmentProfile':profiles, 'user_profile':user_profile})
 
-from django.http import Http404
 
 
 def government_profiles(request):
@@ -294,7 +293,6 @@ def profile(request, username):
 
     try:
         auth_user = request.user
-        # Retrieve the user based on the provided username
         user = User.objects.get(username=username)
         profile = UserProfile.objects.get(user=user)
         posts= Post.objects.filter(user=profile).order_by("-pk")
@@ -302,7 +300,6 @@ def profile(request, username):
         posts= Post.objects.filter(user=profile).order_by("-pk")
         auth_user = request.user
         user_profile, created = UserProfile.objects.get_or_create(user=auth_user)    
-        # fetiching comments for each post
         posts_comments={}
         for post in posts:
             comments=PostComment.objects.filter(post=post)
@@ -312,16 +309,13 @@ def profile(request, username):
             print(f"(dashboard) Decoded Caption: {posts.decoded_caption}")
 
         if auth_user != user:
-            # If they don't match, redirect to the login page
             return redirect('signin')
 
         if user is None:
             return render(request, "user_does_not_exist.html")
 
-        # Retrieve or create UserProfile based on user_id
         profile, created = UserProfile.objects.get_or_create(user=user)
 
-        # Handle profile update
         if request.method == 'POST':
             new_bio = request.POST.get('bio', '')
             if new_bio != '':
@@ -335,19 +329,15 @@ def profile(request, username):
             if new_l_name != '':
                 user.first_name = new_l_name
 
-            # Update profile picture
             if 'picture' in request.FILES:
                 profile.image = request.FILES['picture']
 
-            # Update cover photo
             if 'cover' in request.FILES:
                 profile.cover = request.FILES['cover']
 
-            #drag and drop profile
             if 'drop-area-profile' in request.FILES:
                 profile.image= request.FILES['drop-area-profile']
 
-            #drag and drop cover
             if 'drop-area-cover' in request.FILES:
                 profile.cover= request.FILES['drop-area-cover']
             user.save()
@@ -375,7 +365,6 @@ def profile(request, username):
 @login_required(login_url='signin')
 def view_profile(request, username):
     auth_user=request.user
-    auth_user = request.user
     user_profile, created = UserProfile.objects.get_or_create(user=auth_user)   
     try:
         auth_user=request.user
@@ -383,7 +372,6 @@ def view_profile(request, username):
         user = get_object_or_404(User, username=username)
         profile = get_object_or_404(UserProfile, user=user)
         posts = Post.objects.filter(user=profile).order_by("-pk")
-        # fetiching comments for each post
         posts_comments={}
         for post in posts:
             comments=PostComment.objects.filter(post=post)
@@ -406,6 +394,8 @@ def view_profile(request, username):
         'user_profile':user_profile
     }
     return render(request, 'frontprofile.html', context)
+
+
 def feedback(request):
     auth_user = request.user
     user_profile, created = UserProfile.objects.get_or_create(user=auth_user)    
@@ -419,14 +409,12 @@ def feedback(request):
         feedback = Feedback(category=category, suggestion=suggestion)
         feedback.save()
 
-        # Handle file uploads
         uploaded_files = request.FILES.getlist('user_avatar')
         for uploaded_file in uploaded_files:
             file_instance = UploadedFile(feedback=feedback, file=uploaded_file)
             file_instance.save()
         messages.success(request, "A new feedback is added go and check through!")
-        # Redirect or render a thank you page
-        return HttpResponseRedirect('feedback')  # Replace '/thank-you/' with your desired URL
+        return HttpResponseRedirect('feedback')  
 
     return render(request, 'feedback.html',data) 
 
@@ -441,9 +429,7 @@ def create_post(request):
         auth_user = request.user
         user_profile, created = UserProfile.objects.get_or_create(user=auth_user)
         try:
-            # Calling the Huffman Coding:
             encoded_caption, encoding_dict = huffman_encode(caption)
-            # encoded_caption, _ = huffman_encode(caption)
             post = Post.objects.create(
                 user=user_profile,
                 encoded_caption=encoded_caption,
@@ -509,15 +495,8 @@ def get_names(request):
             'payload': payload,
         }
     )
-from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm
-from django.http import JsonResponse
-from django.shortcuts import redirect, render
 
 
-# @login_required
 def change_password(request, username):
     auth_user = request.user
     print(auth_user)
@@ -525,14 +504,13 @@ def change_password(request, username):
 
 
     error_message = None
-    password_changed = False  # Assuming this variable is used to display a success message
+    password_changed = False  
     
     if request.method == 'POST':
         form = PasswordChangeForm(user=request.user, data=request.POST)
         if form.is_valid():
             new_password = form.cleaned_data['new_password1']
             
-            # Change the user's password and update the session
             request.user.set_password(new_password)
             request.user.save()
             update_session_auth_hash(request, request.user)
@@ -543,7 +521,7 @@ def change_password(request, username):
             error_message = 'Please correct the errors below.'
             for field, errors in form.errors.items():
                 for error in errors:
-                    messages.error(request, f"{field}: {error}")  # Add form errors to messages
+                    messages.error(request, f"{field}: {error}")  
     else:
         form = PasswordChangeForm(user=request.user)
     
@@ -555,35 +533,10 @@ def report_post(request, post_id):
         report = ReportedPost.objects.create(post_id=post_id, reason=reason)
         print(f"Reported post saved: {report}")
 
-        # Redirect the user to a different page or the same page
         return redirect('dashboard')
     return render(request, 'dashboard.html')
 
 
-@login_required(login_url='/signin')
-def like_post(request, post_id):
-    if request.method == 'POST':
-        post = get_object_or_404(Post, pk=post_id)
-        user_profile = request.user.userprofile
-
-        # Check if the user has already liked the post
-        like, created = PostLike.objects.get_or_create(post=post, user=user_profile)
-
-        if not created:
-            # Unlike the post
-            like.delete()
-            post.like_count = PostLike.objects.filter(post=post).count()
-            post.save()
-            return JsonResponse({'message': 'Post unliked successfully', 'is_liked': False, 'like_count': post.like_count})
-        else:
-            # Like the post
-            post.like_count = PostLike.objects.filter(post=post).count()
-            post.save()
-            
-            return JsonResponse({'-message': 'Post liked successfully', 'is_liked': True, 'like_count': post.like_count})
-    
-    # Handle cases for GET requests or other HTTP methods
-    return JsonResponse({'message': 'Method not allowed'}, status=405)
 
 @login_required(login_url="/signin")
 def add_comment(request, post_id):
@@ -639,13 +592,7 @@ def get_names(request):
             'payload': payload,
         }
     )
-import json
 
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404
-
-from .models import Post, PostLike
 
 
 @login_required(login_url='/signin')
@@ -654,17 +601,13 @@ def like_post(request, post_id):
         post = get_object_or_404(Post, pk=post_id)
         user_profile = request.user.userprofile
 
-        # Check if the user has already liked the post
         like, created = PostLike.objects.get_or_create(post=post, user=user_profile)
 
         if not created:
-            # Unlike the post
             like.delete()
         else:
-            # Like the post
             pass  
 
-        # Update the like count
         post.like_count = PostLike.objects.filter(post=post).count()
         post.save()
 
@@ -679,14 +622,8 @@ def like_post(request, post_id):
     return HttpResponse(json.dumps({'message': 'Invalid request method'}), content_type='application/json')
 
 
-from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm
-from django.shortcuts import redirect, render
 
 
-# @login_required
 def change_password(request, username):
     auth_user = request.user
     print(auth_user)
@@ -700,18 +637,14 @@ def change_password(request, username):
         if form.is_valid():
             new_password = form.cleaned_data['new_password1']
             
-            # Change the user's password and update the session
             request.user.set_password(new_password)
             request.user.save()
             update_session_auth_hash(request, request.user)
             
-            # messages.success(request, 'Password changed successfully.')
             password_changed = True
         else:
             error_message = 'Please correct the errors below.'
-            # Get the first error message, you can customize this part as needed
             first_error = list(form.errors.values())[0][0]
-            # messages.error(request, f"Error: {first_error}")  # Add form errors to messages
     else:
         form = PasswordChangeForm(user=request.user)
     
@@ -723,24 +656,18 @@ def report_post(request, post_id):
         report = ReportedPost.objects.create(post_id=post_id, reason=reason)
         print(f"Reported post saved: {report}")
 
-        # Redirect the user to the same page
         return redirect('dashboard')
     return render(request, 'dashboard.html')
 
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
-from django.views.decorators.http import require_POST
 
 
 @require_POST
 def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
-    # Check if the user making the request is the owner of the post
     if post.user.user != request.user:
         return HttpResponse(status=403)
 
-    # Delete the post
     post.delete_post()
 
     return HttpResponse(status=200)
@@ -750,4 +677,4 @@ from django.shortcuts import redirect
 
 def logout_view(request):
     logout(request)
-    return redirect('index')  # Redirect to your desired page after logout
+    return redirect('index')  
