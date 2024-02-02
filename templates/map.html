@@ -26,7 +26,7 @@
         
     </head>
     <body class="flex flex-col">
-<header class="">
+<header class="hidden">
             <nav class="fixed bg-white shadow flex justify-between items-center w-[100%]  mx-auto">
                 <div>
                 <a href="#">  <img style="width:3rem" src="static/assets/LandImg/logo.png" alt="Logo"></a>
@@ -106,11 +106,29 @@
         </header>
 
 {% comment %} Map {% endcomment %}
-<section id="mapContainer" class="blog bg-blue-950 min-h-screen mt-12 items-center justify-center" style="padding-top: 30px;">
+<section id="mapContainer" class="blog bg-blue-950 mt-12 items-center justify-center" style="padding-top: 30px;">
     <h1 class="text-4xl font-bold text-white ml-10">Locate Government Offices</h1>
-<div id="map" class="bg-blue-50 mt-4 items-center justify-center mx-40 rounded-lg" style="height: 70vh; width:150vh"></div>
+<div id="map" class="bg-blue-50 mt-4 items-center justify-center lg:mx-40 rounded-lg md:rounded-xl"></div>
 </section>
+
+<style>
+    #map {
+        height: 70vh;
+        width: 150vh;
+    }
+
+    @media only screen and (max-width: 700px) {
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+    }
+</style>
+
+
 <script>
+
+
 {% comment %} Getting the User's Live Location Coordinates {% endcomment %}
 function getLocation() {
     if (navigator.geolocation) {
@@ -119,6 +137,7 @@ function getLocation() {
         alert("Geolocation is not supported by this browser.");
     }
 }
+
 
 function showPosition(position) {
     var UserLat = position.coords.latitude;
@@ -176,6 +195,14 @@ var leafletIcon=L.icon({
         marker{{ profile.id }}.bindPopup(popupContent{{ profile.id }}).openPopup();
     {% endfor %}
 
+
+
+     // Refresh the map when the window is resized
+     window.addEventListener('resize', function () {
+        setTimeout(function () {
+            map.invalidateSize();
+        }, 300);
+    });
 </script>
 {% comment %} Map Ends {% endcomment %}
         
