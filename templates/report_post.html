@@ -37,7 +37,6 @@
     </div>
 
     <div class="report-form" id="reportForm">
-      <!-- Add your report form fields and submit button here -->
       <label for="reportReason">Reason for reporting:</label>
       <input type="text" id="reportReason" name="reportReason" />
       <button onclick="submitReport()">Submit Report</button>
@@ -54,35 +53,28 @@
 
     <script>
       function reportPost(postId) {
-        // Create a form element dynamically
         var form = document.createElement("form");
         form.method = "POST";
-        form.action = `/dashboard/report_post/${postId}/`; // Replace with your actual URL
+        form.action = `/dashboard/report_post/${postId}/`; 
 
-        // Create a hidden input field for CSRF token
         var csrfToken = document.createElement("input");
         csrfToken.type = "hidden";
         csrfToken.name = "csrfmiddlewaretoken";
-        csrfToken.value = getCookie("csrftoken"); // Assuming you have a function getCookie to retrieve the CSRF token
+        csrfToken.value = getCookie("csrftoken");
 
-        // Create a hidden input field for post_id
         var input = document.createElement("input");
         input.type = "hidden";
         input.name = "post_id";
         input.value = postId;
 
-        // Append the input fields to the form
         form.appendChild(csrfToken);
         form.appendChild(input);
 
-        // Append the form to the document body
         document.body.appendChild(form);
 
-        // Submit the form
         form.submit();
       }
 
-      // Function to get the CSRF token from cookies
       function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== "") {
@@ -102,3 +94,14 @@
     </script>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
