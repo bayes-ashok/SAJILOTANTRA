@@ -136,7 +136,7 @@
 	<div class="border max-w-screen-md lg:w-full bg-white mt-6 rounded-2xl p-4">
 		<div class="flex items-center	justify-between">
 			<div class="gap-3.5	flex items-center ">
-				<img class="object-cover w-12 h-12 rounded-full" src="{{post.user.image}}" alt="Profile Picture">
+				<img class="object-cover w-12 h-12 rounded-full" src="{{post.user.image.url}}" alt="Profile Picture">
 				{% comment %} {% if request.user.is_authenticated %} {% endcomment %}
 
 
@@ -214,7 +214,7 @@ xhr.send(payload);
 					Your browser does not support the video tag.
 				</video>
 			{% else %}
-				<img src="{{ post.image }}" class="bg-gray-900 rounded-2xl w-1/3 object-cover flex-auto" alt="photo">
+				<img src="{{ post.image.url }}" class="bg-gray-900 rounded-2xl w-1/3 object-cover flex-auto" alt="photo">
 			{% endif %}
 		{% endif %}
 		</div>
@@ -405,4 +405,72 @@ if (!createModal.classList.contains('hidden')) {
 
 </script>
 </div>
+<script>
+	function reportPost(postId) {
+		const reason = prompt('Please provide a reason for reporting this post:');
+  
+		if (reason !== null && reason !== '') {
+			// Create a form element dynamically
+			const form = document.createElement('form');
+			form.method = 'post';
+			form.action = `/report-post/${postId}/`;
+  
+			// Create a CSRF token input field
+			const csrfInput = document.createElement('input');
+			csrfInput.type = 'hidden';
+			csrfInput.name = 'csrfmiddlewaretoken';
+			csrfInput.value = getCookie('csrftoken');
+  
+			// Create a reason input field
+			const reasonInput = document.createElement('input');
+			reasonInput.type = 'hidden';
+			reasonInput.name = 'reason';
+			reasonInput.value = reason;
+  
+			// Append inputs to the form
+			form.appendChild(csrfInput);
+			form.appendChild(reasonInput);
+  
+			// Append the form to the body and submit it
+			document.body.appendChild(form);
+			form.submit();
+		}
+	}
+  
+	// Function to get CSRF token from cookies
+	function getCookie(name) {
+		let cookieValue = null;
+		if (document.cookie && document.cookie !== '') {
+			const cookies = document.cookie.split(';');
+			for (let i = 0; i < cookies.length; i++) {
+				const cookie = cookies[i].trim();
+				// Search for a name/value pair with the given name
+				if (cookie.substring(0, name.length + 1) === (name + '=')) {
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+					break;
+				}
+			}
+		}
+		return cookieValue;
+	}
+  </script>
+  <script>
+  function toggleMenu(postId) {
+  var menuOptions = document.getElementById('menuOptions' + postId);
+  menuOptions.style.display = menuOptions.style.display === 'none' ? 'block' : 'none';
+  }
+  </script>
+  
+  
+  <script>
+	function showReasonPrompt(postId) {
+		const reason = prompt('Please provide a reason for reporting this post:');
+		if (reason !== null && reason !== '') {
+			// Set the reason in the hidden input field
+			document.getElementById(`reasonInput${postId}`).value = reason;
+			// Submit the form
+			document.getElementById(`reportForm${postId}`).submit();
+		}
+	}
+  </script> 
 {% endblock content %}
