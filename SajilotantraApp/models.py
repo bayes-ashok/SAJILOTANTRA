@@ -8,22 +8,6 @@ from Sajilotantra import settings
 
 from .utils import *
 
-# from views import huffman_decode
-
-
-
-# class User(models.Model):
-#     user_id = models.AutoField(primary_key=True)
-#     fName = models.CharField(max_length=200)
-#     lName = models.CharField(max_length=200)
-#     email = models.EmailField(unique=True)
-#     password = models.CharField(max_length=128)
-#     image = models.ImageField(upload_to='static/profiles/', null=True, blank=True)
-#     bio = models.CharField(max_length=255, null=True, blank=True)
-#     # image = models.ImageField()
-
-#     def __str__(self):
-#         return self.user_id
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -31,7 +15,6 @@ class UserProfile(models.Model):
     cover = models.ImageField(upload_to='static/cover_images/', default='static/assets/images/default_cover.png', blank=True)    
     bio = models.CharField(max_length=255, null=True, blank=True)
     forget_password_token = models.CharField(max_length=100, default='')
-    # Add other fields as needed
 
     def __str__(self):
         return self.user.username
@@ -112,14 +95,12 @@ class Post(models.Model):
             return "Unable to decode caption"
 
     def save(self, *args, **kwargs):
-        # Ensure that encoding_dict is not saved as None to prevent future errors
         if self.encoding_dict is None:
-            self.encoding_dict = json.dumps({})  # Provide an empty dictionary as a default
+            self.encoding_dict = json.dumps({})  
         super().save(*args, **kwargs)
 
     def delete_post(self):
 
-        # delete the post
         self.delete()
     
 class PostLike(models.Model):
@@ -127,7 +108,6 @@ class PostLike(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
-        # Override save method to update like count in the associated post
         super(PostLike, self).save(*args, **kwargs)
         self.post.like_count = PostLike.objects.filter(post=self.post).count()
         self.post.save()
@@ -149,14 +129,4 @@ class ReportedPost(models.Model):
     
     def __str__(self):
         return f"Report for Post ID: {self.post_id}"    
-# models.py
 
-# from django.db import models
-# from django.contrib.auth.models import User
-
-# class deletedPost(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     content = models.TextField()
-
-#     def delete_post(self):
-#         self.delete()
