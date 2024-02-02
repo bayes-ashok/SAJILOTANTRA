@@ -385,7 +385,7 @@ bioInput.addEventListener('input', function () {
 </style>
 <!-- user posts -->
 <div class="flex flex-col top-10 items-center justify-center bg-blue-50">
-<h2 class="text-3xl font-bold mb-8 text-gray-800 border-b-2 pb-2">Posts by {{ user.username }}</h2>
+<h2 class="text-3xl font-bold mb-8 text-gray-800 border-b-2 pb-2">Posts by @{{ user.username }}</h2>
 
 {% if posts %}
 {%for post in posts%}
